@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    HttpModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -21,4 +22,4 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
