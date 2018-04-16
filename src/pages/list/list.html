@@ -3,21 +3,38 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Videos</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="presentContactModal()">
+      <ion-icon name="add"></ion-icon>
     </button>
+  </ion-fab>
+  <ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="Filtrar" cancelButtonText="Limpiar"></ion-searchbar>
+  </ion-item>
+  <ion-list>
+    <!--  (click)="itemTapped($event, item)" -->
+
+    <ion-item *ngFor="let item of videos">
+      <ion-avatar item-start>
+        <img src="{{ item.img }}">
+      </ion-avatar>
+      <ion-label (click)="play(item._id)">
+        <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
+        {{item.title}}
+      </ion-label>
+      <div class="item-note" item-end>
+        <!-- <ion-icon name='play' item-end color="primary"></ion-icon> -->
+        <ion-icon (click)="stopAll()" name='square' item-end color="secondary"></ion-icon>
+        <ion-icon (click)="showConfirmDelete(item._id)" name='trash' item-end color="danger"></ion-icon>
+        <!-- <button (click)="play(item._id)">⯈</button> -->
+        <!-- <button (click)="stopAll()">⏹</button> -->
+      </div>
+    </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+
 </ion-content>
