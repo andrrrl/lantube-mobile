@@ -26,7 +26,8 @@ export class AddPage {
     addVideo() {
         this.videosService.add(this.extractVideoId()).subscribe(video => {
             // this.goBack();
-            this.viewCtrl.dismiss(video);
+            // this.viewCtrl.dismiss(video);
+            this.navCtrl.pop();
         });
     }
 
