@@ -38,6 +38,17 @@ export class VideosService {
         return this.http.get(this.API + '/api/player/playlist').map(this.extractData);
     }
 
+    playPause(): Observable<any[]> {
+        return this.http.get(this.API + '/api/player/playlist').map(this.extractData);
+    }
+
+    playPrev(): Observable<any[]> {
+        return this.http.get(this.API + '/api/player/prev').map(this.extractData);
+    }
+    playNext(): Observable<any[]> {
+        return this.http.get(this.API + '/api/player/next').map(this.extractData);
+    }
+
     stopAll(): Observable<any[]> {
         return this.http.get(this.API + '/api/player/stop').map(this.extractData);
     }

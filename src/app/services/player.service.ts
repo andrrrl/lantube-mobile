@@ -19,6 +19,10 @@ export class PlayerService {
     return this.http.get(this.playerURL + '/' + player).map(this.extractData);
   }
 
+  setVolume(upOrDown: 'up' | 'down'): Observable<any> {
+    return this.http.get(this.playerURL + '/volume/' + upOrDown).map(this.extractData);
+  }
+
   update(player: any): Observable<any> {
     return this.http.put(this.playerURL, player).map(this.extractData);
   }

@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class ServerService {
 
-  private serveStatsURL = environment.API + '/api/status';
+  private serveStatsURL = environment.API + '/api/player/stats';
 
   constructor(private http: Http) { }
 
