@@ -12,7 +12,8 @@ import { AddPage } from '../add/add';
 })
 export class ListPage {
 
-    contactModal: Modal;
+    currentVolume: any;
+    addModal: Modal;
     videosTmp: any[];
     loader: any;
     // Player configurations from the API
@@ -48,6 +49,8 @@ export class ListPage {
     icons: string[];
     items: Array<{ title: string, note: string, icon: string }>;
 
+    public volumeRange: any = { upper: 100 };
+
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
@@ -67,6 +70,7 @@ export class ListPage {
 
         // this.getPlayer();
         this.getAllVideos();
+        this.getPlayerStats();
         // this.getServerStats();
     }
 
@@ -94,14 +98,14 @@ export class ListPage {
         this.loader.dismiss();
     }
 
-    presentContactModal() {
-        // this.contactModal = this.modalCtrl.create(AddPage);
-        // this.contactModal.onDidDismiss(data => {
+    presentAddModal() {
+        // this.addModal = this.modalCtrl.create(AddPage);
+        // this.addModal.onDidDismiss(data => {
         //     if (data) {
         //         this.getAllVideos();
         //     }
         // });
-        // this.contactModal.present();
+        // this.addModal.present();
         this.navCtrl.push(AddPage);
     }
 
@@ -120,6 +124,7 @@ export class ListPage {
     getPlayerStats() {
         this.serverService.get({ type: 'player' }).subscribe(stats => {
             this.playerStats = stats;
+            this.volumeRange = this.currentVolume = this.playerStats.volume;
         });
     }
 
@@ -157,6 +162,24 @@ export class ListPage {
         });
     }
 
+    playPause() {
+        this.showLoader('Reproduciendo...');
+        this.videosService.playPause().subscribe(playback => {
+            this.currentVideo = playback;
+            this.hideLoader();
+        });
+
+    }
+
+    playNext() {
+        this.showLoader('Reproduciendo...');
+        this.videosService.playNext().subscribe(playback => {
+            this.currentVideo = playback;
+            this.hideLoader();
+        });
+
+    }
+
 
     /**
      * Plays PLS file generated "on the fly"
@@ -191,8 +214,10 @@ export class ListPage {
      * Changes volume
      */
     volume(change) {
-        this.videosService.volume(change).subscribe(playback => {
+
+        this.playerService.setVolume((change > this.currentVolume ? 'up' : 'down')).debounceTime(200).subscribe(playback => {
             this.currentVideo = playback;
+            this.currentVolume = change;
         });
     }
 
