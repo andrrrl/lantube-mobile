@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 // import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
+import { PlayerPage } from '../pages/player/player';
 
 import { VideosService } from './services/videos.service';
 import { ServerService } from './services/server.service';
@@ -21,7 +22,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     // HomePage,
     ListPage,
-    AddPage
+    AddPage,
+    PlayerPage
   ],
   imports: [
     HttpModule,
@@ -33,7 +35,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     // HomePage,
     ListPage,
-    AddPage
+    AddPage,
+    PlayerPage
   ],
   providers: [
     StatusBar,
