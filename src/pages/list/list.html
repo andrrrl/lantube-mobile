@@ -5,14 +5,29 @@
     </button>
     <ion-title>Videos</ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-  <ion-fab top right edge>
-    <button ion-fab mini (click)="presentContactModal()">
+  <ion-item>
+    <player (stopAllPlayer)="stopAll()" (playPausePlayer)="playPause()" (playNextPlayer)="playNext()" (volumePlayer)="volume($event)"></player>
+  </ion-item>
+  <!-- <ion-item>
+    <ion-range dualKnobs="false" min="0" max="100" color="secondary" [ngModel]="volumeRange" (ngModelChange)="volume($event)">
+      <ion-icon name="volume-down"></ion-icon>
+      <ion-icon name="volume-uo"></ion-icon>
+    </ion-range>
+  </ion-item> -->
+  <ion-fab top right>
+    <button ion-fab mini (click)="presentAddModal()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+  <pre>
+      <!-- serverStats: {{ serverStats | json }} -->
+      playerStats: {{ playerStats | json }}
+  </pre>
+
+
+</ion-header>
+
+<ion-content>
   <ion-item>
     <ion-searchbar (ionInput)="getItems($event)" placeholder="Filtrar" cancelButtonText="Limpiar"></ion-searchbar>
   </ion-item>
@@ -29,7 +44,7 @@
       </ion-label>
       <div class="item-note" item-end>
         <!-- <ion-icon name='play' item-end color="primary"></ion-icon> -->
-        <ion-icon (click)="stopAll()" name='square' item-end color="secondary"></ion-icon>
+        <!-- <ion-icon (click)="stopAll()" name='square' item-end color="secondary"></ion-icon> -->
         <ion-icon (click)="showConfirmDelete(item._id)" name='trash' item-end color="danger"></ion-icon>
         <!-- <button (click)="play(item._id)">⯈</button> -->
         <!-- <button (click)="stopAll()">⏹</button> -->
