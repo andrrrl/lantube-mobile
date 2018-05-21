@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 // import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
 import { PlayerPage } from '../pages/player/player';
+import { SearchPage } from '../pages/search/search';
 
 import { VideosService } from './services/videos.service';
 import { ServerService } from './services/server.service';
@@ -23,10 +25,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     // HomePage,
     ListPage,
     AddPage,
-    PlayerPage
+    PlayerPage,
+    SearchPage
   ],
   imports: [
     HttpModule,
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
   ],
@@ -36,7 +40,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     // HomePage,
     ListPage,
     AddPage,
-    PlayerPage
+    PlayerPage,
+    SearchPage
   ],
   providers: [
     StatusBar,
