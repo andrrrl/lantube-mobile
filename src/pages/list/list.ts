@@ -214,7 +214,6 @@ export class ListPage {
      * Changes volume
      */
     volume(change) {
-
         this.playerService.setVolume((change > this.currentVolume ? 'up' : 'down')).debounceTime(200).subscribe(playback => {
             this.currentVideo = playback;
             this.currentVolume = change;
