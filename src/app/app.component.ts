@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
+// import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
 import { SearchPage } from '../pages/search/search';
@@ -18,7 +18,10 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public alertCtrl: AlertController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -38,7 +41,30 @@ export class MyApp {
       this.nav.setRoot(ListPage);
       this.splashScreen.hide();
       this.platform.registerBackButtonAction(() => {
-        this.nav.pop();
+
+
+        if (this.nav.canGoBack()) { //Can we go back?
+          this.nav.pop();
+        } else {
+          const alert = this.alertCtrl.create({
+            title: 'Salir de Lantube',
+            message: 'La App se va a cerrar',
+            buttons: [{
+              text: 'Cancelar',
+              role: 'cancel',
+              handler: () => {
+                console.log('Application exit prevented!');
+              }
+            }, {
+              text: 'Cerrar App',
+              handler: () => {
+                this.platform.exitApp(); // Close this application
+              }
+            }]
+          });
+          alert.present();
+        }
+        // this.nav.pop();
       });
     });
   }
