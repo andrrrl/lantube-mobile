@@ -5,7 +5,8 @@ import { VideosService } from './../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
 
-import { AddPage } from '../add/add';
+// import { AddPage } from '../add/add';
+import { SearchPage } from '../search/search';
 @Component({
     selector: 'page-list',
     templateUrl: 'list.html'
@@ -67,11 +68,25 @@ export class ListPage {
     }
 
     ionViewDidLoad() {
+        // this.getAllVideos();
+        // this.getPlayerStats();
+    }
 
-        // this.getPlayer();
+    ionViewDidEnter() {
         this.getAllVideos();
         this.getPlayerStats();
-        // this.getServerStats();
+    }
+
+    /**
+     * Get full list of videos
+     */
+    getAllVideos() {
+        this.showLoader('Cargando lista de videos...');
+        this.videosService.get({}).subscribe(videos => {
+            this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
+            this.videosTmp = this.videos;
+            this.hideLoader();
+        });
     }
 
     // itemTapped(event, item) {
@@ -91,6 +106,12 @@ export class ListPage {
         this.loader = this.loadingCtrl.create({
             content: text,
         });
+
+        // show Loading... for 15 secs max 
+        // setTimeout(() => {
+        //     this.loader.dismiss();
+        // }, 15000);
+
         this.loader.present();
     }
 
@@ -99,6 +120,7 @@ export class ListPage {
     }
 
     presentAddModal() {
+        this.navCtrl.push(SearchPage);
         // this.addModal = this.modalCtrl.create(AddPage);
         // this.addModal.onDidDismiss(data => {
         //     if (data) {
@@ -106,7 +128,6 @@ export class ListPage {
         //     }
         // });
         // this.addModal.present();
-        this.navCtrl.push(AddPage);
     }
 
     /**
@@ -138,17 +159,7 @@ export class ListPage {
         });
     }
 
-    /**
-     * Get full list of videos
-     */
-    getAllVideos() {
-        this.showLoader('Cargando lista de videos...');
-        this.videosService.get({}).subscribe(videos => {
-            this.videos = videos;
-            this.videosTmp = this.videos;
-            this.hideLoader();
-        });
-    }
+
 
     /**
      * Play selected video by ID
@@ -158,6 +169,7 @@ export class ListPage {
         this.showLoader('Reproduciendo...');
         this.videosService.play(id).subscribe(playback => {
             this.currentVideo = playback;
+            this.playerStats.status = 'playing';
             this.hideLoader();
         });
     }
@@ -166,6 +178,8 @@ export class ListPage {
         this.showLoader('Reproduciendo...');
         this.videosService.playPause().subscribe(playback => {
             this.currentVideo = playback;
+            // this.playerStats.status = this.playerStats.status === 'playing' ? 'paused' : 'playing';
+            this.playerStats.status = 'playing';
             this.hideLoader();
         });
 
@@ -197,6 +211,7 @@ export class ListPage {
         this.showLoader('Deteniendo reproducción...');
         this.videosService.stopAll().subscribe(playback => {
             this.currentVideo = playback;
+            this.playerStats.status = 'idle';
             this.hideLoader();
         });
     }
@@ -207,6 +222,7 @@ export class ListPage {
     pause() {
         this.videosService.pause().subscribe(playback => {
             this.currentVideo = playback;
+            this.playerStats.status = 'paused';
         });
     }
 
@@ -214,7 +230,7 @@ export class ListPage {
      * Changes volume
      */
     volume(change) {
-        this.playerService.setVolume((change > this.currentVolume ? 'up' : 'down')).debounceTime(200).subscribe(playback => {
+        this.playerService.setVolume(change).debounceTime(200).subscribe(playback => {
             this.currentVideo = playback;
             this.currentVolume = change;
         });
