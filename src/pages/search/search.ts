@@ -50,7 +50,7 @@ export class SearchPage {
 
     showConfirmAdd(index) {
         let confirm = this.alertCtrl.create({
-            title: 'Agregar video?',
+            title: '¿Agregar video?',
             message: 'El video se va a agregar a la lista',
             buttons: [
                 {
