@@ -1,7 +1,8 @@
 import { environment } from '../../environments/environment';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
+import { IVolume } from '../../app/interfaces/IVolume.interface';
 // import { Subject } from 'rxjs/Subject';
 
 
@@ -14,11 +15,13 @@ import { VideosService } from './../../app/services/videos.service';
 })
 export class PlayerPage {
 
+    @Input() playerStats: any;
+
     @Output() stopAllPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() playPausePlayer: EventEmitter<any> = new EventEmitter<any>();
+    @Output() playAllPlayer: EventEmitter<any> = new EventEmitter<any>();
     @Output() playPrevPlayer: EventEmitter<any> = new EventEmitter<any>();
     @Output() playNextPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() volumePlayer: EventEmitter<any> = new EventEmitter<any>();
+    @Output() volumePlayer: EventEmitter<IVolume> = new EventEmitter<IVolume>();
 
     constructor(public navCtrl: NavController,
         public loadingCtrl: LoadingController,
@@ -30,8 +33,8 @@ export class PlayerPage {
     stopAllEmit() {
         this.stopAllPlayer.emit(true);
     }
-    playPauseEmit() {
-        this.playPausePlayer.emit(true);
+    playAllEmit() {
+        this.playAllPlayer.emit(true);
     }
     playPrevEmit() {
         this.playPrevPlayer.emit(true);
@@ -39,7 +42,7 @@ export class PlayerPage {
     playNextEmit() {
         this.playNextPlayer.emit(true);
     }
-    volumeEmit(upOrDown: 'up' | 'down') {
+    volumeEmit(upOrDown: IVolume) {
         this.volumePlayer.emit(upOrDown);
     }
 }
