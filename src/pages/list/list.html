@@ -6,7 +6,8 @@
     <ion-title>Videos</ion-title>
   </ion-navbar>
   <ion-item>
-    <player (stopAllPlayer)="stopAll()" (playPausePlayer)="playPause()" (playNextPlayer)="playNext()" (volumePlayer)="volume($event)"></player>
+    <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playAll()" (playNextPlayer)="playNext()"
+      (volumePlayer)="volume($event)"></player>
   </ion-item>
   <!-- <ion-item>
     <ion-range dualKnobs="false" min="0" max="100" color="secondary" [ngModel]="volumeRange" (ngModelChange)="volume($event)">
@@ -19,20 +20,16 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <!-- <pre>
-      serverStats: {{ serverStats | json }}
-      playerStats: {{ playerStats | json }}
-  </pre> -->
-
-
 </ion-header>
 
 <ion-content>
+  <!-- <pre>
+    {{ playerStats | json }}
+  </pre> -->
   <ion-item>
     <ion-searchbar (ionInput)="getItems($event)" placeholder="Filtrar" cancelButtonText="Limpiar"></ion-searchbar>
   </ion-item>
   <ion-list>
-    <!--  (click)="itemTapped($event, item)" -->
 
     <ion-item *ngFor="let item of videos">
       <ion-avatar item-start>
@@ -40,7 +37,7 @@
       </ion-avatar>
       <ion-label (click)="play(item._id)">
         <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
-        {{item.title}}
+        {{ item.order }} {{ item.title }}
       </ion-label>
       <div class="item-note" item-end>
         <!-- <ion-icon name='play' item-end color="primary"></ion-icon> -->
