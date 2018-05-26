@@ -1,6 +1,6 @@
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Http, Response, ResponseContentType, RequestMethod, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, ResponseContentType, RequestMethod, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -35,7 +35,7 @@ export class VideosService {
     }
 
     playAll(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/playlist').map(this.extractData);
+        return this.http.get(this.API + '/api/player/playall').map(this.extractData).catch(this.handleError);
     }
 
     playPause(): Observable<any[]> {
