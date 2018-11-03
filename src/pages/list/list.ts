@@ -86,6 +86,14 @@ export class ListPage {
             this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
             this.videosTmp = this.videos;
             this.hideLoader();
+        }, error => {
+            if (error) {
+                // console.error(error);
+                // setTimeout(() => {
+                //     console.info('Reintentando...');
+                //     this.ionViewDidEnter();
+                // }, 5000);
+            }
         });
     }
 
