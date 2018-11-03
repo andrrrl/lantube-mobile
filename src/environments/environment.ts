@@ -5,6 +5,11 @@
 
 export const environment = {
   production: false,
-  API: 'http://localhost:3000',
-  PLAYER: 'mpv'
+  // API: 'http://localhost:3000',
+  API: 'http://192.168.4.31:3000',
+  // API: 'http://192.168.0.16:3000',
+  // API: 'http://192.168.4.189:3000',
+  // API: 'http://192.168.1.131:3000',
+  // API: 'http://192.168.1.171:3000',
+  PLAYER: 'omxplayer'
 };

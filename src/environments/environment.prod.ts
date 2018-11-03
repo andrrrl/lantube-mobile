@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  API: '//localhost:3000',
-  PLAYER: 'mpv'
+  API: '//192.168.4.31:3000',
+  PLAYER: 'omxplayer'
 };
