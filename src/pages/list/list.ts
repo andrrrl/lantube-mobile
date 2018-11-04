@@ -87,7 +87,7 @@ export class ListPage {
             this.videosService.get({}).subscribe(videos => {
                 this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
                 this.videosTmp = this.videos;
-                this.hideLoader();
+                this.loader.dismiss();
                 // this.getPlayerStats();
 
             });
@@ -161,7 +161,7 @@ export class ListPage {
         this.showLoader('Reproduciendo...');
         this.loader.present().then(() => {
             this.videosService.play(id).subscribe(playback => {
-                this.hideLoader();
+                this.loader.dismiss();
                 // this.loader.dismiss();
                 this.currentVideo = playback;
                 this.getPlayerStats();
