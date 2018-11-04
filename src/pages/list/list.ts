@@ -1,12 +1,13 @@
 import { environment } from '../../environments/environment';
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, ModalController, ViewController, Modal } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ModalController, Modal } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
 
 // import { AddPage } from '../add/add';
 import { SearchPage } from '../search/search';
+import { ImageModalPage } from '../modal/imageModal';
 @Component({
     selector: 'page-list',
     templateUrl: 'list.html'
@@ -55,7 +56,6 @@ export class ListPage {
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
-        // public navParams: NavParams,
         public videosService: VideosService,
         public serverService: ServerService,
         public playerService: PlayerService,
@@ -69,12 +69,13 @@ export class ListPage {
 
     ionViewDidLoad() {
         // this.getAllVideos();
-        // this.getPlayerStats();
+        this.getPlayerStats();
     }
 
     ionViewDidEnter() {
+        // this.videosService.sendMessage('xD');
         this.getAllVideos();
-        this.getPlayerStats();
+
     }
 
     /**
@@ -82,45 +83,21 @@ export class ListPage {
      */
     getAllVideos() {
         this.showLoader('Cargando lista de videos...');
-        this.videosService.get({}).subscribe(videos => {
-            this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
-            this.videosTmp = this.videos;
-            this.hideLoader();
-        }, error => {
-            if (error) {
-                // console.error(error);
-                // setTimeout(() => {
-                //     console.info('Reintentando...');
-                //     this.ionViewDidEnter();
-                // }, 5000);
-            }
-        });
+        this.loader.present().then(() => {
+            this.videosService.get({}).subscribe(videos => {
+                this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
+                this.videosTmp = this.videos;
+                this.hideLoader();
+                // this.getPlayerStats();
+
+            });
+        })
     }
-
-    // itemTapped(event, item) {
-    //     // That's right, we're pushing to ourselves!
-    //     this.navCtrl.push(AddPage, {
-    //         item: item
-    //     });
-    // }
-
-    // goToAddPage() {
-    //     //push another page onto the history stack
-    //     //causing the nav controller to animate the new page in
-    //     this.navCtrl.push(AddPage);
-    // }
 
     showLoader(text: string) {
         this.loader = this.loadingCtrl.create({
             content: text,
         });
-
-        // show Loading... for 15 secs max 
-        // setTimeout(() => {
-        //     this.loader.dismiss();
-        // }, 15000);
-
-        this.loader.present();
     }
 
     hideLoader() {
@@ -129,13 +106,12 @@ export class ListPage {
 
     presentAddModal() {
         this.navCtrl.push(SearchPage);
-        // this.addModal = this.modalCtrl.create(AddPage);
-        // this.addModal.onDidDismiss(data => {
-        //     if (data) {
-        //         this.getAllVideos();
-        //     }
-        // });
-        // this.addModal.present();
+    }
+
+    showImageModal(img) {
+        // const modal = this.modalCtrl.create(ImageModalPage, { img: img });
+        // modal.present();
+        this.navCtrl.push(ImageModalPage, { img: img });
     }
 
     /**
@@ -151,9 +127,18 @@ export class ListPage {
      * Get player stats (current volume, last video, etc)
      */
     getPlayerStats() {
-        this.serverService.get({ type: 'player' }).subscribe(stats => {
-            this.playerStats = stats;
-            this.volumeRange = this.currentVolume = this.playerStats.volume;
+        // this.serverService.get({ type: 'player' }).subscribe(stats => {
+        //     this.playerStats = stats;
+        //     this.currentVideo._id = this.playerStats.videoId;
+
+        // });
+        this.videosService.onNewMessage().subscribe(stats => {
+            if (typeof stats === 'string') {
+                this.playerStats = JSON.parse(stats);
+            } else {
+                this.playerStats = stats;
+            }
+            console.log('playerStats', this.playerStats);
         });
     }
 
@@ -167,19 +152,22 @@ export class ListPage {
         });
     }
 
-
-
     /**
      * Play selected video by ID
      * @param id Redis or MongoDB video ID
      */
     play(id) {
+
         this.showLoader('Reproduciendo...');
-        this.videosService.play(id).subscribe(playback => {
-            this.currentVideo = playback;
-            this.playerStats.status = 'playing';
-            this.hideLoader();
+        this.loader.present().then(() => {
+            this.videosService.play(id).subscribe(playback => {
+                this.hideLoader();
+                // this.loader.dismiss();
+                this.currentVideo = playback;
+                this.getPlayerStats();
+            });
         });
+
     }
 
     playPause() {
@@ -187,8 +175,10 @@ export class ListPage {
         this.videosService.playPause().subscribe(playback => {
             this.currentVideo = playback;
             // this.playerStats.status = this.playerStats.status === 'playing' ? 'paused' : 'playing';
-            this.playerStats.status = 'playing';
-            this.hideLoader();
+            this.videosService.onNewMessage().subscribe(stats => {
+                this.playerStats = stats;
+                this.hideLoader();
+            });
         });
 
     }
