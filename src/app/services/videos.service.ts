@@ -3,16 +3,34 @@ import { Injectable } from '@angular/core';
 import { Http, Response, ResponseContentType, RequestMethod, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import * as io from 'socket.io-client';
 
 @Injectable()
 export class VideosService {
 
     private API = environment.API;
+    private socket: SocketIOClient.Socket;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        this.socket = io(this.API);
+    }
 
     extractData(res: Response) {
         return res.json();
+    }
+
+    // EMITTER
+    sendMessage(msg: string) {
+        this.socket.emit('USER_MESSAGE', { message: msg });
+    }
+
+    // HANDLER
+    onNewMessage() {
+        return Observable.create(observer => {
+            this.socket.on('USER_MESSAGE', msg => {
+                observer.next(msg);
+            });
+        });
     }
 
     private handleError(error: any) {
