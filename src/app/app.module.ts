@@ -18,6 +18,7 @@ import { YoutubeService } from './services/youtube.service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ImageModalPage } from '../pages/modal/imageModal';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     AddPage,
     PlayerPage,
-    SearchPage
+    SearchPage,
+    ImageModalPage
   ],
   imports: [
     HttpModule,
@@ -41,7 +43,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ListPage,
     AddPage,
     PlayerPage,
-    SearchPage
+    SearchPage,
+    ImageModalPage
   ],
   providers: [
     StatusBar,
