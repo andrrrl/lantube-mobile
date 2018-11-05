@@ -34,7 +34,7 @@
       <ion-avatar item-start (click)="showImageModal(item.img)">
         <img src="{{ item.img }}">
       </ion-avatar>
-      <ion-label (click)="play(item._id)" [ngClass]="{'playing': item._id === playerStats.videoId && playerStats.status === 'playing'}">
+      <ion-label (click)="play(item._id)" [ngClass]="{'playing': item._id === playerStats?.videoId && playerStats?.status === 'playing'}">
         <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
         {{ item.order }} {{ item.title }}
       </ion-label>

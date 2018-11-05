@@ -29,7 +29,10 @@ export class ListPage {
     // Server stats
     public serverStats: any = {};
     // Server stats
-    public playerStats: any = {};
+    public playerStats: any = {
+        videoId: '',
+        status: 'idle'
+    };
 
     // Player settings
     public player = {};
