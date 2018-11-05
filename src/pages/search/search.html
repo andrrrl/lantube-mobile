@@ -12,14 +12,16 @@
   </ion-item>
 
   <ion-list>
-    <ion-item *ngFor="let item of videoList; let i = index">
-      <ion-label (click)="view(item._id)">
-        {{item.title}}
-      </ion-label>
-      <div class="item-note" item-end>
-        <ion-icon (click)="showConfirmAdd(i)" name='add' item-end color="danger"></ion-icon>
-      </div>
-    </ion-item>
+    <ng-container *ngFor="let item of videoList; let i = index">
+      <ion-item (click)="showConfirmAdd(i)">
+        <ion-label (click)="view(item._id)">
+          {{item.title}}
+        </ion-label>
+        <div class="item-note" item-end>
+          <ion-icon name='add' item-end color="danger"></ion-icon>
+        </div>
+      </ion-item>
+    </ng-container>
   </ion-list>
 </ion-content>
 
