@@ -9,7 +9,7 @@ export class YoutubeService {
 
   constructor(private http: Http) { }
 
-  private API = environment.API;
+  private API = location.href.includes('172.16') ? environment.API : environment.API_WIFI;
 
   search(term: string): Observable<any> {
     return this.http.get(this.API + '/api/videos/search/' + encodeURIComponent(term)).map(this.extractData).catch(this.handleError);

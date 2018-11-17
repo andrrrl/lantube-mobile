@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class ServerService {
 
-  private serveStatsURL = environment.API + '/api/player/stats';
+  private serveStatsURL = location.href.includes('172.16') ? environment.API : environment.API_WIFI + '/api/player/stats';
 
   constructor(private http: Http) { }
 
