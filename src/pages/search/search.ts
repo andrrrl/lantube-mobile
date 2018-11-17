@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { YoutubeService } from '../../app/services/youtube.service';
 import { VideosService } from '../../app/services/videos.service';
+import { ImageModalPage } from '../modal/imageModal';
 
 @Component({
     selector: 'page-search',
@@ -25,16 +26,20 @@ export class SearchPage {
     }
 
     search() {
-        this.showLoader('Buscando videos...');
-        this.videoList = [];
-        this.youtubeService.search(this.term).subscribe(result => {
-            this.videoList = result;
-            this.hideLoader();
-        });
+        if (typeof this.term === 'string' && this.term.length) {
+            this.showLoader('Buscando videos...');
+            this.videoList = [];
+            this.youtubeService.search(this.term).subscribe(result => {
+                this.videoList = result;
+                this.hideLoader();
+            });
+        }
     }
 
-    view(id) {
-        return id;
+    showImageModal(img) {
+        // const modal = this.modalCtrl.create(ImageModalPage, { img: img });
+        // modal.present();
+        this.navCtrl.push(ImageModalPage, { img: img });
     }
 
     showLoader(text: string) {
