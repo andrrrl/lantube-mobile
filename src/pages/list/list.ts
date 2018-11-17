@@ -88,7 +88,7 @@ export class ListPage {
         this.showLoader('Cargando lista de videos...');
         this.loader.present().then(() => {
             this.videosService.get({}).subscribe(videos => {
-                this.videos = videos.sort((a, b) => parseInt(b._id.replace(/video/, '')) - parseInt(a._id.replace(/video/, '')));
+                this.videos = videos.sort((a, b) => parseInt(b.videoId.replace(/video/, '')) - parseInt(a.videoId.replace(/video/, '')));
                 this.videosTmp = this.videos;
                 this.loader.dismiss();
                 // this.getPlayerStats();
@@ -132,10 +132,10 @@ export class ListPage {
     getPlayerStats() {
         // this.serverService.get({ type: 'player' }).subscribe(stats => {
         //     this.playerStats = stats;
-        //     this.currentVideo._id = this.playerStats.videoId;
+        //     this.currentVideo.videoId = this.playerStats.videoId;
 
         // });
-        this.videosService.onNewMessage().subscribe(stats => {
+        this.playerService.onNewMessage().subscribe(stats => {
             if (typeof stats === 'string') {
                 this.playerStats = JSON.parse(stats);
             } else {
@@ -163,7 +163,7 @@ export class ListPage {
 
         this.showLoader('Reproduciendo...');
         this.loader.present().then(() => {
-            this.videosService.play(id).subscribe(playback => {
+            this.playerService.play(id).subscribe(playback => {
                 this.loader.dismiss();
                 // this.loader.dismiss();
                 this.currentVideo = playback;
@@ -175,10 +175,10 @@ export class ListPage {
 
     playPause() {
         this.showLoader('Reproduciendo...');
-        this.videosService.playPause().subscribe(playback => {
+        this.playerService.playPause().subscribe(playback => {
             this.currentVideo = playback;
             // this.playerStats.status = this.playerStats.status === 'playing' ? 'paused' : 'playing';
-            this.videosService.onNewMessage().subscribe(stats => {
+            this.playerService.onNewMessage().subscribe(stats => {
                 this.playerStats = stats;
                 this.hideLoader();
             });
@@ -186,10 +186,26 @@ export class ListPage {
 
     }
 
+    playPrev() {
+        this.showLoader('Reproduciendo...');
+        this.playerService.playPrev().subscribe(playback => {
+            this.currentVideo = playback;
+            this.playerService.onNewMessage().subscribe(stats => {
+                this.playerStats = stats;
+                this.hideLoader();
+            });
+            this.hideLoader();
+        });
+
+    }
     playNext() {
         this.showLoader('Reproduciendo...');
-        this.videosService.playNext().subscribe(playback => {
+        this.playerService.playNext().subscribe(playback => {
             this.currentVideo = playback;
+            this.playerService.onNewMessage().subscribe(stats => {
+                this.playerStats = stats;
+                this.hideLoader();
+            });
             this.hideLoader();
         });
 
@@ -200,7 +216,7 @@ export class ListPage {
      * Plays PLS file generated "on the fly"
      */
     playAll() {
-        this.videosService.playAll().subscribe(playback => {
+        this.playerService.playAll().subscribe(playback => {
             this.currentVideo = playback;
         });
     }
@@ -210,7 +226,7 @@ export class ListPage {
      */
     stopAll() {
         this.showLoader('Deteniendo reproducción...');
-        this.videosService.stopAll().subscribe(playback => {
+        this.playerService.stopAll().subscribe(playback => {
             this.currentVideo = playback;
             this.playerStats.status = 'idle';
             this.hideLoader();
@@ -221,7 +237,7 @@ export class ListPage {
      * Pauses playback
      */
     pause() {
-        this.videosService.pause().subscribe(playback => {
+        this.playerService.pause().subscribe(playback => {
             this.currentVideo = playback;
             this.playerStats.status = 'paused';
         });
@@ -338,7 +354,7 @@ export class ListPage {
         const params = {
             player: 'mpv',
             status: 'stopped',
-            video_id: 'video2',
+            videoId: 'video1',
             last_updated: new Date()
         };
 

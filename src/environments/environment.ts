@@ -9,7 +9,7 @@ export const environment = {
   // API: 'http://172.16.3.21:3000',
   // API: 'http://172.16.3.31:3000',
   // API: 'http://192.168.4.31:3000',
-  // API: 'http://192.168.60.64:3000', // HPN WIFI
+  API_WIFI_CASA: 'http://192.168.4.31:3000',
   API_WIFI: 'http://192.168.60.64:3000', // HPN WIFI
   API: 'http://172.16.3.127:3000', // HPN LAN
   // API: 'http://192.168.0.16:3000',

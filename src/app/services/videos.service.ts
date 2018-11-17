@@ -8,7 +8,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class VideosService {
 
-    private API = location.href.includes('172.16') ? environment.API : environment.API_WIFI;
+    private API = location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI);
     private socket: SocketIOClient.Socket;
 
     constructor(private http: Http) {
@@ -46,37 +46,6 @@ export class VideosService {
 
     getById(id: string): Observable<any> {
         return this.http.get(this.API + '/api/videos/' + id).map(this.extractData);
-    }
-
-    play(id: String): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/' + id + '/play').map(this.extractData);
-    }
-
-    playAll(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/playall').map(this.extractData).catch(this.handleError);
-    }
-
-    playPause(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/playlist').map(this.extractData);
-    }
-
-    playPrev(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/prev').map(this.extractData);
-    }
-    playNext(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/next').map(this.extractData);
-    }
-
-    stopAll(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/stop').map(this.extractData);
-    }
-
-    pause(): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/pause').map(this.extractData);
-    }
-
-    volume(volume: any): Observable<any[]> {
-        return this.http.get(this.API + '/api/player/volume/' + volume).map(this.extractData);
     }
 
     // save(data: any): Observable<any> {

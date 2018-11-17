@@ -7,7 +7,7 @@
   </ion-navbar>
   <ion-item>
     <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playAll()" (playNextPlayer)="playNext()"
-      (volumePlayer)="volume($event)"></player>
+      (playPrevPlayer)="playPrev()" (volumePlayer)="volume($event)"></player>
   </ion-item>
   <!-- <ion-item>
     <ion-range dualKnobs="false" min="0" max="100" color="secondary" [ngModel]="volumeRange" (ngModelChange)="volume($event)">
@@ -28,21 +28,27 @@
   </ion-item>
   <ion-list>
 
+    <!-- <ion-item>
+      <pre>
+        {{ playerStats | json }}
+      </pre>
+    </ion-item> -->
+
     <ion-item *ngIf="videos.length === 0">No hay videos en la lista</ion-item>
 
     <ion-item *ngFor="let item of videos">
       <ion-avatar item-start (click)="showImageModal(item.img)">
         <img src="{{ item.img }}">
       </ion-avatar>
-      <ion-label (click)="play(item._id)" [ngClass]="{'playing': item._id === playerStats?.videoId && playerStats?.status === 'playing'}">
+      <ion-label (click)="play(item.videoId)" [ngClass]="{'playing': item.videoId === playerStats?.videoId && playerStats?.status === 'playing'}">
         <!-- <ion-icon [name]="item.icon" item-start></ion-icon> -->
         {{ item.order }} {{ item.title }}
       </ion-label>
       <div class="item-note" item-end>
         <!-- <ion-icon name='play' item-end color="primary"></ion-icon> -->
         <!-- <ion-icon (click)="stopAll()" name='square' item-end color="secondary"></ion-icon> -->
-        <ion-icon (click)="showConfirmDelete(item._id)" name='trash' item-end color="danger"></ion-icon>
-        <!-- <button (click)="play(item._id)">⯈</button> -->
+        <ion-icon (click)="showConfirmDelete(item.videoId)" name='trash' item-end color="danger"></ion-icon>
+        <!-- <button (click)="play(item.videoId)">⯈</button> -->
         <!-- <button (click)="stopAll()">⏹</button> -->
       </div>
     </ion-item>
