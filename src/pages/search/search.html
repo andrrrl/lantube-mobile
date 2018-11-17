@@ -6,18 +6,21 @@
 <ion-content>
   <ion-item>
     <ion-input type="text" placeholder="Búsqueda" [(ngModel)]="term" (keyup.enter)="search()"></ion-input>
-    <button ion-button item-end color="secondary" (click)="search()">
+    <button ion-button item-end color="primary" large="true" (click)="search()">
       BUSCAR
     </button>
   </ion-item>
 
   <ion-list>
     <ng-container *ngFor="let item of videoList; let i = index">
-      <ion-item (click)="showConfirmAdd(i)">
-        <ion-label (click)="view(item.videoId)">
-          {{item.title}}
+      <ion-item>
+        <ion-avatar item-start (click)="showImageModal(item.img)">
+          <img src="{{ item.img }}">
+        </ion-avatar>
+        <ion-label (click)="showConfirmAdd(i)">
+          {{ item.title }} ~ {{ item.duration }}
         </ion-label>
-        <div class="item-note" item-end>
+        <div class="item-note" item-end (click)="showConfirmAdd(i)">
           <ion-icon name='add' item-end color="danger"></ion-icon>
         </div>
       </ion-item>
@@ -25,8 +28,8 @@
   </ion-list>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <button ion-button (click)="goBack()">
     CANCELAR
   </button>
-</ion-footer>
+</ion-footer> -->
