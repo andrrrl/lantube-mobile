@@ -5,7 +5,6 @@
     <ion-icon name="square" class="icon-sm"></ion-icon>
   </button> -->
 <div style="display: flex">
-
   <button icon-only ion-button class="button button-md button-default button-default-md" style="transition: none;"
     (click)="playAllEmit()">
     <ion-icon name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
@@ -16,13 +15,13 @@
     <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop" ng-reflect-name="stop"></ion-icon>
   </button>
 
-  <button [disabled]="playerStats?.status !== 'playing'" icon-only ion-button class="button button-md button-default button-default-md"
+  <button [disabled]="playerStats?.videoId === null" icon-only ion-button class="button button-md button-default button-default-md"
     (click)="playPrevEmit()">
     <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward" aria-label="skip backward"
       ng-reflect-name="skip-backward"></ion-icon>
   </button>
 
-  <button [disabled]="playerStats?.status !== 'playing'" icon-only ion-button class="button button-md button-default button-default-md"
+  <button [disabled]="playerStats?.videoId === null" icon-only ion-button class="button button-md button-default button-default-md"
     (click)="playNextEmit()">
     <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward" aria-label="skip forward"
       ng-reflect-name="skip-forward"></ion-icon>

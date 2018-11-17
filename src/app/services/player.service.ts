@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Volume } from '../interfaces/volume.interface';
@@ -104,6 +106,37 @@ export class PlayerService {
 
   volume(volume: any): Observable<any> {
     return this.http.get(this.playerURL + '/volume/' + volume);
+  }
+
+  play(id: String): Observable<any[]> {
+    return this.http.get(this.playerURL + '/' + id + '/play').map(this.extractData);
+  }
+
+  playAll(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/playall').map(this.extractData).catch(this.handleError);
+  }
+
+  playPause(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/playlist').map(this.extractData);
+  }
+
+  playPrev(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/prev').map(this.extractData);
+  }
+  playNext(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/next').map(this.extractData);
+  }
+
+  stopAll(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/stop').map(this.extractData);
+  }
+
+  pause(): Observable<any[]> {
+    return this.http.get(this.playerURL + '/pause').map(this.extractData);
+  }
+
+  volume(volume: any): Observable<any[]> {
+    return this.http.get(this.playerURL + '/volume/' + volume).map(this.extractData);
   }
 
 }

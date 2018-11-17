@@ -14,7 +14,7 @@
   <ion-list>
     <ng-container *ngFor="let item of videoList; let i = index">
       <ion-item (click)="showConfirmAdd(i)">
-        <ion-label (click)="view(item._id)">
+        <ion-label (click)="view(item.videoId)">
           {{item.title}}
         </ion-label>
         <div class="item-note" item-end>
