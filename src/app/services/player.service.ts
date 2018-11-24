@@ -9,7 +9,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class PlayerService {
 
-  private playerURL = location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI) + '/api/player';
+  private playerURL = (location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI)) + '/api/player';
 
   private socket: SocketIOClient.Socket;
 
