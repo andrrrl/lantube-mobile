@@ -21,13 +21,13 @@ export class VideosService {
 
     // EMITTER
     sendMessage(msg: string) {
-        this.socket.emit('USER_MESSAGE', { message: msg });
+        this.socket.emit('VIDEOS_MESSAGE', { message: msg });
     }
 
     // HANDLER
     onNewMessage() {
         return Observable.create(observer => {
-            this.socket.on('USER_MESSAGE', msg => {
+            this.socket.on('VIDEOS_MESSAGE', msg => {
                 observer.next(msg);
             });
         });
@@ -47,14 +47,6 @@ export class VideosService {
     getById(id: string): Observable<any> {
         return this.http.get(this.API + '/api/videos/' + id).map(this.extractData);
     }
-
-    // save(data: any): Observable<any> {
-    //     let headers = new Headers({
-    //         'Content-Type': 'application/json'
-    //     });
-    //     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.Json, method: RequestMethod.Post });
-    //     return this.http.post(this.API + '/api/videos/add', data, options).map(this.extractData).catch(this.handleError);
-    // }
 
     add(video: any): Observable<any> {
         return this.http.get(this.API + '/api/videos/add/' + video).map(this.extractData).catch(this.handleError);

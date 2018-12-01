@@ -64,47 +64,75 @@ export class ListPage {
         public playerService: PlayerService,
         public alertCtrl: AlertController,
         public modalCtrl: ModalController) {
-
-        // If we navigated to this page, we will have an item available as a nav param
-        // this.selectedItem = navParams.get('item');
-        // console.log(this.selectedItem);
     }
 
     ionViewDidLoad() {
-        // this.getAllVideos();
         this.getPlayerStats();
     }
 
-    ionViewDidEnter() {
-        // this.videosService.sendMessage('xD');
+    async ionViewDidEnter() {
+
+        this.getPlayerStats();
+        this.showLoader('Cargando lista de videos...');
+        await this.loader.present();
         this.getAllVideos();
 
+        this.videosService.onNewMessage().subscribe(videosMessage => {
+            if (videosMessage.message === 'getAll' || videosMessage.message === 'added' || videosMessage.message === 'deleted') {
+                this.getAllVideos();
+            }
+        });
+        this.playerService.onNewMessage().subscribe(stats => {
+            this.playerStats = stats;
+        });
     }
 
     /**
      * Get full list of videos
      */
     getAllVideos() {
-        this.showLoader('Cargando lista de videos...');
-        this.loader.present().then(() => {
-            this.videosService.get({}).subscribe(videos => {
-                this.videos = videos.sort((a, b) => parseInt(b.videoId.replace(/video/, '')) - parseInt(a.videoId.replace(/video/, '')));
-                this.videosTmp = this.videos;
-                this.loader.dismiss();
-                // this.getPlayerStats();
-
-            });
-        })
+        this.videosService.get({}).subscribe(videos => {
+            this.videos = videos.sort((a, b) => parseInt(b.videoId.replace(/video/, '')) - parseInt(a.videoId.replace(/video/, '')));
+            this.videosTmp = this.videos;
+            this.loader.dismiss();
+        });
     }
 
-    showLoader(text: string) {
+    /**
+     * Play selected video by ID
+     * @param id Redis or MongoDB video ID
+     */
+    async play(id) {
+        this.showLoader('Reproduciendo...');
+        await this.loader.present();
+        this.playerService.play(id).subscribe(playback => {
+            this.currentVideo = playback;
+            this.getPlayerStats();
+            this.loader.dismiss();
+        });
+
+    }
+
+    playPause() {
+        this.showLoader('Reproduciendo...');
+        this.playerService.playPause().subscribe(playback => {
+            this.currentVideo = playback;
+            this.playerService.onNewMessage().subscribe(stats => {
+                this.playerStats = stats;
+                this.hideLoader();
+            });
+        });
+
+    }
+
+    async showLoader(text: string) {
         this.loader = this.loadingCtrl.create({
             content: text,
         });
     }
 
-    hideLoader() {
-        this.loader.dismiss();
+    async hideLoader() {
+        await this.loader.dismiss();
     }
 
     presentAddModal() {
@@ -112,8 +140,6 @@ export class ListPage {
     }
 
     showImageModal(img) {
-        // const modal = this.modalCtrl.create(ImageModalPage, { img: img });
-        // modal.present();
         this.navCtrl.push(ImageModalPage, { img: img });
     }
 
@@ -130,19 +156,11 @@ export class ListPage {
      * Get player stats (current volume, last video, etc)
      */
     getPlayerStats() {
-        // this.serverService.get({ type: 'player' }).subscribe(stats => {
-        //     this.playerStats = stats;
-        //     this.currentVideo.videoId = this.playerStats.videoId;
-
-        // });
-        this.playerService.onNewMessage().subscribe(stats => {
-            if (typeof stats === 'string') {
-                this.playerStats = JSON.parse(stats);
-            } else {
-                this.playerStats = stats;
-            }
-            console.log('playerStats', this.playerStats);
+        this.serverService.get({ type: 'player' }).subscribe(stats => {
+            this.playerStats = stats;
+            this.currentVideo.videoId = this.playerStats.videoId;
         });
+
     }
 
     /**
@@ -151,40 +169,10 @@ export class ListPage {
     getPlayer() {
         this.playerService.get(environment.PLAYER).subscribe(player => {
             this.player = player;
-            this.getPlayerStats();
         });
     }
 
-    /**
-     * Play selected video by ID
-     * @param id Redis or MongoDB video ID
-     */
-    play(id) {
-
-        this.showLoader('Reproduciendo...');
-        this.loader.present().then(() => {
-            this.playerService.play(id).subscribe(playback => {
-                this.loader.dismiss();
-                // this.loader.dismiss();
-                this.currentVideo = playback;
-                this.getPlayerStats();
-            });
-        });
-
-    }
-
-    playPause() {
-        this.showLoader('Reproduciendo...');
-        this.playerService.playPause().subscribe(playback => {
-            this.currentVideo = playback;
-            // this.playerStats.status = this.playerStats.status === 'playing' ? 'paused' : 'playing';
-            this.playerService.onNewMessage().subscribe(stats => {
-                this.playerStats = stats;
-                this.hideLoader();
-            });
-        });
-
-    }
+    
 
     playPrev() {
         this.showLoader('Reproduciendo...');
