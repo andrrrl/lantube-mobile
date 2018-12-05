@@ -1,8 +1,6 @@
-import { environment } from '../../environments/environment';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
-// import { Subject } from 'rxjs/Subject';
 
 
 @Component({
