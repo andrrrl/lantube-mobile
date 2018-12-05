@@ -4,17 +4,18 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 // import { HomePage } from '../pages/home/home';
+import { PlayerPage } from '../pages/player/player';
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
 import { SearchPage } from '../pages/search/search';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ListPage;
+  rootPage: any = PlayerPage;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -38,7 +39,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.nav.setRoot(ListPage);
+      this.nav.setRoot(PlayerPage);
       this.splashScreen.hide();
       this.platform.registerBackButtonAction(() => {
 

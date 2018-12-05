@@ -7,6 +7,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <page-list></page-list>
+<ion-content background="dark" padding>
+  <!-- <page-list></page-list> -->
+  <ion-item>
+
+    <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playAll()" (playNextPlayer)="playNext()"
+      (playPrevPlayer)="playPrev()" (volumePlayer)="volume($event)"></player>
+  </ion-item>
 </ion-content>

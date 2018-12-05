@@ -44,6 +44,8 @@
     "devDependencies": {
         "@ionic/app-scripts": "3.1.8",
         "@types/socket.io-client": "^1.4.32",
+        "cordova-splash": "^1.0.0",
+        "icon-splash-resize": "^1.0.6",
         "typescript": "~2.6.2"
     },
     "description": "An Ionic project",
