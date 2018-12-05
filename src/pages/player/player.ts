@@ -1,14 +1,11 @@
 import { environment } from '../../environments/environment';
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams, LoadingController, ViewController, Modal, AlertController, ModalController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
-import { IVolume } from '../../app/interfaces/IVolume.interface';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
 import { SearchPage } from '../search/search';
-import { ImageModalPage } from '../modal/imageModal';
 import { ListPage } from '../list/list';
-// import { Subject } from 'rxjs/Subject';
 
 
 @Component({

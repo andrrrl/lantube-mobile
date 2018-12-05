@@ -3,9 +3,6 @@ import { NavController, LoadingController, AlertController, ModalController, Mod
 import { VideosService } from '../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
-import { SearchPage } from '../search/search';
-import { ImageModalPage } from '../modal/imageModal';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'page-home',
@@ -156,15 +153,6 @@ export class HomePage {
       this.currentVideo.videoId = this.playerStats.videoId;
     });
 
-  }
-
-  /**
-   * Get player configs and stats
-   */
-  getPlayer() {
-    this.playerService.get(environment.PLAYER).subscribe(player => {
-      this.player = player;
-    });
   }
 
   playPrev() {
