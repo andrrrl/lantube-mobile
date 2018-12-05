@@ -86,3 +86,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+ion-content[background="dark"] {
+  background: black url('../assets/ui/bg.jpg') center center;
+}

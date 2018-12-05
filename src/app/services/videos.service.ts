@@ -8,7 +8,8 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class VideosService {
 
-    private API = location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI);
+    private API = environment.API_CASA ? environment.API_WIFI_CASA : (location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI));
+
     private socket: SocketIOClient.Socket;
 
     constructor(private http: Http) {
