@@ -62,7 +62,7 @@ export class PlayerService {
         return this.http.get(this.playerURL + '/playall').map(this.extractData).catch(this.handleError);
     }
 
-    playPause(): Observable<any[]> {
+    playList(): Observable<any[]> {
         return this.http.get(this.playerURL + '/playlist').map(this.extractData);
     }
 

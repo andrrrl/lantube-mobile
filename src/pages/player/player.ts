@@ -48,14 +48,8 @@ export class PlayerPage {
         });
     }
 
-    playPause() {
-        this.showLoader('Reproduciendo...');
-        this.playerService.playPause().subscribe(playback => {
-            this.playerService.onNewMessage().subscribe(stats => {
-                this.playerStats = stats;
-                this.hideLoader();
-            });
-        });
+    playList() {
+        this.playerService.playList().subscribe();
     }
 
     async showLoader(text: string) {
@@ -84,54 +78,41 @@ export class PlayerPage {
     }
 
     playPrev() {
-        this.showLoader('Reproduciendo...');
-        this.playerService.playPrev().subscribe(playback => {
-            this.playerService.onNewMessage().subscribe(stats => {
-                this.playerStats = stats;
-                this.hideLoader();
-            });
-            this.hideLoader();
-        });
+        this.playerService.playPrev().subscribe();
 
     }
 
     playNext() {
-        this.showLoader('Reproduciendo...');
-        this.playerService.playNext().subscribe(playback => {
-            this.playerService.onNewMessage().subscribe(stats => {
-                this.playerStats = stats;
-                this.hideLoader();
-            });
-            this.hideLoader();
-        });
-
+        this.playerService.playNext().subscribe();
     }
 
     /**
-     * Plays PLS file generated "on the fly"
+     * Plays all videos (from current) in ascending order
      */
     playAll() {
-        this.playerService.playAll().subscribe(playback => {
-        });
+        this.playerService.playAll().subscribe();
+    }
+
+    playPause() {
+        this.playerService.pause().subscribe();
     }
 
     /**
      * Stops all playback
      */
     stopAll() {
-        this.showLoader('Deteniendo reproducción...');
-        this.playerService.stopAll().subscribe(playback => {
-            this.hideLoader();
-        });
+        this.playerService.stopAll().subscribe();
     }
 
     /**
      * Pauses playback
      */
     pause() {
-        this.playerService.pause().subscribe(playback => {
-            this.playerStats.status = 'paused';
-        });
+        this.playerService.pause().subscribe();
+    }
+
+    continuum() {
+        this.playerService.playAll().subscribe();
     }
 
     /**
