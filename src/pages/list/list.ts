@@ -1,14 +1,11 @@
-import { environment } from '../../environments/environment';
 import { Component, Output, EventEmitter } from '@angular/core';
-import { NavController, LoadingController, AlertController, ModalController, Modal } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
-import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
-
-// import { AddPage } from '../add/add';
 import { SearchPage } from '../search/search';
 import { ImageModalPage } from '../modal/imageModal';
 import { IVolume } from '../../app/interfaces/IVolume.interface';
+import { ServerService } from '../../app/services/server.service';
 @Component({
     selector: 'page-list',
     templateUrl: 'list.html'
@@ -23,23 +20,26 @@ export class ListPage {
 
     videos: any[] = [];
     playerStats: any;
-    currentVideo: any[];
 
     constructor(public navCtrl: NavController,
         public videosService: VideosService,
         public alertCtrl: AlertController,
+        public serverService: ServerService,
         public playerService: PlayerService) {
 
     }
 
     ionViewDidLoad() {
+        if (typeof this.playerStats === 'undefined') {
+            this.getPlayerStats();
+        }
+
         this.playerService.onNewMessage().subscribe(stats => {
             this.playerStats = stats;
         });
     }
 
     async ionViewDidEnter() {
-
 
         this.getAllVideos();
 
@@ -50,6 +50,15 @@ export class ListPage {
         });
     }
 
+    /**
+     * Get player stats (current volume, last video, etc)
+     */
+    getPlayerStats() {
+        this.serverService.get().subscribe(stats => {
+            this.playerStats = stats;
+        });
+
+    }
 
     stopAllEmit() {
         this.stopAllPlayer.emit(true);
@@ -72,8 +81,8 @@ export class ListPage {
      */
     getAllVideos() {
         this.videosService.get({}).subscribe(videos => {
+            videos = JSON.parse(JSON.stringify((videos)));
             this.videos = videos.sort((a, b) => parseInt(b.videoId.replace(/video/, '')) - parseInt(a.videoId.replace(/video/, '')));
-            // this.loader.dismiss();
         });
     }
 
@@ -82,13 +91,7 @@ export class ListPage {
      * @param id Redis or MongoDB video ID
      */
     async play(id) {
-        // this.showLoader('Reproduciendo...');
-        // await this.loader.present();
-        this.playerService.play(id).subscribe(async playback => {
-            this.currentVideo = playback;
-            // this.getPlayerStats();
-            // await this.loader.dismiss();
-        });
+        this.playerService.play(id).subscribe();
         this.navCtrl.pop();
 
     }
@@ -126,9 +129,11 @@ export class ListPage {
         });
         confirm.present();
     }
+
     showImageModal(img) {
         this.navCtrl.push(ImageModalPage, { img: img });
     }
+
     presentAddModal() {
         this.navCtrl.push(SearchPage);
     }
