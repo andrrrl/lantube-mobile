@@ -64,7 +64,12 @@ export class HomePage {
     }
 
     playPause() {
-        this.playerService.playPause().subscribe();
+        // if(this.playerStats.status === 'playing') {
+
+        //     this.playerService.pause().subscribe();
+        // } else {
+        //     this.playerService.play().subscribe();
+        // }
 
     }
 
