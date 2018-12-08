@@ -30,81 +30,33 @@ export class PlayerPage {
         public modalCtrl: ModalController) {
     }
 
-
-
     currentVolume: any;
     addModal: Modal;
-    videosTmp: any[];
     loader: any;
-    // Player configurations from the API
-    videoModes: any[] = [
-        'windowed',
-        'fullscreen',
-        'chromecast',
-        'audio only'
-    ];
-
-    // Server stats
-    public serverStats: any = {};
-    // Server stats
-    // public playerStats: any = {
-    //     videoId: '',
-    //     status: 'idle'
-    // };
-
-    // Player settings
-    public player = {};
 
     // List of all videos from the API
     public videos = [];
 
-    // Current selected video
-    public currentVideo: any = {};
-
-    // New video to be added thru <input>
-    public videoURL: any;
-
-    // private EVENT_URL = environment.API + '/api/stats?type=player';
-    // private serverMessage: any = {};
-    // private eventSource: any;
-
-    selectedItem: any;
-    icons: string[];
-    items: Array<{ title: string, note: string, icon: string }>;
-
-    public volumeRange: any = { upper: 100 };
-
-
-
     ionViewDidLoad() {
-        // this.getPlayerStats();
+        if (typeof this.playerStats === 'undefined') {
+            this.getPlayerStats();
+        }
     }
 
     async ionViewDidEnter() {
-
-        this.getPlayerStats();
-        // this.showLoader('Cargando lista de videos...');
-        // await this.loader.present();
-
         this.playerService.onNewMessage().subscribe(stats => {
             this.playerStats = JSON.parse(JSON.stringify(stats));
-            console.log({ stats });
         });
-
     }
-
-
 
     playPause() {
         this.showLoader('Reproduciendo...');
         this.playerService.playPause().subscribe(playback => {
-            this.currentVideo = playback;
             this.playerService.onNewMessage().subscribe(stats => {
                 this.playerStats = stats;
                 this.hideLoader();
             });
         });
-
     }
 
     async showLoader(text: string) {
@@ -122,16 +74,6 @@ export class PlayerPage {
     }
 
 
-
-    /**
-       * Get server
-       */
-    // getServerStats() {
-    //     this.serverService.get({ type: 'server' }).subscribe(stats => {
-    //         this.serverStats = stats;
-    //     });
-    // }
-
     /**
      * Get player stats (current volume, last video, etc)
      */
@@ -142,19 +84,9 @@ export class PlayerPage {
 
     }
 
-    /**
-     * Get player configs and stats
-     */
-    getPlayer() {
-        this.playerService.get(environment.PLAYER).subscribe(player => {
-            this.player = player;
-        });
-    }
-
     playPrev() {
         this.showLoader('Reproduciendo...');
         this.playerService.playPrev().subscribe(playback => {
-            this.currentVideo = playback;
             this.playerService.onNewMessage().subscribe(stats => {
                 this.playerStats = stats;
                 this.hideLoader();
@@ -163,10 +95,10 @@ export class PlayerPage {
         });
 
     }
+
     playNext() {
         this.showLoader('Reproduciendo...');
         this.playerService.playNext().subscribe(playback => {
-            this.currentVideo = playback;
             this.playerService.onNewMessage().subscribe(stats => {
                 this.playerStats = stats;
                 this.hideLoader();
@@ -190,7 +122,6 @@ export class PlayerPage {
     stopAll() {
         this.showLoader('Deteniendo reproducción...');
         this.playerService.stopAll().subscribe(playback => {
-            this.playerStats.status = 'idle';
             this.hideLoader();
         });
     }
@@ -209,86 +140,7 @@ export class PlayerPage {
      */
     volume(change) {
         this.playerService.setVolume(change).debounceTime(200).subscribe(playback => {
-        });
-    }
-
-    // /**
-    //  * Add video to the list of videos
-    //  * @param youtubeURL Youtube URI or ID
-    //  */
-    // addVideo() {
-    //     const params = {
-    //         video: this.videoURL
-    //     };
-
-    //     this.videosService.save(params).subscribe(video => {
-    //         this.videos = [...this.videos, video];
-    //         this.videoURL = '';
-    //         this.getServerStats();
-    //     });
-    // }
-
-
-
-
-
-    isPlaying(id) {
-        return false;
-    }
-
-    setVolume(type) {
-        return type;
-    }
-
-
-    getItems(ev) {
-        // Reset items back to all of the items
-        this.videos = this.videosTmp;
-
-        // set val to the value of the ev target
-        var val = ev.target.value;
-
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-            this.videos = this.videos.filter((video) => {
-                return (video.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-            });
-        }
-    }
-
-
-    /**
-     * Tools
-     */
-
-    // Initialize player settings
-    updatePlayer() {
-        const params = {
-            player: 'mpv',
-            player_mode: 'windowed',
-            player_volume: 50,
-            player_volume_step: 5,
-            player_is_muted: false,
-            player_playlist: '--playlist'
-        };
-
-        this.playerService.update(params).subscribe(player => {
-            this.player = player;
-        });
-
-    }
-
-    // Initializa server stats
-    updateServerStats() {
-        const params = {
-            player: 'mpv',
-            status: 'stopped',
-            videoId: 'video1',
-            last_updated: new Date()
-        };
-
-        this.serverService.update(params).subscribe(stats => {
-            this.serverStats = stats;
+            this.currentVolume = change;
         });
     }
 
