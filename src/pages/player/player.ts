@@ -1,4 +1,3 @@
-import { environment } from '../../environments/environment';
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams, LoadingController, ViewController, Modal, AlertController, ModalController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, ModalController, Modal } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { VideosService } from '../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
