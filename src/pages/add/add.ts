@@ -18,7 +18,6 @@ export class AddPage {
 
     goBack() {
         this.navCtrl.pop();
-        // this.viewCtrl.dismiss();
     }
 
     addVideo() {
