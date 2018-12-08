@@ -1,17 +1,6 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Lantube Mobile</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content background="dark" padding>
-  <!-- <page-list></page-list> -->
   <ion-item>
-
-    <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playAll()" (playNextPlayer)="playNext()"
+    <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playCurrent()" (playNextPlayer)="playNext()"
       (playPrevPlayer)="playPrev()" (volumePlayer)="volume($event)"></player>
   </ion-item>
 </ion-content>
