@@ -62,8 +62,9 @@ export class PlayerService {
         return this.http.get(this.playerURL + '/playall').map(this.extractData).catch(this.handleError);
     }
 
+    // Toggles playlist mode
     playList(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/playlist').map(this.extractData);
+        return this.http.patch(this.playerURL + '/playlist', {}).map(this.extractData);
     }
 
     playPrev(): Observable<any[]> {
