@@ -99,11 +99,12 @@ svg#record-player {
     #record-cover {
         width: 100px;
         position: absolute;
-        top: -130px;
+        top: -30px;
         margin-left: 40px;
         z-index: 9;
     }
 
+    background: #c56649;
     width: 100%;
     display: flex;
     justify-content: center;
