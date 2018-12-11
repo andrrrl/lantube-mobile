@@ -42,7 +42,7 @@
     <!-- <pre>
         {{ playerStats | json }}
     </pre> -->
-    <ion-fab middle center>
+    <ion-fab class="add" middle center>
         <button ion-fab color="danger" (click)="presentAddModal()">
             <ion-icon name="add"></ion-icon>
         </button>
@@ -90,6 +90,7 @@
                 s-6.211,2.752-6.211,6.211s2.752,6.211,6.211,6.211S168.707,165.959,168.707,162.5z" />
             </g>
         </svg>
+
         <svg version="1.1" id="record-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             x="0px" y="0px" width="500.051px" height="304.709px" viewBox="0 0 500.051 304.709" enable-background="new 0 0 500.051 304.709"
             xml:space="preserve">
@@ -201,7 +202,7 @@
             </g>
         </svg>
     </div>
-
+    <ion-spinner *ngIf="playerStats?.status === 'loading'" color="primary"></ion-spinner>
     <ion-fab left middle>
         <button color="{{ playerStats?.playlist ? 'secondary' : 'dark' }}" ion-fab mini class="button button-md button-default button-default-md"
             (click)="playList()">
@@ -212,39 +213,30 @@
             <ion-icon name="list"></ion-icon>
         </button>
     </ion-fab>
-    <ion-fab bottom id="player">
-        <ion-row>
-            <ion-col>
-                <button color="dark" ion-fab mini dark [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-                    (click)="playPrev()">
-                    <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward" aria-label="skip backward"
-                        ng-reflect-name="skip-backward"></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col>
-                <button color="dark" ion-fab mini [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-                    (click)="playNext()">
-                    <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward" aria-label="skip forward"
-                        ng-reflect-name="skip-forward"></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col>
-                <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing'" class="button button-md button-default button-default-md"
-                    (click)="stopAll()">
-                    <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop"
-                        ng-reflect-name="stop"></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col>
-                <button color="dark" ion-fab mini class="button button-md button-default button-default-md" style="transition: none;"
-                    (click)="playPause()">
-                    <ion-icon *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
-                        name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
-                    <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img" class="icon icon-md ion-md-pause"
-                        aria-label="pause" ng-reflect-name="pause"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
+    <ion-fab left bottom class="player">
+        <button color="dark" ion-fab mini dark [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
+            (click)="playPrev()">
+            <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward" aria-label="skip backward"
+                ng-reflect-name="skip-backward"></ion-icon>
+        </button>
+        <button color="dark" ion-fab mini [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
+            (click)="playNext()">
+            <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward" aria-label="skip forward"
+                ng-reflect-name="skip-forward"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab bottom right class="player">
+        <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing'" class="button button-md button-default button-default-md"
+            (click)="stopAll()">
+            <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop" ng-reflect-name="stop"></ion-icon>
+        </button>
+        <button color="dark" ion-fab mini class="button button-md button-default button-default-md" style="transition: none;"
+            (click)="playPause()">
+            <ion-icon *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
+                name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
+            <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img" class="icon icon-md ion-md-pause"
+                aria-label="pause" ng-reflect-name="pause"></ion-icon>
+        </button>
     </ion-fab>
     <ion-fab right middle>
         <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
