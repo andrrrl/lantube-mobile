@@ -48,8 +48,11 @@ export class PlayerPage {
         });
     }
 
+    // Toggle continuous mode
     playList() {
-        this.playerService.playList().subscribe();
+        this.playerService.playList().subscribe(playlistStats => {
+            this.playerStats = playlistStats;
+        });
     }
 
     async showLoader(text: string) {
@@ -109,10 +112,6 @@ export class PlayerPage {
      */
     pause() {
         this.playerService.pause().subscribe();
-    }
-
-    continuum() {
-        this.playerService.playAll().subscribe();
     }
 
     /**
