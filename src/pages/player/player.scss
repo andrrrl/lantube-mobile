@@ -2,10 +2,20 @@ ion-icon.icon-sm {
   font-size: 1.2em;
 }
 
-ion-fab#player {
+ion-fab.add {
+    top: 74%;
+}
+
+ion-spinner {
+    display: block;
+    margin: auto;
+  }
+
+ion-fab.player {
+    width: 41%;
     display: flex;
-    width: 100vw;
-    justify-content: space-around;
+    justify-content: space-between;
+    // justify-content: space-around;
 }
 
 .logo-container {
