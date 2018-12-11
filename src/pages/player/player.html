@@ -203,7 +203,8 @@
     </div>
 
     <ion-fab left middle>
-        <button color="dark" ion-fab mini class="button button-md button-default button-default-md" (click)="continuum()">
+        <button color="{{ playerStats?.playlist ? 'secondary' : 'dark' }}" ion-fab mini class="button button-md button-default button-default-md"
+            (click)="playList()">
             <ion-icon name="infinite"></ion-icon>
         </button>
         <br>
@@ -237,8 +238,8 @@
             <ion-col>
                 <button color="dark" ion-fab mini class="button button-md button-default button-default-md" style="transition: none;"
                     (click)="playPause()">
-                    <ion-icon *ngIf="playerStats?.status === 'paused' || playerStats?.status === 'stopped'" name="play"
-                        role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
+                    <ion-icon *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
+                        name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
                     <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img" class="icon icon-md ion-md-pause"
                         aria-label="pause" ng-reflect-name="pause"></ion-icon>
                 </button>
