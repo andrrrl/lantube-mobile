@@ -1,3 +1,7 @@
+.toolbar-background .toolbar-background-md, .toolbar-background-md {
+    background: black !important;
+    color: white !important;
+}
 page-list {
 
     @keyframes playing {
@@ -14,6 +18,23 @@ page-list {
 
     .playing {
         animation: playing 1s ease infinite;
+    }
+
+    .video-thumb {
+        width: 50px;
+        margin-bottom: 0 !important;
+        margin-right: 15px !important;
+    }
+
+    .item-md {
+        height: 50px !important;
+        background: black;
+        color: white;
+        border-bottom: 1px solid white;
+    }
+
+    .item-md.item-block .item-inner {
+        border-bottom: 0 !important;
     }
 
 }
