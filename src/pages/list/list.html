@@ -16,9 +16,9 @@
         <ion-item *ngIf="videos?.length === 0">No hay videos en la lista</ion-item>
         <ion-item *ngFor="let video of videos">
 
-            <ion-avatar item-start (click)="showImageModal(video.videoInfo.img)">
+            <div class="video-thumb" item-start (click)="showImageModal(video.videoInfo.img)">
                 <img src="{{ video.videoInfo.img }}" alt="" srcset="">
-            </ion-avatar>
+            </div>
             <ion-label (click)="play(video?.videoId)" [ngClass]="{'playing': video?.videoInfo?.videoId === playerStats?.videoId && playerStats?.status === 'playing'}">
                 {{ video.order }} {{ video.videoInfo.title }}
             </ion-label>
