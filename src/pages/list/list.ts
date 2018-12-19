@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
 import { PlayerService } from '../../app/services/player.service';
@@ -12,14 +12,9 @@ import { ServerService } from '../../app/services/server.service';
 })
 export class ListPage {
 
-    @Output() stopAllPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() playAllPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() playPrevPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() playNextPlayer: EventEmitter<any> = new EventEmitter<any>();
-    @Output() volumePlayer: EventEmitter<IVolume> = new EventEmitter<IVolume>();
-
     videos: any[] = [];
     playerStats: any;
+    videosAux: any[] = [];
 
     constructor(public navCtrl: NavController,
         public videosService: VideosService,
@@ -60,20 +55,24 @@ export class ListPage {
 
     }
 
-    stopAllEmit() {
-        this.stopAllPlayer.emit(true);
+    stopAll() {
+        this.playerService.stopAll().subscribe();
     }
-    playAllEmit() {
-        this.playAllPlayer.emit(true);
+
+    playPause() {
+        this.playerService.pause().subscribe();
     }
-    playPrevEmit() {
-        this.playPrevPlayer.emit(true);
+
+    playPrev() {
+        this.playerService.playPrev().subscribe();
     }
-    playNextEmit() {
-        this.playNextPlayer.emit(true);
+
+    playNext() {
+        this.playerService.playNext().subscribe();
     }
-    volumeEmit(upOrDown: IVolume) {
-        this.volumePlayer.emit(upOrDown);
+
+    volume(change: IVolume) {
+        this.playerService.setVolume(change).debounceTime(200).subscribe();
     }
 
     /**
@@ -83,6 +82,7 @@ export class ListPage {
         this.videosService.get({}).subscribe(videos => {
             videos = JSON.parse(JSON.stringify((videos)));
             this.videos = videos.sort((a, b) => parseInt(b.videoId.replace(/video/, '')) - parseInt(a.videoId.replace(/video/, '')));
+            this.videosAux = this.videos;
         });
     }
 
@@ -92,8 +92,7 @@ export class ListPage {
      */
     async play(id) {
         this.playerService.play(id).subscribe();
-        this.navCtrl.pop();
-
+        // this.navCtrl.pop();
     }
 
     /**
@@ -136,6 +135,21 @@ export class ListPage {
 
     presentAddModal() {
         this.navCtrl.push(SearchPage);
+    }
+
+    getItems(ev) {
+        // Reset items back to all of the items
+        this.videos = this.videosAux;
+
+        // set val to the value of the ev target
+        var val = ev.target.value;
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            this.videos = this.videos.filter((video) => {
+                return (video.videoInfo.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            });
+        }
     }
 
 }

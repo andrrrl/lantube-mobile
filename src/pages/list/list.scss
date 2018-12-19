@@ -1,7 +1,77 @@
-.toolbar-background .toolbar-background-md, .toolbar-background-md {
+button {
+    transition: none;
+}
+.toolbar-background .toolbar-background-md, .toolbar-background-md, .filtro, .video-info-lista {
     background: black !important;
     color: white !important;
 }
+
+.filtro {
+    .searchbar-input {
+        background: black !important;
+    color: white !important;
+    }
+}
+
+@keyframes vinyl {
+    0% {
+        transform:  rotate(0deg);
+    }
+    100% {
+        transform:  rotate(300deg);
+    }
+}
+
+.video-info-lista {
+    height: 75px;
+    display: flex;
+
+    .vinyl-container {
+        width: 80px;
+        position: relative;
+        top: 3px;
+        left: 10px;
+    }
+    .vinyl-cover {
+        position: absolute;
+        left: 10px;
+        z-index: 1;
+    }
+    .vinyl {
+        position: absolute;
+        left: 0px;
+        top: 14px;
+        transform: perspective(200px) rotateX(10deg) rotateY(50deg);
+        path {
+            transform-origin: 50% 50%;
+            animation: vinyl 4s infinite linear;
+            stroke-width: 1.5;
+            stroke-dasharray: 3px;
+            stroke-dashoffset: 23px;
+        }
+    }
+    .video-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 75vw;
+        font-weight: 800;
+    }
+    img {
+        width: 4.5rem;
+        
+        position: absolute;
+        top: 15px;
+        left: 14px;
+
+        transform: perspective(200px) rotateY(55deg) rotateZ(-21deg) rotateX(3deg);
+        transform-origin: 50% 50%;
+        mix-blend-mode: hard-light;
+
+        z-index: 2;
+    }
+}
+
 page-list {
 
     @keyframes playing {
