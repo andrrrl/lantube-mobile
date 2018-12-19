@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import * as io from 'socket.io-client';
+import { IVolume } from '../interfaces/IVolume.interface';
 
 @Injectable()
 export class PlayerService {
@@ -46,7 +47,7 @@ export class PlayerService {
         return this.http.get(this.playerURL + '/' + player).map(this.extractData);
     }
 
-    setVolume(upOrDown: 'up' | 'down'): Observable<any> {
+    setVolume(upOrDown: IVolume): Observable<any> {
         return this.http.get(this.playerURL + '/volume/' + upOrDown).map(this.extractData);
     }
 
