@@ -5,6 +5,7 @@ import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
 import { SearchPage } from '../search/search';
 import { ListPage } from '../list/list';
+import { IVolume } from '../../app/interfaces/IVolume.interface';
 
 
 @Component({
@@ -82,7 +83,6 @@ export class PlayerPage {
 
     playPrev() {
         this.playerService.playPrev().subscribe();
-
     }
 
     playNext() {
@@ -117,7 +117,7 @@ export class PlayerPage {
     /**
      * Changes volume
      */
-    volume(change) {
+    volume(change: IVolume) {
         this.playerService.setVolume(change).debounceTime(200).subscribe(playback => {
             this.currentVolume = change;
         });
