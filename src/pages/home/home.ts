@@ -3,6 +3,7 @@ import { NavController, LoadingController, AlertController, ModalController } fr
 import { VideosService } from '../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
+import { IPlayerStats } from '../../app/interfaces/IPlayerStats';
 
 @Component({
     selector: 'page-home',
@@ -17,7 +18,7 @@ export class HomePage {
     loader: any;
 
     // Server stats
-    public playerStats: any = {};
+    public playerStats: IPlayerStats;
 
     // List of all videos from the API
     public videos = [];
@@ -88,7 +89,14 @@ export class HomePage {
      */
     getPlayerStats() {
         this.serverService.get().subscribe(stats => {
-            this.playerStats = stats;
+            if (typeof stats !== 'undefined') {
+                this.playerStats = stats;
+            } else {
+                this.playerStats = {
+                    status: 'stopped',
+                    playlist: false
+                }
+            }
         });
 
     }

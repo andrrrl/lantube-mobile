@@ -62,9 +62,126 @@
         </svg>
     </div>
     <div class="record-player-container">
+        <div id="tridiv">
+            <div class="scene">
+                <div class="shape cuboid-1 cub-1" [ngClass]="{'play': playerStats?.status === 'playing'}">
+                    <div class="face ft">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face bk">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face rt">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face lt">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face bm">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face tp">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="cr cr-0">
+                        <div class="face side s0">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s1">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s2">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="cr cr-1">
+                        <div class="face side s0">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s1">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s2">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="cr cr-2">
+                        <div class="face side s0">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s1">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s2">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="cr cr-3">
+                        <div class="face side s0">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s1">
+                            <div class="photon-shader"></div>
+                        </div>
+                        <div class="face side s2">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shape pyramid-1 pyr-1">
+                    <div class="face-wrapper ft">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper bk">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper lt">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper rt">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face bm">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pua-container">
+            <!-- <svg version="1.1" id="pua" [ngClass]="{'play': playerStats?.status === 'playing'}" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="277.298px" height="151.3px" viewBox="0 0 277.298 151.3"
+                enable-background="new 0 0 277.298 151.3" xml:space="preserve">
+                <polygon fill="#C66749" points="5.956,17.363 11.006,27.668 14.843,22.516 " />
+                <polygon fill="#FCD727" points="60.958,8.891 277.298,112.417 256.982,122.998 44.318,12.235" />
+                <polygon fill="#CFAD2C" points="51.195,31.985 256.982,151.3 256.982,122.998 44.318,12.235" />
+                <polygon fill="#E0BF35" points="276.193,140.161 256.982,151.3 256.982,122.998 277.298,112.417" />
+                <polygon fill="#FCD727" points="44.318,12.235 5.956,6.117 0,0 60.958,8.891 " />
+                <polygon fill="#CFAD2C" points="44.318,12.235 5.956,6.117 5.956,22.516 51.195,31.985 " />
+                <polygon fill="#CFAD2C" points="0,0 5.956,6.117 5.956,22.516 0,15.669 " />
+            </svg> -->
+            <!-- <svg version="1.1" [ngClass]="{'play': playerStats?.status === 'playing'}" id="pua" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="153.188px" height="41.341px" viewBox="0 0 153.188 41.341"
+                enable-background="new 0 0 153.188 41.341" xml:space="preserve">
+                <polygon fill="#C66749" points="149.976,9.694 147.251,15.253 145.181,12.473" />
+                <polygon fill="#FCD727" points="120.303,0 0,20.366 10.959,26.075 128.331,3.627" />
+                <polygon fill="#CFAD2C" points="125.57,12.458 10.959,41.341 10.959,26.075 128.331,3.627" />
+                <polygon fill="#E0BF35" points="0.596,35.333 10.959,41.341 10.959,26.075 0,20.366" />
+                <polygon fill="#FCD727" points="128.331,3.627 149.976,3.627 153.188,0.327 120.303,0 " />
+                <polygon fill="#CFAD2C" points="128.331,3.627 149.976,3.627 149.976,12.473 125.57,12.458 " />
+                <polygon fill="#CFAD2C" points="153.188,0.327 149.976,3.627 149.976,12.473 153.188,8.78 " />
+            </svg> -->
+        </div>
         <svg version="1.1" id="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
             y="0px" width="325px" height="325px" viewBox="0 0 325 325" enable-background="new 0 0 325 325" xml:space="preserve">
-            <g [ngClass]="{'playing-animation': playerStats?.status === 'playing'}">
+            <g [ngClass]="{'playing-animation': playerStats?.status === 'loading' || playerStats?.status === 'playing'}">
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,323.5c-88.99,0-161-72.01-161-161
                 s72.01-161,161-161s161,72.01,161,161S251.486,323.5,162.496,323.5z" />
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,311.079

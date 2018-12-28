@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController, FabContainer } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
 import { PlayerService } from '../../app/services/player.service';
 import { SearchPage } from '../search/search';
@@ -11,6 +11,8 @@ import { ServerService } from '../../app/services/server.service';
     templateUrl: 'list.html'
 })
 export class ListPage {
+
+    @ViewChild('fab') fab: FabContainer;
 
     videos: any[] = [];
     playerStats: any;
@@ -32,6 +34,8 @@ export class ListPage {
         this.playerService.onNewMessage().subscribe(stats => {
             this.playerStats = stats;
         });
+
+        this.fab.toggleList();
     }
 
     async ionViewDidEnter() {
@@ -52,7 +56,6 @@ export class ListPage {
         this.serverService.get().subscribe(stats => {
             this.playerStats = stats;
         });
-
     }
 
     stopAll() {
