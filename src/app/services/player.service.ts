@@ -1,5 +1,3 @@
-import { environment } from '../../environments/environment';
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Volume } from '../interfaces/volume.interface';
@@ -124,6 +122,7 @@ export class PlayerService {
     playPrev(): Observable<any[]> {
         return this.http.get(this.playerURL + '/prev').map(this.extractData);
     }
+
     playNext(): Observable<any[]> {
         return this.http.get(this.playerURL + '/next').map(this.extractData);
     }

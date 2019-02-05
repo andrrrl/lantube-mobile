@@ -1,12 +1,25 @@
 <ion-header>
+    <ion-fab left top>
+        <button ion-fab mini class="button button-md button-default button-default-md" (click)="presentConfigModal()">
+            <ion-icon name="config" role="img" class="icon icon-md ion-md-build" aria-label="config" ng-reflect-name="config"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab right top>
+        <span *ngIf="!connected" ion-fab mini color="light" class="disconnected">
+            <ion-icon name="cloud" size="small"></ion-icon>
+        </span>
+
+        <span *ngIf="connected" ion-fab mini class="connected">
+            <ion-icon name="cloud-done" size="small"></ion-icon>
+        </span>
+    </ion-fab>
     <div class="logo-container">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
             y="0px" width="506.224px" height="83.673px" viewBox="0 0 506.224 83.673" enable-background="new 0 0 506.224 83.673"
             xml:space="preserve">
             <g>
-                <polygon fill="#FFFFFF" points="50.388,50.303 50.388,5.245 5.244,50.387 50.303,50.387 50.303,50.303 	" />
-                <polygon fill="#FFFFFF" points="83.673,83.517 83.673,0 62.637,0 62.636,62.636 0,62.636 0,83.673 83.517,83.673 83.517,83.517 	
-           " />
+                <polygon fill="#FFFFFF" points="50.388,50.303 50.388,5.245 5.244,50.387 50.303,50.387 50.303,50.303" />
+                <polygon fill="#FFFFFF" points="83.673,83.517 83.673,0 62.637,0 62.636,62.636 0,62.636 0,83.673 83.517,83.673 83.517,83.517" />
             </g>
             <g>
                 <path fill="#DFE8E8" d="M104.298,10.53h15.701v58.204h34.802v13.2h-50.503V10.53z" />
@@ -42,15 +55,19 @@
     <!-- <pre>
         {{ playerStats | json }}
     </pre> -->
+
     <ion-fab class="add" middle center>
         <button ion-fab color="danger" (click)="presentAddModal()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
     <div *ngIf="playerStats" class="video-info">
-        <span class="artist">
-            {{ playerStats?.videoInfo?.title }}
+        <span *ngIf="playerStats?.videoInfo?.title" class="artist">
+            {{ playerStats.videoInfo.title }}
         </span>
+        <!-- <span *ngIf="!videos.length" class="artist">
+            No hay videos en la lista
+        </span> -->
     </div>
     <div class="video-img-container">
         <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}" alt="{{ playerStats?.videoInfo?.title }}">

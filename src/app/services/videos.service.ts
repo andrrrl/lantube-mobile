@@ -69,4 +69,13 @@ export class VideosService {
     extractVideoId(videoURL: string) {
         return videoURL.replace(/http(s?):\/\/(w{3})?(\.?)youtube\.com\/watch\?v=/, '');
     }
+
+
+    reorder(videoId: string, swap: boolean): Observable<any> {
+        let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: cpHeaders });
+        return this.http.post(this.API + '/api/', swap, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 }

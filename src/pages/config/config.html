@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Configurar Servidor</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+        <ion-input type="text" placeholder="URL" [(ngModel)]="APIEndpoint" autofocus="true"></ion-input>
+    </ion-item>
+</ion-content>
+<ion-footer>
+    <button full ion-button (click)="goBack()">
+        CANCELAR
+    </button>
+    <button full ion-button color="secondary" (click)="setAPIEndpoint()" [(disabled)]="!APIEndpoint">
+        GUARDAR
+    </button>
+</ion-footer>

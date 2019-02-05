@@ -54,7 +54,11 @@
                 {{ video.order }} {{ video.videoInfo.title }}
             </ion-label>
             <div class="item-note" item-end>
-                <ion-icon (click)="showConfirmDelete(video?.videoId)" name='trash' item-end color="danger"></ion-icon>
+                <ion-icon *ngIf="video?.order < videos.length" (click)="moveToTop(video?.videoId)" name='arrow-round-up'
+                    item-end color="secondary"></ion-icon>
+                <!-- <ion-icon *ngIf="video?.order < videos.length" (click)="swapToTop(video?.videoId)" name='git-compare' class="rotateCW"
+                    item-end color="secondary"></ion-icon> -->
+                <ion-icon (click)="showConfirmDelete(video?.videoId)" name='trash' item-end color="primary"></ion-icon>
             </div>
         </ion-item>
     </ion-list>
