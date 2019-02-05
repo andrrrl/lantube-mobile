@@ -163,5 +163,14 @@ svg#record-player {
     justify-content: center;
 }
 
+.connected {
+    background: green;
+    color: white;
+}
+
+.disconnected {
+    color: #f53d3d;
+    background: black;
+}
 
 @import "pua";

@@ -8,6 +8,7 @@ import { PlayerPage } from '../pages/player/player';
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
 import { SearchPage } from '../pages/search/search';
+import { ConfigPage } from '../pages/config/config';
 
 @Component({
   templateUrl: 'app.html',
@@ -30,6 +31,7 @@ export class MyApp {
       { title: 'Videos', component: ListPage },
       { title: 'Agregar URL', component: AddPage },
       { title: 'Buscar', component: SearchPage },
+      { title: 'Configuraciones', component: ConfigPage },
     ];
 
   }
@@ -42,7 +44,6 @@ export class MyApp {
       this.nav.setRoot(PlayerPage);
       this.splashScreen.hide();
       this.platform.registerBackButtonAction(() => {
-
 
         if (this.nav.canGoBack()) { //Can we go back?
           this.nav.pop();
@@ -75,4 +76,5 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.push(page.component);
   }
+
 }
