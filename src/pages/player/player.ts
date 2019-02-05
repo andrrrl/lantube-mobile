@@ -6,7 +6,8 @@ import { PlayerService } from '../../app/services/player.service';
 import { SearchPage } from '../search/search';
 import { ListPage } from '../list/list';
 import { IVolume } from '../../app/interfaces/IVolume.interface';
-
+import { ConfigPage } from '../config/config';
+import { SocketEvent } from '../../app/enums/socketio-events';
 
 @Component({
     selector: 'player',
@@ -18,6 +19,7 @@ import { IVolume } from '../../app/interfaces/IVolume.interface';
 export class PlayerPage {
 
     @Input() playerStats: any;
+    connected = false;
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
@@ -41,13 +43,25 @@ export class PlayerPage {
         if (typeof this.playerStats === 'undefined') {
             this.getPlayerStats();
         }
+        this.playerService.onNewMessage().subscribe(stats => {
+            this.playerStats = JSON.parse(JSON.stringify(stats));
+            this.connected = true;
+        });
+        this.playerService.onEvent(SocketEvent.DISCONNECT).subscribe(() => {
+            this.connected = false;
+        });
+        this.playerService.onEvent(SocketEvent.CONNECT).subscribe(() => {
+            this.connected = true;
+        });
+        this.playerService.onEvent(SocketEvent.RECONNECT).subscribe(() => {
+            this.connected = true;
+        });
     }
 
     async ionViewDidEnter() {
-        this.playerService.onNewMessage().subscribe(stats => {
-            this.playerStats = JSON.parse(JSON.stringify(stats));
-        });
     }
+
+
 
     // Toggle continuous mode
     playList() {
@@ -125,5 +139,10 @@ export class PlayerPage {
 
     presentAddModal() {
         this.navCtrl.push(SearchPage);
+    }
+
+
+    presentConfigModal() {
+        this.navCtrl.push(ConfigPage);
     }
 }

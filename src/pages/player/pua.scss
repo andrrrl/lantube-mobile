@@ -181,6 +181,6 @@
 }
 .cub-1 {
     &.play {
-        animation: play 3s 1 linear forwards;
+        animation: play 3s 1 ease-out forwards;
     }
 }

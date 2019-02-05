@@ -1,18 +1,21 @@
-import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { ConfigService } from './config.services';
+import { Headers } from '@angular/http'
 import * as io from 'socket.io-client';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VideosService {
 
-    private API = environment.API_CASA ? environment.API_WIFI_CASA : (location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI));
-
+    private API: string;
     private socket: SocketIOClient.Socket;
 
-    constructor(private http: Http) {
+    constructor(
+        private http: Http,
+        private configService: ConfigService) {
+        this.API = this.configService.getAPIEndpoint();
         this.socket = io(this.API);
     }
 
@@ -59,6 +62,15 @@ export class VideosService {
 
     delete(videoId: string): Observable<any> {
         return this.http.delete(this.API + '/api/videos/delete/' + videoId)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+
+    reorder(videoId: string, swap: boolean): Observable<any> {
+        let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: cpHeaders });
+        return this.http.post(this.API + '/api/', swap, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

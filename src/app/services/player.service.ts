@@ -1,22 +1,26 @@
-import { environment } from '../../environments/environment';
-
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import * as io from 'socket.io-client';
 import { IVolume } from '../interfaces/IVolume.interface';
-
+import { ConfigService } from './config.services';
+import * as io from 'socket.io-client';
+import { Headers } from '@angular/http'
+import { SocketEvent } from '../enums/socketio-events';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 @Injectable()
 export class PlayerService {
 
-    private playerURL = (environment.API_CASA ? environment.API_WIFI_CASA : (location.href.includes('172.16') ? environment.API : (location.href.includes('192.168.4') ? environment.API_WIFI_CASA : environment.API_WIFI))) + '/api/player';
-
+    private playerURL: string;
     private socket: SocketIOClient.Socket;
 
-    constructor(private http: Http) {
+    constructor(
+        private http: Http,
+        public configService: ConfigService) {
+        this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
         this.socket = io(this.playerURL.replace('/api/player', ''));
     }
+
 
     // EMITTER
     sendMessage(msg: string) {
@@ -25,9 +29,19 @@ export class PlayerService {
 
     // HANDLER
     onNewMessage() {
-        return Observable.create(observer => {
+        return Observable.create((observer, error) => {
             this.socket.on('PLAYER_MESSAGE', msg => {
+                // console.info(msg);
                 observer.next(msg);
+            });
+        });
+    }
+
+    public onEvent(event: SocketEvent): Observable<any> {
+        return new Observable<Event>(observer => {
+            this.socket.on(String(event), () => {
+                // console.info(event);
+                observer.next();
             });
         });
     }
@@ -39,7 +53,7 @@ export class PlayerService {
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg);
+        // console.log({ errMsg });
         return Observable.throw(errMsg);
     }
 
@@ -51,8 +65,10 @@ export class PlayerService {
         return this.http.get(this.playerURL + '/volume/' + upOrDown).map(this.extractData);
     }
 
-    update(player: any): Observable<any> {
-        return this.http.put(this.playerURL, player).map(this.extractData);
+    update(player: any, videoId): Observable<any> {
+        let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: cpHeaders });
+        return this.http.put(this.playerURL + '/stats/update/' + videoId, player, options).map(this.extractData);
     }
 
     play(id: String): Observable<any[]> {
@@ -71,6 +87,7 @@ export class PlayerService {
     playPrev(): Observable<any[]> {
         return this.http.get(this.playerURL + '/prev').map(this.extractData);
     }
+
     playNext(): Observable<any[]> {
         return this.http.get(this.playerURL + '/next').map(this.extractData);
     }

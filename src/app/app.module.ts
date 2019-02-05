@@ -19,6 +19,8 @@ import { YoutubeService } from './services/youtube.service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ImageModalPage } from '../pages/modal/imageModal';
+import { ConfigPage } from '../pages/config/config';
+import { ConfigService } from './services/config.services';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { ImageModalPage } from '../pages/modal/imageModal';
     AddPage,
     PlayerPage,
     SearchPage,
-    ImageModalPage
+    ImageModalPage,
+    ConfigPage
   ],
   imports: [
     HttpModule,
@@ -44,7 +47,8 @@ import { ImageModalPage } from '../pages/modal/imageModal';
     AddPage,
     PlayerPage,
     SearchPage,
-    ImageModalPage
+    ImageModalPage,
+    ConfigPage
   ],
   providers: [
     StatusBar,
@@ -53,6 +57,7 @@ import { ImageModalPage } from '../pages/modal/imageModal';
     ServerService,
     PlayerService,
     YoutubeService,
+    ConfigService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

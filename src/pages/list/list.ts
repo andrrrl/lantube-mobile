@@ -6,6 +6,7 @@ import { SearchPage } from '../search/search';
 import { ImageModalPage } from '../modal/imageModal';
 import { IVolume } from '../../app/interfaces/IVolume.interface';
 import { ServerService } from '../../app/services/server.service';
+import { IPlayerStats } from '../../app/interfaces/IPlayerStats';
 @Component({
     selector: 'page-list',
     templateUrl: 'list.html'
@@ -15,7 +16,7 @@ export class ListPage {
     @ViewChild('fab') fab: FabContainer;
 
     videos: any[] = [];
-    playerStats: any;
+    playerStats: IPlayerStats;
     videosAux: any[] = [];
 
     constructor(public navCtrl: NavController,
@@ -130,6 +131,102 @@ export class ListPage {
             ]
         });
         confirm.present();
+    }
+
+    swapToTop(id) {
+
+        let newTop = this.videos.find(x => x.videoId === id);
+        let newTopIndex = this.videos.indexOf(newTop);
+
+        let currentTop = this.videos[0];
+        currentTop.videoId = newTop.videoId;
+        currentTop.order = newTop.order;
+        currentTop.videoInfo.videoId = newTop.videoId;
+        this.videos[newTopIndex] = currentTop;
+
+        newTop.videoId = `video${this.videos.length}`;
+        newTop.order = this.videos.length;
+        newTop.videoInfo.videoId = `video${this.videos.length}`;
+        this.videos[0] = newTop;
+
+        if (this.playerStats) {
+            if (this.playerStats.status === 'playing' && this.playerStats.videoId === id) {
+                this.playerStats.videoId = `video${this.videos.length}`;
+                this.playerStats.videoInfo = newTop.videoInfo;
+            } else if (this.playerStats.status === 'playing' && this.playerStats.videoId === `video${this.videos.length}`) {
+                this.playerStats.videoId = currentTop.videoId;
+                this.playerStats.videoInfo = currentTop.videoInfo;
+            }
+
+            this.playerService.update(this.playerStats, newTop.videoId).subscribe(stats => {
+                this.playerStats = stats;
+            });
+        }
+    }
+
+    moveToTop(id) {
+        let newTop = this.videos.find(x => x.videoId === id);
+        let newTopIndex = this.videos.indexOf(newTop);
+        let currentTop = this.videos[0];
+
+        this.videos.splice(newTopIndex, 1);
+        this.videos = [newTop, ...this.videos];
+
+
+        this.reorderList();
+
+        // Update Player Stats
+        if (this.playerStats) {
+            if (this.playerStats.status === 'playing' && this.playerStats.videoId === id) {
+                this.playerStats.videoId = `video${this.videos.length}`;
+                this.playerStats.videoInfo = newTop.videoInfo;
+            } else if (this.playerStats.status === 'playing' && this.playerStats.videoId === `video${this.videos.length}`) {
+                this.playerStats.videoId = currentTop.videoId;
+                this.playerStats.videoInfo = currentTop.videoInfo;
+            }
+
+            this.playerService.update(this.playerStats, id).subscribe(stats => {
+                // this.playerStats = stats;
+            });
+        }
+    }
+
+    reorderList() {
+        let i = this.videos.length;
+        for (let video of this.videos) {
+            video.videoId = video.videoInfo.videoId = 'video' + i;
+            video.order = i;
+            i--;
+        }
+
+        // swapToTop(key) {
+        // let newTop = this.videos.find(x => x.videoId === id);
+        // let newTopIndex = this.videos.indexOf(newTop);
+
+        // let currentTop = this.videos[0];
+        // currentTop.videoId = newTop.videoId;
+        // currentTop.order = newTop.order;
+        // currentTop.videoInfo.videoId = newTop.videoId;
+        // this.videos[newTopIndex] = currentTop;
+
+        // newTop.videoId = `video${this.videos.length}`;
+        // newTop.order = this.videos.length;
+        // newTop.videoInfo.videoId = `video${this.videos.length}`;
+        // this.videos[0] = newTop;
+
+        // if (this.playerStats) {
+        //     if (this.playerStats.status === 'playing' && this.playerStats.videoId === id) {
+        //         this.playerStats.videoId = `video${this.videos.length}`;
+        //         this.playerStats.videoInfo = newTop.videoInfo;
+        //     } else if (this.playerStats.status === 'playing' && this.playerStats.videoId === `video${this.videos.length}`) {
+        //         this.playerStats.videoId = currentTop.videoId;
+        //         this.playerStats.videoInfo = currentTop.videoInfo;
+        //     }
+
+        //     this.playerService.update(this.playerStats).subscribe(stats => {
+        //         this.playerStats = stats;
+        //     });
+        // }
     }
 
     showImageModal(img) {
