@@ -25,7 +25,7 @@ import { ConfigService } from './services/config.services';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    // HomePage,
     ListPage,
     AddPage,
     PlayerPage,
@@ -42,7 +42,7 @@ import { ConfigService } from './services/config.services';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    // HomePage,
     ListPage,
     AddPage,
     PlayerPage,
