@@ -8,6 +8,7 @@ import { ListPage } from '../list/list';
 import { IVolume } from '../../app/interfaces/IVolume.interface';
 import { ConfigPage } from '../config/config';
 import { SocketEvent } from '../../app/enums/socketio-events';
+import { ConfigService } from '../../app/services/config.services';
 
 @Component({
     selector: 'player',
@@ -25,6 +26,7 @@ export class PlayerPage {
         public navParams: NavParams,
         public viewCtrl: ViewController,
         public loadingCtrl: LoadingController,
+        public configService: ConfigService,
         public videosService: VideosService,
         public serverService: ServerService,
         public playerService: PlayerService,
@@ -40,8 +42,24 @@ export class PlayerPage {
     public videos = [];
 
     ionViewDidLoad() {
+    }
+
+    ionViewWillEnter() {
+
         if (typeof this.playerStats === 'undefined') {
             this.getPlayerStats();
+        }
+    }
+
+    async ionViewDidEnter() {
+
+        setTimeout(() => {
+            this.configService.autoConnect();
+        }, 500);
+
+        if (this.navCtrl.canGoBack()) { //Can we go back?
+            // this.navCtrl.popTo(this.navCtrl.getActive().component);
+            // this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }
         this.playerService.onNewMessage().subscribe(stats => {
             this.playerStats = JSON.parse(JSON.stringify(stats));
@@ -57,10 +75,6 @@ export class PlayerPage {
             this.connected = true;
         });
     }
-
-    async ionViewDidEnter() {
-    }
-
 
 
     // Toggle continuous mode
@@ -83,7 +97,12 @@ export class PlayerPage {
     presentListModal() {
         this.navCtrl.push(ListPage);
     }
-
+    presentAddModal() {
+        this.navCtrl.push(SearchPage);
+    }
+    presentConfigModal() {
+        this.navCtrl.push(ConfigPage);
+    }
 
     /**
      * Get player stats (current volume, last video, etc)
@@ -92,7 +111,6 @@ export class PlayerPage {
         this.serverService.get().subscribe(stats => {
             this.playerStats = stats;
         });
-
     }
 
     playPrev() {
@@ -137,12 +155,4 @@ export class PlayerPage {
         });
     }
 
-    presentAddModal() {
-        this.navCtrl.push(SearchPage);
-    }
-
-
-    presentConfigModal() {
-        this.navCtrl.push(ConfigPage);
-    }
 }
