@@ -31,7 +31,6 @@ export class PlayerService {
     onNewMessage() {
         return Observable.create((observer, error) => {
             this.socket.on('PLAYER_MESSAGE', msg => {
-                // console.info(msg);
                 observer.next(msg);
             });
         });
@@ -40,7 +39,6 @@ export class PlayerService {
     public onEvent(event: SocketEvent): Observable<any> {
         return new Observable<Event>(observer => {
             this.socket.on(String(event), () => {
-                // console.info(event);
                 observer.next();
             });
         });
@@ -53,7 +51,6 @@ export class PlayerService {
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        // console.log({ errMsg });
         return Observable.throw(errMsg);
     }
 
