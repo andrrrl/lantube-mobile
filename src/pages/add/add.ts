@@ -9,6 +9,7 @@ import { VideosService } from './../../app/services/videos.service';
 })
 export class AddPage {
     youtubeVideo: any;
+
     constructor(public navCtrl: NavController,
         public loadingCtrl: LoadingController,
         public navParams: NavParams,
@@ -22,7 +23,9 @@ export class AddPage {
 
     addVideo() {
         this.videosService.add(this.extractVideoId()).subscribe(video => {
-            this.navCtrl.pop();
+            if (this.navCtrl.canGoBack()) { //Can we go back?
+                this.navCtrl.pop();
+            }
         });
     }
 
