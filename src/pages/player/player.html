@@ -1,7 +1,8 @@
 <ion-header>
     <ion-fab left top>
         <button ion-fab mini class="button button-md button-default button-default-md" (click)="presentConfigModal()">
-            <ion-icon name="config" role="img" class="icon icon-md ion-md-build" aria-label="config" ng-reflect-name="config"></ion-icon>
+            <ion-icon name="config" role="img" class="icon icon-md ion-md-build" aria-label="config"
+                ng-reflect-name="config"></ion-icon>
         </button>
     </ion-fab>
     <ion-fab right top>
@@ -14,12 +15,13 @@
         </span>
     </ion-fab>
     <div class="logo-container">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-            y="0px" width="506.224px" height="83.673px" viewBox="0 0 506.224 83.673" enable-background="new 0 0 506.224 83.673"
-            xml:space="preserve">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px" y="0px" width="506.224px" height="83.673px" viewBox="0 0 506.224 83.673"
+            enable-background="new 0 0 506.224 83.673" xml:space="preserve">
             <g>
                 <polygon fill="#FFFFFF" points="50.388,50.303 50.388,5.245 5.244,50.387 50.303,50.387 50.303,50.303" />
-                <polygon fill="#FFFFFF" points="83.673,83.517 83.673,0 62.637,0 62.636,62.636 0,62.636 0,83.673 83.517,83.673 83.517,83.517" />
+                <polygon fill="#FFFFFF"
+                    points="83.673,83.517 83.673,0 62.637,0 62.636,62.636 0,62.636 0,83.673 83.517,83.673 83.517,83.517" />
             </g>
             <g>
                 <path fill="#DFE8E8" d="M104.298,10.53h15.701v58.204h34.802v13.2h-50.503V10.53z" />
@@ -63,6 +65,7 @@
     </ion-fab>
     <div *ngIf="playerStats" class="video-info">
         <span *ngIf="playerStats?.videoInfo?.title" class="artist">
+
             {{ playerStats.videoInfo.title }}
         </span>
         <!-- <span *ngIf="!videos.length" class="artist">
@@ -70,11 +73,12 @@
         </span> -->
     </div>
     <div class="video-img-container">
-        <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}" alt="{{ playerStats?.videoInfo?.title }}">
+        <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}"
+            alt="{{ playerStats?.videoInfo?.title }}">
 
-        <svg version="1.1" id="record-cover" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            x="0px" y="0px" width="107px" height="160px" viewBox="0 0 107 160" enable-background="new 0 0 107 160"
-            xml:space="preserve">
+        <svg version="1.1" id="record-cover" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="107px" height="160px"
+            viewBox="0 0 107 160" enable-background="new 0 0 107 160" xml:space="preserve">
             <polygon fill="#C66749" points="0,38.843 83.131,0 107.534,100.56 40.395,160.295 " />
         </svg>
     </div>
@@ -196,9 +200,11 @@
                 <polygon fill="#CFAD2C" points="153.188,0.327 149.976,3.627 149.976,12.473 153.188,8.78 " />
             </svg> -->
         </div>
-        <svg version="1.1" id="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-            y="0px" width="325px" height="325px" viewBox="0 0 325 325" enable-background="new 0 0 325 325" xml:space="preserve">
-            <g [ngClass]="{'playing-animation': playerStats?.status === 'loading' || playerStats?.status === 'playing'}">
+        <svg version="1.1" id="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px" y="0px" width="325px" height="325px" viewBox="0 0 325 325" enable-background="new 0 0 325 325"
+            xml:space="preserve">
+            <g
+                [ngClass]="{'playing-animation': playerStats?.status === 'loading' || playerStats?.status === 'playing'}">
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,323.5c-88.99,0-161-72.01-161-161
                 s72.01-161,161-161s161,72.01,161,161S251.486,323.5,162.496,323.5z" />
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,311.079
@@ -213,7 +219,8 @@
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,273.974
                 c-61.633,0-111.474-49.841-111.474-111.474S100.863,51.026,162.496,51.026S273.97,100.867,273.97,162.5
                 S224.129,273.974,162.496,273.974z" />
-                <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,261.553
+                <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
+                    d="M162.496,261.553
                 c-54.793,0-99.053-44.26-99.053-99.053s44.26-99.053,99.053-99.053s99.053,44.26,99.053,99.053S217.289,261.553,162.496,261.553z" />
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,249.211
                 c-47.954,0-86.711-38.757-86.711-86.711s38.757-86.711,86.711-86.711s86.711,38.757,86.711,86.711S210.45,249.211,162.496,249.211z
@@ -221,7 +228,8 @@
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,236.789
                 c-41.036,0-74.289-33.253-74.289-74.289s33.253-74.289,74.289-74.289s74.289,33.253,74.289,74.289S203.532,236.789,162.496,236.789
                 z" />
-                <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,224.447
+                <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
+                    d="M162.496,224.447
                 c-34.197,0-61.947-27.75-61.947-61.947s27.75-61.947,61.947-61.947s61.947,27.75,61.947,61.947S196.693,224.447,162.496,224.447z" />
                 <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,212.026
                 c-27.357,0-49.526-22.169-49.526-49.526s22.169-49.526,49.526-49.526s49.526,22.169,49.526,49.526S189.854,212.026,162.496,212.026
@@ -231,9 +239,9 @@
             </g>
         </svg>
 
-        <svg version="1.1" id="record-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            x="0px" y="0px" width="500.051px" height="304.709px" viewBox="0 0 500.051 304.709" enable-background="new 0 0 500.051 304.709"
-            xml:space="preserve">
+        <svg version="1.1" id="record-player" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500.051px" height="304.709px"
+            viewBox="0 0 500.051 304.709" enable-background="new 0 0 500.051 304.709" xml:space="preserve">
             <g>
                 <polygon fill="#403B3C" points="499.291,68.914 250.025,0 0.761,68.914 250.027,198.738 	" />
                 <polygon fill="#403B3C" stroke="#939393" stroke-miterlimit="10" points="23.044,156.249 250.027,303.788 250.027,198.738 
@@ -283,7 +291,8 @@
                     <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M275.439,61.443c-2.861-12.906-25.053-22.023-50.03-21.924
                   c-25.037,0.097-48.433,9.441-52.765,22.45c-5.04,15.128,16.983,29.124,49.923,28.903
                   C255.393,90.652,278.759,76.441,275.439,61.443z" />
-                    <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.71,88.3c-30.007,0.197-50.397-12.493-46.082-26.352
+                    <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
+                        d="M222.71,88.3c-30.007,0.197-50.397-12.493-46.082-26.352
                   c3.757-12.059,25.39-20.815,48.697-20.91c23.246-0.091,43.767,8.454,46.169,20.425C274.243,75.21,252.623,88.104,222.71,88.3z" />
                     <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M267.547,61.486c-1.976-11.05-20.772-18.985-42.307-18.899
                   c-21.59,0.089-41.404,8.22-44.624,19.341c-3.667,12.636,15.026,24.037,42.236,23.861C249.98,85.614,269.792,74.027,267.547,61.486
@@ -297,14 +306,16 @@
                     <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M223.248,78.625c-19.084,0.116-32.778-7.755-30.743-16.758
                   c1.858-8.207,16.336-14.402,32.469-14.471c16.103-0.07,29.836,5.979,30.781,14.147C256.778,70.498,242.288,78.513,223.248,78.625z
                   " />
-                    <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M228.143,61.685c0.038-1.074-1.668-1.914-3.851-1.904
+                    <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
+                        d="M228.143,61.685c0.038-1.074-1.668-1.914-3.851-1.904
                   c-2.187,0.012-3.994,0.867-4.074,1.946c-0.086,1.087,1.625,1.956,3.859,1.944C226.306,63.659,228.108,62.772,228.143,61.685z" />
                 </g>
                 <g>
                     <g>
                         <g enable-background="new">
                             <g>
-                                <path fill="#A8A39E" d="M117.097,78.655v-1.408c0,4.947,1.35,9.864,4.052,14.63c12.609,22.205,50.112,36.001,97.875,36.001
+                                <path fill="#A8A39E"
+                                    d="M117.097,78.655v-1.408c0,4.947,1.35,9.864,4.052,14.63c12.609,22.205,50.112,36.001,97.875,36.001
                         c0.729,0,1.476-0.009,2.214-0.009c48.789-0.427,89.55-15.574,103.842-38.58v1.408c-14.292,23.005-55.054,38.153-103.842,38.58
                         c-0.738,0-1.485,0.009-2.214,0.009c-47.763,0-85.266-13.796-97.875-36.001C118.447,88.52,117.097,83.603,117.097,78.655z" />
                             </g>
@@ -317,14 +328,16 @@
                         C329.987,63.695,331.105,68.26,331.105,72.84z" />
                             </g>
                             <g>
-                                <path fill="#A8A39E" d="M227.844,21.753v-1.408c22.05,0,44.091,3.716,62.073,10.48c18.972,7.129,32.058,16.96,37.827,28.419
+                                <path fill="#A8A39E"
+                                    d="M227.844,21.753v-1.408c22.05,0,44.091,3.716,62.073,10.48c18.972,7.129,32.058,16.96,37.827,28.419
                         v1.408c-5.77-11.458-18.855-21.29-37.827-28.419C271.935,25.469,249.894,21.753,227.844,21.753z" />
                             </g>
                             <g>
                                 <rect x="227.259" y="20.346" fill="#A8A39E" width="0.585" height="1.408" />
                             </g>
                             <g>
-                                <path fill="#A8A39E" d="M116.088,78.655v-1.408c0-5.691,1.73-11.419,5.188-17.007c14.229-22.979,58.797-39.762,105.984-39.895
+                                <path fill="#A8A39E"
+                                    d="M116.088,78.655v-1.408c0-5.691,1.73-11.419,5.188-17.007c14.229-22.979,58.797-39.762,105.984-39.895
                         v1.408c-47.187,0.133-91.755,16.917-105.984,39.895C117.818,67.236,116.088,72.964,116.088,78.655z" />
                             </g>
                             <g>
@@ -344,47 +357,53 @@
     </div>
     <ion-spinner *ngIf="playerStats?.status === 'loading'" color="primary"></ion-spinner>
     <ion-fab left middle>
-        <button color="{{ playerStats?.playlist ? 'secondary' : 'dark' }}" ion-fab mini class="button button-md button-default button-default-md"
-            (click)="playList()">
+        <button color="{{ playerStats?.playlist ? 'secondary' : 'dark' }}" ion-fab mini
+            class="button button-md button-default button-default-md" (click)="playList()">
             <ion-icon name="infinite"></ion-icon>
         </button>
         <br>
-        <button color="dark" ion-fab mini class="button button-md button-default button-default-md" (click)="presentListModal()">
+        <button color="dark" ion-fab mini class="button button-md button-default button-default-md"
+            (click)="presentListModal()">
             <ion-icon name="list"></ion-icon>
         </button>
     </ion-fab>
     <ion-fab left bottom class="player">
-        <button color="dark" ion-fab mini dark [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-            (click)="playPrev()">
-            <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward" aria-label="skip backward"
-                ng-reflect-name="skip-backward"></ion-icon>
+        <button color="dark" ion-fab mini dark [disabled]="playerStats?.videoId === null"
+            class="button button-md button-default button-default-md" (click)="playPrev()">
+            <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward"
+                aria-label="skip backward" ng-reflect-name="skip-backward"></ion-icon>
         </button>
-        <button color="dark" ion-fab mini [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-            (click)="playNext()">
+        <button color="dark" ion-fab mini [disabled]="playerStats?.videoId === null"
+            class="button button-md button-default button-default-md" (click)="playNext()">
             <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward" aria-label="skip forward"
                 ng-reflect-name="skip-forward"></ion-icon>
         </button>
     </ion-fab>
     <ion-fab bottom right class="player">
-        <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing'" class="button button-md button-default button-default-md"
-            (click)="stopAll()">
-            <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop" ng-reflect-name="stop"></ion-icon>
+        <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing'"
+            class="button button-md button-default button-default-md" (click)="stopAll()">
+            <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop"
+                ng-reflect-name="stop"></ion-icon>
         </button>
-        <button color="dark" ion-fab mini class="button button-md button-default button-default-md" style="transition: none;"
-            (click)="playPause()">
-            <ion-icon *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
-                name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
-            <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img" class="icon icon-md ion-md-pause"
-                aria-label="pause" ng-reflect-name="pause"></ion-icon>
+        <button color="dark" ion-fab mini class="button button-md button-default button-default-md"
+            style="transition: none;" (click)="playPause()">
+            <ion-icon
+                *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
+                name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play">
+            </ion-icon>
+            <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img"
+                class="icon icon-md ion-md-pause" aria-label="pause" ng-reflect-name="pause"></ion-icon>
         </button>
     </ion-fab>
     <ion-fab right middle>
-        <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
+        <button color="dark" ion-fab mini
+            [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
             class="button button-md button-default button-default-md" (click)="volume('up')">
             <ion-icon name="volume-up"></ion-icon>
         </button>
         <br>
-        <button color="dark" ion-fab mini [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
+        <button color="dark" ion-fab mini
+            [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
             class="button button-md button-default button-default-md" (click)="volume('down')">
             <ion-icon name="volume-down"></ion-icon>
         </button>
