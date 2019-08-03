@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ViewController, ToastController } from 'ionic-angular';
 import { ConfigService } from './../../app/services/config.services';
 import { PlayerService } from '../../app/services/player.service';
 
@@ -10,8 +10,8 @@ import { PlayerService } from '../../app/services/player.service';
 
 export class ConfigPage {
 
-    APIEndpoint: string;
-    APIPort: number;
+    APIUrl: string;
+    APIPort = 3000;
     audioOnly = false;
 
     constructor(public navCtrl: NavController,
@@ -19,15 +19,18 @@ export class ConfigPage {
         public navParams: NavParams,
         public playerService: PlayerService,
         public configService: ConfigService,
+        public viewCtrl: ViewController,
         public toastController: ToastController) {
     }
 
     ionViewWillEnter() {
-        if (!this.configService.getAPIEndpoint()) {
-            this.APIEndpoint = window.location.hostname;
-            this.configService.setAPIEndpoint(this.APIEndpoint, this.APIPort);
+        if (!this.configService.getAPIUrl()) {
+            this.APIUrl = window.location.hostname;
+            if (this.APIUrl.indexOf('http') > -1) {
+                this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
+            }
         } else {
-            this.APIEndpoint = this.configService.getAPIEndpoint();
+            this.APIUrl = this.configService.getAPIUrl();
         }
     }
 
@@ -47,6 +50,7 @@ export class ConfigPage {
     }
 
     setAPIEndpoint() {
+        this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
         if (this.configService.getAPIEndpoint()) {
             this.presentToast('Configuración guardada.');
         } else {
