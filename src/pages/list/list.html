@@ -12,23 +12,27 @@
     </ion-fab>
     <div class="video-info-lista">
         <div class="vinyl-container">
-            <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}" alt="{{ playerStats?.videoInfo?.title }}">
-            <svg version="1.1" class="vinyl-cover" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" width="45px" height="67px" viewBox="0 0 45 67" enable-background="new 0 0 45 67"
-                xml:space="preserve">
+            <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}"
+                alt="{{ playerStats?.videoInfo?.title }}">
+            <svg version="1.1" class="vinyl-cover" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="45px" height="67px"
+                viewBox="0 0 45 67" enable-background="new 0 0 45 67" xml:space="preserve">
                 <polygon fill="#C66749" points="0,16.256 34.794,0 45,42.087 16.907,67 " />
             </svg>
-            <svg version="1.1" class="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" width="48px" height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48"
-                xml:space="preserve">
+            <svg version="1.1" class="vinyl" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px"
+                viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
                 <g>
                     <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10" d="M24,46.999C11.287,46.999,1,36.707,1,24
             C1,11.287,11.287,1,24,1c12.707,0,23,10.287,23,23C47,36.707,36.707,46.999,24,46.999z" />
-                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10" d="M24,43.45C13.241,43.45,4.536,34.745,4.536,24
+                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                        d="M24,43.45C13.241,43.45,4.536,34.745,4.536,24
             C4.536,13.241,13.241,4.536,24,4.536C34.745,4.536,43.45,13.241,43.45,24C43.45,34.745,34.745,43.45,24,43.45z" />
-                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10" d="M24,39.907c-8.804,0-15.924-7.108-15.924-15.908
+                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                        d="M24,39.907c-8.804,0-15.924-7.108-15.924-15.908
             c0-8.805,7.12-15.924,15.924-15.924c8.8,0,15.907,7.12,15.907,15.924C39.907,32.799,32.799,39.907,24,39.907z" />
-                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10" d="M24,36.375c-6.85,0-12.392-5.534-12.392-12.376
+                    <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                        d="M24,36.375c-6.85,0-12.392-5.534-12.392-12.376
             c0-6.85,5.542-12.392,12.392-12.392c6.841,0,12.377,5.542,12.377,12.392C36.376,30.841,30.84,36.375,24,36.375z" />
                     <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10" d="M24,32.844c-4.894,0-8.849-3.971-8.849-8.845
             c0-4.894,3.956-8.849,8.849-8.849c4.874,0,8.845,3.956,8.845,8.849C32.844,28.874,28.874,32.844,24,32.844z" />
@@ -41,7 +45,8 @@
             {{ playerStats?.videoInfo?.title }}
         </div>
     </div>
-    <ion-searchbar class="filtro" (ionInput)="getItems($event)" placeholder="Filtrar" cancelButtonText="Limpiar"></ion-searchbar>
+    <ion-searchbar class="filtro" (ionInput)="getItems($event)" placeholder="Filtrar" cancelButtonText="Limpiar">
+    </ion-searchbar>
 </ion-header>
 <ion-content>
     <ion-list>
@@ -50,11 +55,14 @@
             <div class="video-thumb" item-start (click)="showImageModal(video.videoInfo.img)">
                 <img src="{{ video.videoInfo.img }}" alt="" srcset="">
             </div>
-            <ion-label (click)="play(video?.videoId)" [ngClass]="{'playing': video?.videoInfo?.videoId === playerStats?.videoId && playerStats?.status === 'playing'}">
+            <ion-label (click)="play(video?.videoId)"
+                [ngClass]="{'playing': video?.videoInfo?.videoId === playerStats?.videoId && playerStats?.status === 'playing'}">
                 {{ video.order }} {{ video.videoInfo.title }}
+                {{ video.videoInfo?.duration ? '(' + video.videoInfo.duration + ')' : '' }}
             </ion-label>
             <div class="item-note" item-end>
-                <ion-icon *ngIf="video?.order < videos.length && (video?.videoInfo?.videoId !== playerStats?.videoId && playerStats?.status === 'playing')"
+                <ion-icon
+                    *ngIf="video?.order < videos.length && (video?.videoInfo?.videoId !== playerStats?.videoId && playerStats?.status === 'playing')"
                     (click)="moveToTop(video?.videoId)" name='arrow-round-up' item-end color="secondary"></ion-icon>
                 <!-- <ion-icon *ngIf="video?.order < videos.length" (click)="swapToTop(video?.videoId)" name='git-compare' class="rotateCW"
                     item-end color="secondary"></ion-icon> -->
@@ -65,7 +73,8 @@
 
     <ion-fab bottom right #fab>
         <button ion-fab color="dark">
-            <ion-icon name="more" role="img" class="icon icon-md ion-md-more" aria-label="more" ng-reflect-name="more"></ion-icon>
+            <ion-icon name="more" role="img" class="icon icon-md ion-md-more" aria-label="more" ng-reflect-name="more">
+            </ion-icon>
         </button>
         <ion-fab-list side="top">
             <button ion-fab mini [disabled]="playerStats?.status !== 'playing' && playerStats?.status !== 'paused'"
@@ -80,24 +89,27 @@
         <ion-fab-list side="left">
             <button ion-fab mini class="button button-md button-default button-default-md" (click)="playPause()">
                 <!-- <ion-icon name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon> -->
-                <ion-icon *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
-                    name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play"></ion-icon>
-                <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img" class="icon icon-md ion-md-pause"
-                    aria-label="pause" ng-reflect-name="pause"></ion-icon>
+                <ion-icon
+                    *ngIf="playerStats?.status === 'loading' || playerStats?.status === 'paused' || playerStats?.status === 'stopped'"
+                    name="play" role="img" class="icon icon-md ion-md-play" aria-label="play" ng-reflect-name="play">
+                </ion-icon>
+                <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause" role="img"
+                    class="icon icon-md ion-md-pause" aria-label="pause" ng-reflect-name="pause"></ion-icon>
             </button>
-            <button ion-fab mini [disabled]="playerStats?.status !== 'playing'" class="button button-md button-default button-default-md"
-                (click)="stopAll()">
-                <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop" ng-reflect-name="stop"></ion-icon>
+            <button ion-fab mini [disabled]="playerStats?.status !== 'playing'"
+                class="button button-md button-default button-default-md" (click)="stopAll()">
+                <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop"
+                    ng-reflect-name="stop"></ion-icon>
             </button>
-            <button ion-fab mini [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-                (click)="playNext()">
-                <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward" aria-label="skip forward"
-                    ng-reflect-name="skip-forward"></ion-icon>
+            <button ion-fab mini [disabled]="playerStats?.videoId === null"
+                class="button button-md button-default button-default-md" (click)="playNext()">
+                <ion-icon name="skip-forward" role="img" class="icon icon-md ion-md-skip-forward"
+                    aria-label="skip forward" ng-reflect-name="skip-forward"></ion-icon>
             </button>
-            <button ion-fab mini dark [disabled]="playerStats?.videoId === null" class="button button-md button-default button-default-md"
-                (click)="playPrev()">
-                <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward" aria-label="skip backward"
-                    ng-reflect-name="skip-backward"></ion-icon>
+            <button ion-fab mini dark [disabled]="playerStats?.videoId === null"
+                class="button button-md button-default button-default-md" (click)="playPrev()">
+                <ion-icon name="skip-backward" role="img" class="icon icon-md ion-md-skip-backward"
+                    aria-label="skip backward" ng-reflect-name="skip-backward"></ion-icon>
             </button>
         </ion-fab-list>
     </ion-fab>
