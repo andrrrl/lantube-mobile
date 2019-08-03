@@ -19,7 +19,7 @@ export class ConfigPage {
         public navParams: NavParams,
         public playerService: PlayerService,
         public configService: ConfigService,
-        public viewCtrl: ViewController) {
+        public toastController: ToastController) {
     }
 
     ionViewWillEnter() {
@@ -47,11 +47,22 @@ export class ConfigPage {
     }
 
     setAPIEndpoint() {
-        this.configService.setAPIEndpoint(this.APIEndpoint, this.APIPort);
+        if (this.configService.getAPIEndpoint()) {
+            this.presentToast('Configuración guardada.');
+        } else {
+            this.presentToast('No se pudo guardar la configuración.');
+        }
     }
 
     toggleAudioOnly() {
         this.audioOnly = !this.audioOnly;
     }
 
+    async presentToast(message) {
+        const toast = await this.toastController.create({
+            message,
+            duration: 2000
+        });
+        toast.present();
+    }
 }
