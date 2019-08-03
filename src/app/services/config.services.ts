@@ -4,29 +4,40 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class ConfigService {
 
-    APIEndpoint = new BehaviorSubject<any>(null);
+    APIUrl = new BehaviorSubject<any>(null);
+    APIPort = new BehaviorSubject<any>(null);
 
     constructor() { }
 
-    setAPIEndpoint(ip, port) {
-        const url = `http://${ip}:${port}`;
-        this.APIEndpoint.next({ url });
+    setAPIEndpoint(ip = 'localhost', port = 3000) {
+        const url = ip;
+        this.APIUrl.next({ url, port });
         localStorage.setItem('url', url);
-        return url;
+        localStorage.setItem('port', String(port));
+        return `${url}:${port}`;
     }
 
+    getAPIUrl() {
+        const url = localStorage.getItem('url') || this.APIUrl.getValue();
+        return url;
+
+    }
     getAPIEndpoint() {
-        return localStorage.getItem('url') || this.APIEndpoint.getValue() || null;
+        const url = localStorage.getItem('url') || this.APIUrl.getValue();
+        const port = localStorage.getItem('port') || this.APIPort.getValue();
+        return `${url}:${port}`;
     }
 
     delAPIEndpoint() {
-        this.APIEndpoint.next(null);
+        this.APIUrl.next(null);
+        this.APIPort.next(null);
         localStorage.removeItem('url');
+        localStorage.removeItem('port');
     }
 
     async autoConnect() {
         if (!this.getAPIEndpoint()) {
-            if (window.location.hostname) {
+            if (window.location.hostname.indexOf('http') > -1) {
                 const result = await this.setAPIEndpoint(window.location.hostname, 3000);
                 if (result) {
                     return true;
