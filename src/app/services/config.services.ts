@@ -9,7 +9,7 @@ export class ConfigService {
 
     constructor() { }
 
-    setAPIEndpoint(ip = 'localhost', port = 3000) {
+    setAPIEndpoint(ip = 'http://localhost', port = 3000) {
         const url = ip;
         this.APIUrl.next({ url, port });
         localStorage.setItem('url', url);
