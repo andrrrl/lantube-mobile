@@ -1,7 +1,11 @@
 button {
     transition: none;
 }
-.toolbar-background .toolbar-background-md, .toolbar-background-md, .filtro, .video-info-lista {
+
+.toolbar-background .toolbar-background-md,
+.toolbar-background-md,
+.filtro,
+.video-info-lista {
     background: black !important;
     color: white !important;
 }
@@ -9,16 +13,17 @@ button {
 .filtro {
     .searchbar-input {
         background: black !important;
-    color: white !important;
+        color: white !important;
     }
 }
 
 @keyframes vinyl {
     0% {
-        transform:  rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-        transform:  rotate(300deg);
+        transform: rotate(300deg);
     }
 }
 
@@ -32,16 +37,19 @@ button {
         top: 3px;
         left: 10px;
     }
+
     .vinyl-cover {
         position: absolute;
         left: 10px;
         z-index: 1;
     }
+
     .vinyl {
         position: absolute;
         left: 0px;
         top: 14px;
         transform: perspective(200px) rotateX(10deg) rotateY(50deg);
+
         path {
             transform-origin: 50% 50%;
             animation: vinyl 4s infinite linear;
@@ -50,6 +58,7 @@ button {
             stroke-dashoffset: 23px;
         }
     }
+
     .video-title {
         display: flex;
         // justify-content: center;
@@ -57,9 +66,10 @@ button {
         width: 75vw;
         font-weight: 800;
     }
+
     img {
         width: 4.5rem;
-        
+
         position: absolute;
         top: 15px;
         left: 14px;
@@ -78,9 +88,11 @@ page-list {
         0% {
             opacity: 0;
         }
+
         50% {
             opacity: 1;
         }
+
         100% {
             opacity: 0;
         }
@@ -105,6 +117,10 @@ page-list {
 
     .item-md.item-block .item-inner {
         border-bottom: 0 !important;
+    }
+
+    ion-label {
+        font-size: 1.25rem;
     }
 
 }
