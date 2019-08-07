@@ -25,12 +25,13 @@ export class ConfigPage {
 
     ionViewWillEnter() {
         if (!this.configService.getAPIUrl()) {
-            this.APIUrl = window.location.hostname;
-            if (this.APIUrl.indexOf('http') > -1) {
-                this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
-            }
+            this.APIUrl = `http://${window.location.hostname}`;
         } else {
+            console.log(this.configService.getAPIUrl());
             this.APIUrl = this.configService.getAPIUrl();
+        }
+        if (this.APIUrl.indexOf('http') > -1) {
+            this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
         }
     }
 
