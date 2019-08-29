@@ -1,5 +1,5 @@
 ion-icon.icon-sm {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 ion-fab.add {
@@ -9,7 +9,7 @@ ion-fab.add {
 ion-spinner {
     display: block;
     margin: auto;
-  }
+}
 
 ion-fab.player {
     width: 41%;
@@ -36,7 +36,7 @@ svg#player {
     position: relative;
     top: 60px;
     width: 100%;
-    height: 120px;
+    height: 200px;
     display: flex;
     justify-content: center;
 }
@@ -53,9 +53,10 @@ svg#vinyl {
 
     path {
         &:not(:last-child) {
-                stroke-dasharray: 13px;
-                stroke-dashoffset: 23px;
+            stroke-dasharray: 13px;
+            stroke-dashoffset: 23px;
         }
+
         stroke: grey;
         fill: black;
         transform-origin: 50% 50%;
@@ -63,18 +64,20 @@ svg#vinyl {
 
     }
 }
-        .playing-animation {
-            path {
-                animation: vinyl 4s infinite linear;
-            }
-        }
+
+.playing-animation {
+    path {
+        animation: vinyl 4s infinite linear;
+    }
+}
 
 @keyframes vinyl {
     0% {
-        transform:  rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-        transform:  rotate(300deg);
+        transform: rotate(300deg);
     }
 }
 
@@ -87,10 +90,11 @@ svg#record-player {
 
 @keyframes pua {
     0% {
-        transform:  rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-        transform:  rotate(300deg);
+        transform: rotate(300deg);
     }
 }
 
@@ -100,12 +104,14 @@ svg#record-player {
     justify-content: center;
     height: 0;
     position: absolute;
+
     svg#pua {
         transform: scale(.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
         position: relative;
         top: 5px;
         left: -20px;
         z-index: 1;
+
         &.play {
             animation: pua 1s infinite linear;
             animation-delay: 0.5s;
@@ -116,13 +122,15 @@ svg#record-player {
 .video-info {
     display: flex;
     justify-content: center;
+
     .artist {
         color: white;
         font-weight: 800;
-        font-size: 2rem;
+        font-size: 1.9rem;
         text-align: center;
     }
 }
+
 .video-img-container {
 
     #record-cover {
@@ -140,11 +148,11 @@ svg#record-player {
     position: relative;
     top: 50px;
     left: 20px;
-    
+
     img {
         width: 9rem;
         height: auto;
-        
+
         position: absolute;
         top: 10px;
         margin-left: 47px;
@@ -152,7 +160,7 @@ svg#record-player {
         transform: perspective(320px) rotateY(48deg) rotateZ(-23deg) rotateX(2deg);
         transform-origin: 50% 50%;
         mix-blend-mode: hard-light;
-        
+
         z-index: 10;
     }
 }
@@ -164,8 +172,8 @@ svg#record-player {
 }
 
 .connected {
-    background: green;
-    color: white;
+    color: green;
+    background: black;
 }
 
 .disconnected {

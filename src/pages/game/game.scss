@@ -1,0 +1,55 @@
+page-game {
+
+    .paisaje {
+        width: 100vw;
+        height: 100px;
+        display: flex;
+        align-items: flex-end;
+
+        .piso {
+            border-bottom: 1px solid white;
+            width: 100vw;
+            position: absolute;
+            left: 0px;
+        }
+
+        .tipito {
+            width: 15px;
+            height: 15px;
+            background: blue;
+            border-radius: 15px;
+        }
+    }
+
+    .stick {
+        width: 5px;
+        height: 30px;
+        background: red;
+        position: relative;
+        bottom: 80px;
+
+        &.lejano {
+            animation: palito infinite linear 10s;
+        }
+
+        &.cercano {
+            top: 40px;
+            animation: palito infinite linear 5s;
+        }
+    }
+
+
+
+    @keyframes palito {
+
+        0% {
+            left: 460px;
+        }
+
+        100% {
+            left: -20px;
+        }
+    }
+
+
+}
