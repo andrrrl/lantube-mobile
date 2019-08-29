@@ -15,11 +15,14 @@ import { ServerService } from './services/server.service';
 import { PlayerService } from './services/player.service';
 import { YoutubeService } from './services/youtube.service';
 
+import { SensorService } from './services/sensor.service';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ImageModalPage } from '../pages/modal/imageModal';
 import { ConfigPage } from '../pages/config/config';
 import { ConfigService } from './services/config.services';
+import { GamePage } from '../pages/game/game';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { ConfigService } from './services/config.services';
     PlayerPage,
     SearchPage,
     ImageModalPage,
-    ConfigPage
+    ConfigPage,
+    GamePage
   ],
   imports: [
     HttpModule,
@@ -45,7 +49,8 @@ import { ConfigService } from './services/config.services';
     PlayerPage,
     SearchPage,
     ImageModalPage,
-    ConfigPage
+    ConfigPage,
+    GamePage
   ],
   providers: [
     StatusBar,
@@ -55,6 +60,7 @@ import { ConfigService } from './services/config.services';
     PlayerService,
     YoutubeService,
     ConfigService,
+    SensorService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

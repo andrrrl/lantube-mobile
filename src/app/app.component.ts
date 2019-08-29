@@ -10,6 +10,7 @@ import { AddPage } from '../pages/add/add';
 import { SearchPage } from '../pages/search/search';
 import { ConfigPage } from '../pages/config/config';
 import { ConfigService } from './services/config.services';
+import { GamePage } from '../pages/game/game';
 
 @Component({
     templateUrl: 'app.html',
@@ -34,6 +35,7 @@ export class MyApp {
             { title: 'Agregar URL', component: AddPage },
             { title: 'Buscar', component: SearchPage },
             { title: 'Configuraciones', component: ConfigPage },
+            { title: 'Extras', component: GamePage },
         ];
 
     }
