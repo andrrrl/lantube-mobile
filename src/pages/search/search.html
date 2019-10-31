@@ -5,11 +5,9 @@
 </ion-header>
 <ion-content>
   <ion-item>
-    <ion-input type="text" placeholder="Búsqueda" [(ngModel)]="term" (keyup.enter)="search()" autofocus="true">
+    <ion-input type="text" placeholder="Búsqueda" [(ngModel)]="term" (keyup.enter)="search()">
     </ion-input>
-    <button ion-button item-end color="primary" (click)="search()">
-      BUSCAR
-    </button>
+
   </ion-item>
 
   <ion-list>
@@ -28,3 +26,8 @@
     </ng-container>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <button full ion-button color="primary" (click)="search()">
+    BUSCAR
+  </button>
+</ion-footer>

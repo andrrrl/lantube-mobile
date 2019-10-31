@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, Renderer, ElementRef } from '@angular/core';
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { YoutubeService } from '../../app/services/youtube.service';
 import { VideosService } from '../../app/services/videos.service';
@@ -9,6 +9,8 @@ import { ImageModalPage } from '../modal/imageModal';
     templateUrl: 'search.html'
 })
 export class SearchPage {
+
+    @ViewChild('input') searchInput;
 
     public youtubeVideo: any;
     public term = '';
@@ -21,10 +23,19 @@ export class SearchPage {
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
         public youtubeService: YoutubeService,
-        public videosService: VideosService) {
+        public videosService: VideosService,
+        private renderer: Renderer,
+        private elementRef: ElementRef) {
 
     }
 
+    ngAfterViewInit() {
+        // we need to delay our call in order to work with ionic ...
+        setTimeout(() => {
+            const element = this.elementRef.nativeElement.querySelector('input');
+            this.renderer.invokeElementMethod(element, 'focus', []);
+        }, 1000);
+    }
     search() {
         if (typeof this.term === 'string' && this.term.length) {
             this.showLoader('Buscando videos...');
