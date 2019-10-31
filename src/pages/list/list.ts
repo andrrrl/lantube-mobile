@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, FabContainer } from 'ionic-angular';
+import { NavController, AlertController, FabContainer, Content } from 'ionic-angular';
 import { VideosService } from './../../app/services/videos.service';
 import { PlayerService } from '../../app/services/player.service';
 import { SearchPage } from '../search/search';
@@ -14,6 +14,7 @@ import { IPlayerStats } from '../../app/interfaces/IPlayerStats';
 export class ListPage {
 
     @ViewChild('fab') fab: FabContainer;
+    @ViewChild('content') content: Content;
 
     videos: any[] = [];
     playerStats: IPlayerStats;
@@ -198,35 +199,6 @@ export class ListPage {
             video.order = i;
             i--;
         }
-
-        // swapToTop(key) {
-        // let newTop = this.videos.find(x => x.videoId === id);
-        // let newTopIndex = this.videos.indexOf(newTop);
-
-        // let currentTop = this.videos[0];
-        // currentTop.videoId = newTop.videoId;
-        // currentTop.order = newTop.order;
-        // currentTop.videoInfo.videoId = newTop.videoId;
-        // this.videos[newTopIndex] = currentTop;
-
-        // newTop.videoId = `video${this.videos.length}`;
-        // newTop.order = this.videos.length;
-        // newTop.videoInfo.videoId = `video${this.videos.length}`;
-        // this.videos[0] = newTop;
-
-        // if (this.playerStats) {
-        //     if (this.playerStats.status === 'playing' && this.playerStats.videoId === id) {
-        //         this.playerStats.videoId = `video${this.videos.length}`;
-        //         this.playerStats.videoInfo = newTop.videoInfo;
-        //     } else if (this.playerStats.status === 'playing' && this.playerStats.videoId === `video${this.videos.length}`) {
-        //         this.playerStats.videoId = currentTop.videoId;
-        //         this.playerStats.videoInfo = currentTop.videoInfo;
-        //     }
-
-        //     this.playerService.update(this.playerStats).subscribe(stats => {
-        //         this.playerStats = stats;
-        //     });
-        // }
     }
 
     showImageModal(img) {
@@ -251,5 +223,13 @@ export class ListPage {
             });
         }
     }
+
+    // scrollToTop() {
+    //     this.content.scrollToTop();
+    // }
+
+    // scrollToBottom() {
+    //     this.content.scrollToBottom();
+    // }
 
 }
