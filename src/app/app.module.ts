@@ -23,6 +23,7 @@ import { ImageModalPage } from '../pages/modal/imageModal';
 import { ConfigPage } from '../pages/config/config';
 import { ConfigService } from './services/config.services';
 import { GamePage } from '../pages/game/game';
+import { TemperatureComponent } from './../pages/sensor/temperature';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { GamePage } from '../pages/game/game';
     SearchPage,
     ImageModalPage,
     ConfigPage,
-    GamePage
+    GamePage,
+    TemperatureComponent
   ],
   imports: [
     HttpModule,
@@ -50,7 +52,8 @@ import { GamePage } from '../pages/game/game';
     SearchPage,
     ImageModalPage,
     ConfigPage,
-    GamePage
+    GamePage,
+    TemperatureComponent
   ],
   providers: [
     StatusBar,

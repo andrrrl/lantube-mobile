@@ -53,7 +53,6 @@ export class SensorService {
     }
 
     get(sensor: string): Observable<any> {
-        console.log({ sensor });
         return this.http.get(this.sensorURL + '/' + sensor).map(this.extractData).catch(this.handleError);
     }
 

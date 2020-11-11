@@ -39,6 +39,7 @@ svg#player {
     height: 200px;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 svg#vinyl {
@@ -61,7 +62,6 @@ svg#vinyl {
         fill: black;
         transform-origin: 50% 50%;
         stroke-width: 8px;
-
     }
 }
 
@@ -81,12 +81,10 @@ svg#vinyl {
     }
 }
 
-
 svg#record-player {
     width: 170px;
     height: 130px;
 }
-
 
 @keyframes pua {
     0% {
@@ -106,7 +104,7 @@ svg#record-player {
     position: absolute;
 
     svg#pua {
-        transform: scale(.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+        transform: scale(0.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
         position: relative;
         top: 5px;
         left: -20px;
@@ -132,7 +130,6 @@ svg#record-player {
 }
 
 .video-img-container {
-
     #record-cover {
         width: 100px;
         position: absolute;
