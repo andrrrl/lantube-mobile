@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Buscar Video</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+        <ion-input type="text" placeholder="Búsqueda" [(ngModel)]="term" (keyup.enter)="search()">
+        </ion-input>
+
+    </ion-item>
+
+    <ion-list>
+        <ng-container *ngFor="let item of videoList; let i = index">
+            <ion-item>
+                <ion-avatar item-start (click)="showImageModal(item.img)">
+                    <img src="{{ item.img }}">
+                </ion-avatar>
+                <ion-label (click)="showConfirmAdd(i)">
+                    {{ item.title }} ~ {{ item.duration }}
+                </ion-label>
+                <div class="item-note" item-end (click)="showConfirmAdd(i)">
+                    <ion-icon name='add' item-end color="danger"></ion-icon>
+                </div>
+            </ion-item>
+        </ng-container>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <button full ion-button color="primary" (click)="search()">
+        BUSCAR
+    </button>
+</ion-footer>

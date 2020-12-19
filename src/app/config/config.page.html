@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons>
+            <ion-back-button slot="start" defaultHref="player"></ion-back-button>
+            <ion-title>Configuraciones!</ion-title>
+            <ion-menu-button slot="end"></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+        <ion-label>API address</ion-label>
+        <ion-input type="text" placeholder="API address" [(ngModel)]="APIUrl" autofocus="true"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>API port</ion-label>
+        <ion-input type="text" placeholder="API port number" [(ngModel)]="APIPort"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-checkbox slot="start" [(ngModel)]="audioOnly" (ionChange)="toggleAudioOnly()"></ion-checkbox>
+        <ion-label>Sólo audio</ion-label>
+    </ion-item>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-button expand="block" color="secondary" (click)="setAPIEndpoint()" [(disabled)]="!APIUrl">
+            GUARDAR
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

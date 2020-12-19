@@ -1,5 +1,8 @@
 {
   "name": "lantube-mobile",
-  "integrations": {},
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
   "type": "angular"
 }

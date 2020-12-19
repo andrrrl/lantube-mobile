@@ -1,0 +1,17 @@
+<ion-fab horizontal="end" vertical="top">
+    <ion-fab-button size="small" color="dark">
+        <ion-icon name="stats-chart"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+        <ion-fab-button *ngIf="coreTempSensor$ | async as coreTemp" [color]="coreTempColor(coreTemp)" size="small">
+            <small>
+                {{ coreTemp.temperature.value }} {{ coreTemp.temperature.unit }}
+            </small>
+        </ion-fab-button>
+        <ion-fab-button *ngIf="roomTempSensor$ | async as roomTemp" [color]="roomTempColor(roomTemp)" size="small">
+            <small>
+                {{ roomTemp.temperature.value }} {{ roomTemp.temperature.unit }}
+            </small>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>

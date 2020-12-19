@@ -1,0 +1,6 @@
+<ion-content background="dark" padding>
+  <ion-item>
+    <player [playerStats]="playerStats" (stopAllPlayer)="stopAll()" (playAllPlayer)="playCurrent()" (playNextPlayer)="playNext()"
+      (playPrevPlayer)="playPrev()" (volumePlayer)="volume($event)"></player>
+  </ion-item>
+</ion-content>
