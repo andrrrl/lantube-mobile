@@ -1,8 +1,8 @@
 import { ConfigService } from './../../services/config.services';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
+import { merge, Observable, throwError } from 'rxjs';
+import { catchError, debounceTime, tap } from 'rxjs/operators';
 import { PlayerService } from 'src/app/services/player.service';
 import { IPlayerStats } from '../../interfaces/IPlayerStats';
 import { IVolume } from 'src/app/interfaces/IVolume.interface';
@@ -15,8 +15,10 @@ import { AddComponent } from '../../search/add/add.component';
 })
 export class PlayerPage implements OnInit {
     serverStats$: Observable<IPlayerStats>;
+    stats$: Observable<IPlayerStats>;
     connected: boolean;
     serverStats: any;
+    loader: HTMLIonLoadingElement;
 
     constructor(
         private playerService: PlayerService,
@@ -26,18 +28,32 @@ export class PlayerPage implements OnInit {
         public toastController: ToastController
     ) { }
 
-    ngOnInit() {
+    async ngOnInit() {
+
+        console.log('init');
+
+
+
+
+    }
+
+    async ionViewDidEnter() {
+
+        this.loader = await this.loadingController.create({
+            message: 'Conectando API Lantube...',
+        });
+        await this.loader.present();
 
         // Trae los server stats
-        this.serverStats$ = this.playerService.getStats().pipe(
-            tap(() => {
-                this.serverStats$ = this.playerService.onNewMessage().pipe(
-                    // debounceTime(1000),
-                    tap((stats) => {
-                        console.log('Server & Player stats updated');
-                        this.connected = true;
-                    })
-                );
+        this.serverStats$ = merge(this.playerService.getStats(), this.playerService.onNewMessage()).pipe(
+            catchError(async (err) => {
+                console.log('Error HttpClient...', err);
+                await this.loader.dismiss();
+                return throwError(err);
+            }),
+            tap(async () => {
+                this.connected = true;
+                await this.loader.dismiss();
             })
         );
 
