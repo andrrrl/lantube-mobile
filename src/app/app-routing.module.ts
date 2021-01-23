@@ -13,15 +13,15 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+    loadChildren: () => import('./pages/list/list.module').then(m => m.ListPageModule)
   },
   {
     path: 'config',
-    loadChildren: () => import('./config/config.module').then(m => m.ConfigPageModule)
+    loadChildren: () => import('./pages/config/config.module').then(m => m.ConfigPageModule)
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
   },
 ];
 

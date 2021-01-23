@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "lantube-mobile",
+  "appId": "ar.lantube.player",
+  "appName": "Lantube App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -20,5 +20,5 @@
       "SplashScreenDelay": "3000"
     }
   },
-    "linuxAndroidStudioPath": "/home/andrrr/soft/android-studio/bin/studio.sh"
+  "linuxAndroidStudioPath": "/home/andrrr/soft/android-studio/bin/studio.sh"
 }

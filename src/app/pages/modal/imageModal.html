@@ -1,11 +1,16 @@
 <ion-header>
-    <ion-navbar>
+    <ion-toolbar>
         <ion-title>Miniatura del video</ion-title>
-    </ion-navbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <div class="thumbnail-conatiner">
-        <ion-img class="youtube-thumbnail" [src]="imagen"></ion-img>
+        <ion-img class="youtube-thumbnail" [src]="image"></ion-img>
     </div>
 </ion-content>

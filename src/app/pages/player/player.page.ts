@@ -1,59 +1,66 @@
 import { ConfigService } from './../../services/config.services';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { merge, Observable, throwError } from 'rxjs';
+import { merge, Observable } from 'rxjs';
 import { catchError, debounceTime, tap } from 'rxjs/operators';
 import { PlayerService } from 'src/app/services/player.service';
 import { IPlayerStats } from '../../interfaces/IPlayerStats';
 import { IVolume } from 'src/app/interfaces/IVolume.interface';
-import { AddComponent } from '../../search/add/add.component';
+import { AddComponent } from '../search/add/add.component';
+// import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-player',
     templateUrl: './player.page.html',
     styleUrls: ['./player.page.scss'],
 })
-export class PlayerPage implements OnInit {
+export class PlayerPage {
     serverStats$: Observable<IPlayerStats>;
     stats$: Observable<IPlayerStats>;
-    connected: boolean;
+    connected = false;
     serverStats: any;
-    loader: HTMLIonLoadingElement;
+    loading: HTMLIonLoadingElement;
 
     constructor(
         private playerService: PlayerService,
         private configService: ConfigService,
         public loadingController: LoadingController,
         public modalController: ModalController,
+        // private activatedRoute: ActivatedRoute,
         public toastController: ToastController
     ) { }
 
-    async ngOnInit() {
-
-        console.log('init');
 
 
+    async ionViewWillEnter() {
 
+        // this.activatedRoute.snapshot.paramMap.get('id');
 
+        if (!this.connected) {
+            this.loading = await this.loadingController.create({
+                message: 'Conectando API Lantube...',
+                duration: 10000
+            });
+            await this.loading.present();
+        }
+        this.init();
     }
 
-    async ionViewDidEnter() {
-
-        this.loader = await this.loadingController.create({
-            message: 'Conectando API Lantube...',
-        });
-        await this.loader.present();
+    async init() {
 
         // Trae los server stats
         this.serverStats$ = merge(this.playerService.getStats(), this.playerService.onNewMessage()).pipe(
             catchError(async (err) => {
                 console.log('Error HttpClient...', err);
-                await this.loader.dismiss();
-                return throwError(err);
+                if (!this.connected) {
+                    await this.loading.dismiss();
+                }
             }),
             tap(async () => {
+                if (!this.connected) {
+                    await this.loading.dismiss();
+                }
                 this.connected = true;
-                await this.loader.dismiss();
             })
         );
 

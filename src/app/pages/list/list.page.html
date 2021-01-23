@@ -1,0 +1,112 @@
+<ng-container *ngIf="(playerStats$ | async) as playerStats">
+    <ion-header translucent="true">
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="player"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Videos</ion-title>
+        </ion-toolbar>
+        <ion-fab vertical="top" horizontal="end">
+            <ion-fab-button color="danger" [routerLink]="['/search']">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+        <div class="video-info-lista">
+            <div class="vinyl-container">
+                <img *ngIf="playerStats?.videoInfo?.img" class="video-img" src="{{ playerStats?.videoInfo?.img }}"
+                     alt="{{ playerStats?.videoInfo?.title }}">
+                <svg version="1.1" class="vinyl-cover" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="45px" height="67px"
+                     viewBox="0 0 45 67" enable-background="new 0 0 45 67" xml:space="preserve">
+                    <polygon fill="#C66749" points="0,16.256 34.794,0 45,42.087 16.907,67 " />
+                </svg>
+                <svg version="1.1" class="vinyl" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px" height="48px"
+                     viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+                    <g>
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24,46.999C11.287,46.999,1,36.707,1,24 C1,11.287,11.287,1,24,1c12.707,0,23,10.287,23,23C47,36.707,36.707,46.999,24,46.999z" />
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24,43.45C13.241,43.45,4.536,34.745,4.536,24C4.536,13.241,13.241,4.536,24,4.536C34.745,4.536,43.45,13.241,43.45,24C43.45,34.745,34.745,43.45,24,43.45z" />
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24,39.907c-8.804,0-15.924-7.108-15.924-15.908c0-8.805,7.12-15.924,15.924-15.924c8.8,0,15.907,7.12,15.907,15.924C39.907,32.799,32.799,39.907,24,39.907z" />
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24,36.375c-6.85,0-12.392-5.534-12.392-12.376c0-6.85,5.542-12.392,12.392-12.392c6.841,0,12.377,5.542,12.377,12.392C36.376,30.841,30.84,36.375,24,36.375z" />
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24,32.844c-4.894,0-8.849-3.971-8.849-8.845c0-4.894,3.956-8.849,8.849-8.849c4.874,0,8.845,3.956,8.845,8.849C32.844,28.874,28.874,32.844,24,32.844z" />
+                        <path fill="none" stroke="#A8A39F" stroke-width="1" stroke-miterlimit="10"
+                              d="M24.875,24c0-0.494-0.382-0.897-0.876-0.897c-0.493,0-0.897,0.403-0.897,0.897s0.404,0.876,0.897,0.876C24.494,24.875,24.875,24.494,24.875,24z" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <ion-searchbar showCancelButton="focus" (ionCancel)="cancelSearch()" (ionClear)="cancelSearch()"
+                       (ionInput)="searchItems($event)" placeholder="Filtrar">
+        </ion-searchbar>
+    </ion-header>
+    <ion-content>
+        <ion-list lines="full" *ngIf="(videos$ | async) as videos">
+            <ion-item *ngIf="videos?.length === 0">No hay videos en la lista</ion-item>
+            <ion-item button *ngFor="let video of videos">
+                <ion-thumbnail slot="start" (click)="presentModal(video.videoInfo.img)">
+                    <img src="{{ video.videoInfo.img }}" alt="" srcset="">
+                </ion-thumbnail>
+                <ion-label class="ion-text-wrap" (click)="play(video?.videoId)"
+                           [ngClass]="{'playing': video?.videoInfo?.videoId === playerStats?.videoId && playerStats?.status === 'playing'}">
+                    <p>
+                        {{ video.order }} {{ video.videoInfo.title }}
+
+                    </p>
+                </ion-label>
+                <ion-item-group slot="end">
+                    <ion-note color="danger">{{ video.videoInfo?.duration ? '(' + video.videoInfo.duration + ')' : '' }}
+                    </ion-note>
+                    <!-- <ion-icon name="arrow-up-outline"
+                              *ngIf="video?.order <= videos.length && (video?.videoInfo?.videoId !== playerStats?.videoId && playerStats?.status === 'playing')"
+                              (click)="moveToTop(video?.videoId)" name='arrow-up' slot="end" color="secondary">
+                    </ion-icon> -->
+                    <!-- <ion-button *ngIf="video?.order < videos.length" (click)="swapToTop(video?.videoId)" name='git-compare' class="rotateCW"
+                      item-end color="secondary"></ion-button> -->
+                    <!-- <ion-icon name="arrow-up-outline" (click)="swapToTop(video?.videoId)" slot="end" color="danger"
+                              *ngIf="video?.order < videos.length"></ion-icon> -->
+                    <ion-icon name="trash" (click)="showConfirmDelete(video?.videoId)" slot="end" color="danger">
+                    </ion-icon>
+                </ion-item-group>
+            </ion-item>
+            <ion-item-divider></ion-item-divider>
+        </ion-list>
+
+        <!-- <ion-fab bottom center>
+      <button color="dark">
+          <ion-icon name="arrow-down" role="img" class="icon icon-md ion-md-arrow-down" aria-label="arrow-down"
+                    ng-reflect-name="arrow-down" (click)="scrollToBottom()">
+          </ion-icon>
+      </button>
+  </ion-fab> -->
+        <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+            <ion-fab-button color="dark">
+                <ion-icon name="ellipsis-vertical">
+                </ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'" (click)="volume('down')">
+                    <ion-icon name="volume-low"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'" (click)="volume('up')">
+                    <ion-icon name="volume-high"></ion-icon>
+                </ion-fab-button>
+            </ion-fab-list>
+            <ion-fab-list side="start">
+                <ion-fab-button (click)="playPause()" color="dark">
+                    <ion-icon *ngIf="playerStats?.status === 'paused' || playerStats?.status === 'stopped'" name="play">
+                    </ion-icon>
+                    <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button color="dark" [disabled]="playerStats?.status !== 'playing'" (click)="stopAll()">
+                    <ion-icon name="stop"></ion-icon>
+                </ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
+
+    </ion-content>
+</ng-container>

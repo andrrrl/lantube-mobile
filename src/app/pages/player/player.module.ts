@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PlayerPageRoutingModule } from './player-routing.module';
 
 import { PlayerPage } from './player.page';
-import { TemperatureComponent } from '../../temperature/temperature.component';
+import { TemperatureComponent } from '../../sensor/temperature/temperature.component';
 
 @NgModule({
   imports: [

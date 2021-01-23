@@ -6,5 +6,5 @@ export interface ICoreTemperature {
         value: number;
         coolTempLimit: number;
         dangerTempLimit: number;
-    }
+    };
 }
