@@ -30,6 +30,7 @@ npm-debug.log*
 /plugins
 /www
 android/
+e2e/
 resources/icon/*
 resources/splash/*
 resources/xml/*
