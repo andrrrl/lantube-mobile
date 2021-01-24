@@ -1,3 +1,4 @@
+import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ import { TemperatureComponent } from '../../sensor/temperature/temperature.compo
   ],
   declarations: [
     PlayerPage,
+    PlayerStatsComponent,
     TemperatureComponent,
   ]
 })

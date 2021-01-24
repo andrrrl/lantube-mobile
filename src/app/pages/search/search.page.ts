@@ -95,7 +95,11 @@ export class SearchPage {
         this.videoList$.pipe(
             tap(videos => {
                 this.youtubeVideo = videos[index];
-                this.videosService.add(this.extractVideoId()).subscribe(async () => {
+                debugger;
+
+                const videoId = this.extractVideoId();
+
+                this.videosService.add(videoId).subscribe(async () => {
                     const toast = await this.toastController.create({
                         message: `Se agregó "${this.youtubeVideo.title}"`,
                         duration: 2000
