@@ -53,7 +53,7 @@ export class PlayerService {
     }
 
     setVolume(upOrDown: IVolume): Observable<any> {
-        return this.http.get(this.playerURL + '/volume/' + upOrDown);
+        return this.http.get(this.playerURL + '/volume/' + upOrDown.volume);
     }
 
     update(player: any, videoId): Observable<any> {

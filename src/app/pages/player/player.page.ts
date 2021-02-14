@@ -51,7 +51,7 @@ export class PlayerPage {
         // Trae los server stats
         this.serverStats$ = merge(this.playerService.getStats(), this.playerService.onNewMessage()).pipe(
             catchError(async (err) => {
-                console.log('Error HttpClient...', err);
+                console.error('Error HttpClient...', err);
                 if (!this.connected) {
                     await this.loading.dismiss();
                 }

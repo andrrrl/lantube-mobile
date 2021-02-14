@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ListPageRoutingModule } from './list-routing.module';
+import { SensorPageRoutingModule } from './sensor-routing.module';
 
-import { ListPage } from './list.page';
+import { SensorPage } from './sensor.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListPageRoutingModule
+    SensorPageRoutingModule
   ],
-  declarations: [
-    ListPage
-  ]
+  declarations: [SensorPage]
 })
-export class ListPageModule { }
+export class SensorPageModule {}

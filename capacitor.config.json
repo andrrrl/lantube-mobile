@@ -23,6 +23,7 @@
   "linuxAndroidStudioPath": "/home/andrrr/soft/android-studio/bin/studio.sh",
   "server": {
     "url": "http://localhost:8100",
-    "cleartext": true
+    "cleartext": true,
+    "originalCleartext": true
   }
 }

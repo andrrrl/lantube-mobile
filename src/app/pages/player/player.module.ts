@@ -1,3 +1,4 @@
+import { PlayerService } from './../../services/player.service';
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,6 +22,9 @@ import { TemperatureComponent } from '../../sensor/temperature/temperature.compo
     PlayerPage,
     PlayerStatsComponent,
     TemperatureComponent,
+  ],
+  providers: [
+    PlayerService
   ]
 })
 export class PlayerPageModule { }

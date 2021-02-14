@@ -65,4 +65,8 @@ export class VideosService {
         const options = { headers };
         return this.http.post(this.API + '/api/', swap, options);
     }
+
+    extractVideoId(videoURL) {
+        return videoURL.replace(/http(s?):\/\/(w{3})?(\.?)youtube\.com\/watch\?v=/, '');
+    }
 }

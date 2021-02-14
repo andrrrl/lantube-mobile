@@ -91,17 +91,10 @@ svg#record-player {
 .video-info {
     display: flex;
     justify-content: center;
-
-    .artist {
-        color: white;
-        font-weight: 800;
-        font-size: 1rem;
-        text-align: center;
-    }
 }
 
 .video-img-container {
-    #record-cover {
+    .record-cover {
         width: 100px;
         position: absolute;
         top: -30px;

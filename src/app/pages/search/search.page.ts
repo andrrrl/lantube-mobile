@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, IonInput, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, IonInput, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { VideosService } from '../../services/videos.service';
 import { YoutubeService } from '../../services/youtube.service';
+import { ImageModalPage } from '../modal/imageModal';
 
 @Component({
     selector: 'app-search',
@@ -25,6 +26,7 @@ export class SearchPage {
         public router: Router,
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
+        public modalController: ModalController,
         public youtubeService: YoutubeService,
         public videosService: VideosService,
         public toastController: ToastController) {
@@ -53,12 +55,20 @@ export class SearchPage {
         }
     }
 
-    showImageModal(img) {
+    async showImageModal(image) {
+        const modal = await this.modalController.create({
+            component: ImageModalPage,
+            componentProps: {
+                image
+            }
+        });
+        modal.present();
     }
 
     async showLoader(text: string) {
         this.loader = await this.loadingCtrl.create({
             message: text,
+            spinner: 'crescent'
         });
         await this.loader.present();
     }
@@ -94,26 +104,25 @@ export class SearchPage {
     addVideo(index: number) {
         this.videoList$.pipe(
             tap(videos => {
+
                 this.youtubeVideo = videos[index];
-                debugger;
+                const videoId = this.videosService.extractVideoId(this.youtubeVideo.url);
+                this.showLoader('Agregando video...').then(async () => {
 
-                const videoId = this.extractVideoId();
+                    this.videosService.add(videoId).subscribe(async () => {
+                        const toast = await this.toastController.create({
+                            message: `Se agregó "${this.youtubeVideo.title}"`,
+                            duration: 2000
+                        });
 
-                this.videosService.add(videoId).subscribe(async () => {
-                    const toast = await this.toastController.create({
-                        message: `Se agregó "${this.youtubeVideo.title}"`,
-                        duration: 2000
+                        this.hideLoader();
+                        toast.present();
+
+                        this.router.navigate(['list']);
                     });
-                    toast.present();
-                    this.router.navigate(['list']);
                 });
+
             })
         ).subscribe();
     }
-
-    extractVideoId() {
-        return this.youtubeVideo.url.trim().replace(/http(s?):\/\/(w{3})?(\.)?youtube\.com\/watch\?v=/, '');
-
-    }
-
 }

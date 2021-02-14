@@ -89,20 +89,22 @@
                 </ion-icon>
             </ion-fab-button>
             <ion-fab-list side="top">
-                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'" (click)="volume('down')">
+                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'"
+                                (click)="volume($event, { volume: 'down' })">
                     <ion-icon name="volume-low"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'" (click)="volume('up')">
+                <ion-fab-button color="danger" [disabled]="playerStats?.status === 'stopped'"
+                                (click)="volume($event, { volume: 'up' })">
                     <ion-icon name="volume-high"></ion-icon>
                 </ion-fab-button>
             </ion-fab-list>
             <ion-fab-list side="start">
-                <ion-fab-button (click)="playPause()" color="dark">
+                <ion-fab-button (click)="playPause($event)" color="dark">
                     <ion-icon *ngIf="playerStats?.status === 'paused' || playerStats?.status === 'stopped'" name="play">
                     </ion-icon>
                     <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-button color="dark" [disabled]="playerStats?.status !== 'playing'" (click)="stopAll()">
+                <ion-fab-button color="dark" [disabled]="playerStats?.status !== 'playing'" (click)="stopAll($event)">
                     <ion-icon name="stop"></ion-icon>
                 </ion-fab-button>
             </ion-fab-list>

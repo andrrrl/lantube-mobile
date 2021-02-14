@@ -1,9 +1,9 @@
 <div class="video-img-container" *ngIf="stats.videoInfo !== null">
     <img *ngIf="stats.videoInfo.img" class="video-img" src="{{ stats?.videoInfo?.img }}"
          alt="{{ stats?.videoInfo?.title }}">
-    <svg version="1.1" id="record-cover" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-         x="0px" y="0px" width="107px" height="160px" viewBox="0 0 107 160" enable-background="new 0 0 107 160"
-         xml:space="preserve">
+    <svg version="1.1" class="record-cover" xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="107px" height="160px" viewBox="0 0 107 160"
+         enable-background="new 0 0 107 160" xml:space="preserve">
         <polygon fill="#C66749" points="0,38.843 83.131,0 107.534,100.56 40.395,160.295 " />
     </svg>
 </div>
@@ -253,11 +253,14 @@
         </g>
     </svg>
 </div>
-<ion-item class="ion-margin-horizontal ion-text-nowrap">
-    <ion-spinner *ngIf="stats?.status === 'loading'" color="primary"></ion-spinner>
-    <ion-label *ngIf="stats" class="ion-text-wrap video-info">
-        <span *ngIf="stats?.videoInfo?.title" class="artist ion-text-nowrap">
-            {{ stats.videoInfo?.order }} {{ stats.videoInfo.title }}
-        </span>
-    </ion-label>
-</ion-item>
+<ion-card>
+    <ion-item class="ion-margin-horizontal">
+        <ion-icon name="musical-notes-outline" slot="start"></ion-icon>
+        <ion-label *ngIf="stats" class="video-info ion-text-wrap">
+            <span *ngIf="stats?.videoInfo?.title" class="artist">
+                {{ stats.videoInfo?.order }} {{ stats.videoInfo.title }}
+            </span>
+        </ion-label>
+        <ion-spinner *ngIf="stats?.status === 'loading'" slot="end" color="primary"></ion-spinner>
+    </ion-item>
+</ion-card>

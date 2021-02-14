@@ -72,11 +72,13 @@ export class ListPage {
         );
     }
 
-    stopAll() {
+    stopAll(event) {
+        event.stopPropagation();
         this.playerService.stopAll().subscribe();
     }
 
-    playPause() {
+    playPause(event) {
+        event.stopPropagation();
         this.playerService.pause().subscribe();
     }
 
@@ -88,13 +90,12 @@ export class ListPage {
     //     this.playerService.playNext().subscribe();
     // }
 
-    volume(change: IVolume) {
+    volume(event, change: IVolume) {
+        event.stopPropagation();
         this.playerService.setVolume(change).pipe(
             debounceTime(200)
         ).subscribe();
     }
-
-
 
     // /**
     //  * Play selected video by ID

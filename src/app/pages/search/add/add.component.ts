@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { VideosService } from 'src/app/services/videos.service';
 
 @Component({
@@ -7,25 +7,29 @@ import { VideosService } from 'src/app/services/videos.service';
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
 })
-export class AddComponent {
+export class AddComponent implements OnInit, OnDestroy {
 
     youtubeVideo: any;
+    videoAdded: any;
 
     constructor(
         public videosService: VideosService,
-        public toastController: ToastController
+        public toastController: ToastController,
+        public loadingController: LoadingController
     ) { }
 
-    // dismiss() {
-    //     this.modalController.dismiss({
-    //         dismissed: true
-    //     });
-    // }
+
+    ngOnInit() {
+        const adding = this.loadingController.create({
+            message: 'Agregando video...',
+            spinner: 'crescent'
+        });
+    }
 
     addVideo() {
-        console.log(this.youtubeVideo);
-        this.videosService.add(this.extractVideoId()).subscribe(added => {
-            console.log(added);
+
+        const videoID = this.videosService.extractVideoId(this.youtubeVideo);
+        this.videoAdded = this.videosService.add(videoID).subscribe(added => {
             if (added.error) {
                 this.presentToast(`ID inválido. No se agregó el video "${this.youtubeVideo}"`);
             } else {
@@ -34,9 +38,8 @@ export class AddComponent {
         });
     }
 
-    extractVideoId() {
-        return this.youtubeVideo.trim().replace(/http(s?):\/\/(w{3}?)(\.?)youtube\.com\/watch\?v=/, '');
-    }
+
+
 
     async presentToast(message) {
         const toast = await this.toastController.create({
@@ -44,6 +47,10 @@ export class AddComponent {
             duration: 2000
         });
         await toast.present();
+    }
+
+    ngOnDestroy(): void {
+        this.videoAdded.unsubscribe();
     }
 
 }

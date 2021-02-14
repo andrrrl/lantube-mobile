@@ -19,32 +19,12 @@
 @import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
-// @import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/padding.css";
 // @import "~@ionic/angular/css/float-elements.css";
-// @import "~@ionic/angular/css/text-alignment.css";
-// @import "~@ionic/angular/css/text-transformation.css";
-// @import "~@ionic/angular/css/flex-utils.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 
 :root {
-    // ion-toolbar {
-    //     @include background-gradient(rgba(23, 166, 223, 1), rgba(3, 103, 144, 1), rgba(3, 103, 144, 1));
-    // }
-
     --ion-font-family: Arial sans-serif;
-    .md {
-        app-player {
-            ion-header.md,
-            ion-content.md,
-            ion-footer.md {
-                // --background: white;
-                --background: black url("./assets/ui/bg.jpg");
-                background: var(--background);
-            }
-        }
-    }
 }
-
-// ion-content::part(background) {
-//     --background: black url("./assets/ui/bg.jpg");
-//     background: var(--background);
-// }

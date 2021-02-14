@@ -19,7 +19,7 @@
         <app-player-stats [stats]="serverStats"></app-player-stats>
     </ion-content>
 
-    <ion-footer>
+    <ion-footer translucent="true">
         <ion-grid>
             <ion-row>
                 <ion-col size="3" size-lg color="light">
@@ -37,8 +37,9 @@
                 </ion-col>
                 <ion-col size="3" size-lg>
                     <ion-fab horizontal="end">
-                        <ion-fab-button color="dark" size="small" [disabled]="serverStats?.status === 'stopped'"
-                                        (click)="volume('up')">
+                        <ion-fab-button color="dark" size="small"
+                                        [disabled]="serverStats.status === 'stopped' || serverStats.status === 'loading'"
+                                        (click)="volume({ volume: 'up' })">
                             <ion-icon name="volume-high"></ion-icon>
                         </ion-fab-button>
                     </ion-fab>
@@ -55,8 +56,9 @@
                 </ion-col>
                 <ion-col size="3" size-lg>
                     <ion-fab horizontal="end">
-                        <ion-fab-button color="dark" size="small" [disabled]="serverStats?.status === 'stopped'"
-                                        (click)="volume('down')">
+                        <ion-fab-button color="dark" size="small"
+                                        [disabled]="serverStats.status === 'stopped' || serverStats.status === 'loading'"
+                                        (click)="volume({ volume: 'down' })">
                             <ion-icon name="volume-low"></ion-icon>
                         </ion-fab-button>
                     </ion-fab>
@@ -64,21 +66,23 @@
             </ion-row>
             <ion-row>
                 <ion-col size="3" size-lg>
-                    <ion-fab-button color="dark" size="small" dark [disabled]="serverStats?.videoId === null"
+                    <ion-fab-button color="dark" size="small" dark
+                                    [disabled]="serverStats.videoId === null || serverStats.status === 'playing' || serverStats.status === 'loading'"
                                     (click)="playPrev()">
                         <ion-icon name="play-skip-back" role="img" aria-label="skip backward">
                         </ion-icon>
                     </ion-fab-button>
                 </ion-col>
                 <ion-col size="3" size-lg>
-                    <ion-fab-button color="dark" size="small" [disabled]="serverStats?.videoId === null"
+                    <ion-fab-button color="dark" size="small"
+                                    [disabled]="serverStats.videoId === null || serverStats.status === 'playing' || serverStats.status === 'loading'"
                                     (click)="playNext()">
                         <ion-icon name="play-skip-forward" role="img" aria-label="skip forward">
                         </ion-icon>
                     </ion-fab-button>
                 </ion-col>
                 <ion-col size="3" size-lg>
-                    <ion-fab-button color="dark" size="small" [disabled]="serverStats?.status !== 'playing'"
+                    <ion-fab-button color="dark" size="small" [disabled]="serverStats.status === 'loading'"
                                     class="button button-md button-default button-default-md" (click)="stopAll()">
                         <ion-icon name="stop" role="img" class="icon icon-md ion-md-square" aria-label="stop">
                         </ion-icon>
@@ -86,13 +90,12 @@
                 </ion-col>
                 <ion-col size="3" size-lg class="ion-justify-content-end">
                     <ion-fab horizontal="end">
-                        <ion-fab-button color="dark" size="small"
-                                        [disabled]="serverStats?.status === 'playing' || serverStats?.status === 'loading'"
+                        <ion-fab-button color="dark" size="small" [disabled]="serverStats.status === 'loading'"
                                         (click)="playPause()">
-                            <ion-icon name="play" role="img" aria-label="play">
-                            </ion-icon>
-                            <ion-icon *ngIf="serverStats?.status === 'playing'" name="pause" role="img"
-                                      aria-label="pause">
+                            <ion-icon *ngIf="serverStats.status === 'paused' || serverStats.status === 'stopped'"
+                                      name="play" role="img" aria-label="play"></ion-icon>
+                            <ion-icon *ngIf="serverStats.status === 'playing' || serverStats.status === 'loading'"
+                                      name="pause" role="img" aria-label="pause">
                             </ion-icon>
                         </ion-fab-button>
                     </ion-fab>

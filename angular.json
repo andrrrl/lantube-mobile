@@ -17,6 +17,7 @@
             "allowedCommonJsDependencies": [
               "socket.io-client"
            ],
+           "aot": true,
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
