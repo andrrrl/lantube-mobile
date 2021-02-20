@@ -1,3 +1,4 @@
+import { ExtrasPageModule } from './pages/extras/extras.module';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -25,7 +26,11 @@ const routes: Routes = [
   },
   {
     path: 'sensor',
-    loadChildren: () => import('./sensor/sensor.module').then( m => m.SensorPageModule)
+    loadChildren: () => import('./sensor/sensor.module').then(m => m.SensorPageModule)
+  },
+  {
+    path: 'extras',
+    loadChildren: () => import('./pages/extras/extras.module').then(m => m.ExtrasPageModule)
   },
 ];
 

@@ -35,3 +35,4 @@ resources/icon/*
 resources/splash/*
 resources/xml/*
 ios
+src/environments/environment.prod.ts
