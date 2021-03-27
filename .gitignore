@@ -36,3 +36,4 @@ resources/splash/*
 resources/xml/*
 ios
 src/environments/environment.prod.ts
+src/environments/environment.ts
