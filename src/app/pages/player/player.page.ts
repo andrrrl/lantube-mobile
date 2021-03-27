@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { merge, Observable } from 'rxjs';
 import { catchError, debounceTime, tap } from 'rxjs/operators';
-import { PlayerService } from 'src/app/services/player.service';
+import { PlayerService } from '../..//services/player.service';
 import { IPlayerStats } from '../../interfaces/IPlayerStats';
-import { IVolume } from 'src/app/interfaces/IVolume.interface';
+import { IVolume } from '../../interfaces/IVolume.interface';
 import { AddComponent } from '../search/add/add.component';
+import { Router } from '@angular/router';
 // import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -27,15 +28,13 @@ export class PlayerPage {
         public loadingController: LoadingController,
         public modalController: ModalController,
         // private activatedRoute: ActivatedRoute,
-        public toastController: ToastController
+        public toastController: ToastController,
+        public router: Router
     ) { }
 
 
 
     async ionViewWillEnter() {
-
-        // this.activatedRoute.snapshot.paramMap.get('id');
-
         if (!this.connected) {
             this.loading = await this.loadingController.create({
                 message: 'Conectando API Lantube...',
@@ -43,26 +42,30 @@ export class PlayerPage {
             });
             await this.loading.present();
         }
+        // Init!
         this.init();
     }
 
     async init() {
 
-        // Trae los server stats
-        this.serverStats$ = merge(this.playerService.getStats(), this.playerService.onNewMessage()).pipe(
-            catchError(async (err) => {
-                console.error('Error HttpClient...', err);
-                if (!this.connected) {
+        this.playerService.restart().subscribe(() => {
+
+            // Trae los server stats
+            this.serverStats$ = merge(...[this.playerService.getStats(), this.playerService.onNewMessage()]).pipe(
+                catchError(async (err) => {
+                    console.error('API down?', err);
                     await this.loading.dismiss();
-                }
-            }),
-            tap(async () => {
-                if (!this.connected) {
-                    await this.loading.dismiss();
-                }
-                this.connected = true;
-            })
-        );
+                    this.router.navigate(['config']);
+                }),
+                tap(async () => {
+                    if (!this.connected) {
+                        await this.loading.dismiss();
+                    }
+                    this.connected = true;
+                })
+            );
+
+        });
 
     }
 

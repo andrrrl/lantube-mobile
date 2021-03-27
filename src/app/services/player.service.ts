@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { IVolume } from '../interfaces/IVolume.interface';
 import { ConfigService } from './config.services';
 import * as io from 'socket.io-client';
-import { IPlayerStats } from '../interfaces/IPlayerStats';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
@@ -18,9 +17,18 @@ export class PlayerService {
         public configService: ConfigService) {
         this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
         this.serveStatsURL = this.configService.getAPIEndpoint() + '/api/player/stats';
-        this.socket = io(this.playerURL.replace('/api/player', ''));
+        this.socket = io(this.playerURL.replace('/api/player', ''), { upgrade: false, transports: ['websocket'] });
     }
 
+    restart(): Observable<any> {
+        return new Observable<any>(observer => {
+            this.socket.disconnect();
+            this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
+            this.serveStatsURL = this.configService.getAPIEndpoint() + '/api/player/stats';
+            this.socket = io(this.playerURL.replace('/api/player', ''), { upgrade: false, transports: ['websocket'] });
+            observer.next();
+        });
+    }
 
     // EMITTER
     sendMessage(msg: string) {
