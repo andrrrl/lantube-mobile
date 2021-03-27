@@ -15,6 +15,8 @@ import { SensorPage } from './sensor.page';
     IonicModule,
     SensorPageRoutingModule
   ],
-  declarations: [SensorPage]
+  declarations: [
+    SensorPage
+  ]
 })
-export class SensorPageModule {}
+export class SensorPageModule { }

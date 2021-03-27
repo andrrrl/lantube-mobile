@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ModalController, ToastController, LoadingController } from '@ionic/angular';
-import { VideosService } from 'src/app/services/videos.service';
+import { ToastController, LoadingController } from '@ionic/angular';
+import { VideosService } from '../../../services/videos.service';
 
 @Component({
     selector: 'app-add',
