@@ -1,4 +1,10 @@
-<ion-item>
-  <ion-label position="floating">Link a abrir en {{ server }}</ion-label>
-  <ion-input placeholder="ej: https://duckduckgo.com"></ion-input>
-</ion-item>
+<form [formGroup]="form">
+  <ion-item>
+    <ion-label position="floating">Link a abrir en {{ server }}</ion-label>
+    <ion-input placeholder="ej: https://duckduckgo.com" name="url" formControlName="url"></ion-input>
+    <ion-text *ngIf="form.get('url').getError('required') && (form.get('url').dirty || form.get('url').touched)">
+      URL is required
+    </ion-text>
+    <ion-button (click)="openInBrowser()" [disabled]="!form.valid">Abrir en navegador</ion-button>
+  </ion-item>
+</form>
