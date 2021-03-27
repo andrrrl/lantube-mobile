@@ -5,6 +5,7 @@ import { ConfigService } from '../../services/config.services';
 import { PlayerService } from '../../services/player.service';
 import { Location } from '@angular/common';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-config',
@@ -23,7 +24,9 @@ export class ConfigPage implements AfterViewInit {
         public loadingCtrl: LoadingController,
         public playerService: PlayerService,
         public configService: ConfigService,
-        public toastController: ToastController) {
+        public toastController: ToastController,
+        public router: Router
+    ) {
     }
 
     ngAfterViewInit(): void {
@@ -50,6 +53,7 @@ export class ConfigPage implements AfterViewInit {
         this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
         if (this.configService.getAPIEndpoint()) {
             this.presentToast('Configuración guardada.');
+            this.router.navigate(['player']);
         } else {
             this.presentToast('No se pudo guardar la configuración.');
         }
