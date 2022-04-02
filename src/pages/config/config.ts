@@ -1,73 +1,63 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ViewController, ToastController } from 'ionic-angular';
+import { ToastController } from '@ionic/angular';
 import { ConfigService } from './../../app/services/config.services';
-import { PlayerService } from '../../app/services/player.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'page-config',
-    templateUrl: 'config.html'
+  selector: 'app-page-config',
+  templateUrl: 'config.html',
 })
-
 export class ConfigPage {
+  apiUrl: string;
+  apiPort = 3000;
+  audioOnly = false;
 
-    APIUrl: string;
-    APIPort = 3000;
-    audioOnly = false;
+  constructor(
+    public configService: ConfigService,
+    public toastController: ToastController,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-    constructor(public navCtrl: NavController,
-        public loadingCtrl: LoadingController,
-        public navParams: NavParams,
-        public playerService: PlayerService,
-        public configService: ConfigService,
-        public viewCtrl: ViewController,
-        public toastController: ToastController) {
+  ionViewWillEnter() {
+    if (!this.configService.getApiUrl()) {
+      this.apiUrl = `http://${window.location.hostname}`;
+    } else {
+      console.log(this.configService.getApiUrl());
+      this.apiUrl = this.configService.getApiUrl();
     }
-
-    ionViewWillEnter() {
-        if (!this.configService.getAPIUrl()) {
-            this.APIUrl = `http://${window.location.hostname}`;
-        } else {
-            console.log(this.configService.getAPIUrl());
-            this.APIUrl = this.configService.getAPIUrl();
-        }
-        if (this.APIUrl.indexOf('http') > -1) {
-            this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
-        }
+    if (this.apiUrl.indexOf('http') > -1) {
+      this.configService.setApiEndpoint(this.apiUrl, this.apiPort);
     }
+  }
 
-    goBack() {
-        if (this.navCtrl.canGoBack()) { //Can we go back?
-            this.navCtrl.pop();
-        }
-    }
+  onCancel() {
+    this.router.navigate(['/player'], { relativeTo: this.route });
+  }
 
-    saveAndGoBack() {
-        this.playerService.playList().subscribe(playlistStats => {
-            playlistStats;
-        });
-        if (this.navCtrl.canGoBack()) { //Can we go back?
-            this.navCtrl.pop();
-        }
-    }
+  onSave() {
+    this.setApiEndpoint();
+    this.router.navigate(['/player'], { relativeTo: this.route });
+  }
 
-    setAPIEndpoint() {
-        this.configService.setAPIEndpoint(this.APIUrl, this.APIPort);
-        if (this.configService.getAPIEndpoint()) {
-            this.presentToast('Configuración guardada.');
-        } else {
-            this.presentToast('No se pudo guardar la configuración.');
-        }
+  setApiEndpoint() {
+    this.configService.setApiEndpoint(this.apiUrl, this.apiPort);
+    if (this.configService.getApiEndpoint()) {
+      this.presentToast('Configuración guardada.');
+    } else {
+      this.presentToast('No se pudo guardar la configuración.');
     }
+  }
 
-    toggleAudioOnly() {
-        this.audioOnly = !this.audioOnly;
-    }
+  toggleAudioOnly() {
+    this.audioOnly = !this.audioOnly;
+  }
 
-    async presentToast(message) {
-        const toast = await this.toastController.create({
-            message,
-            duration: 2000
-        });
-        toast.present();
-    }
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+    });
+    toast.present();
+  }
 }

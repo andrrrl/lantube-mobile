@@ -1,6 +1,6 @@
 export enum SocketEvent {
-    CONNECT = 'reconnect',
-    RECONNECT = 'reconnect',
-    DISCONNECT = 'disconnect',
-    CONNECT_ERROR = 'connect_error',
+  connect = 'reconnect',
+  reconnect = 'reconnect',
+  disconnect = 'disconnect',
+  connectError = 'connectError',
 }

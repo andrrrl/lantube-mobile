@@ -1,3 +1,3 @@
 export interface IVolume {
-    volume: 'up' | 'down';
+  volume: 'up' | 'down';
 }

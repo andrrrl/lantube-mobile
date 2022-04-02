@@ -1,152 +1,148 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, ViewController, Modal, AlertController, ModalController, FabContainer } from 'ionic-angular';
+import {
+  NavController,
+  LoadingController,
+  AlertController,
+  ModalController,
+  IonFab,
+  IonModal,
+} from '@ionic/angular';
 import { VideosService } from './../../app/services/videos.service';
 import { ServerService } from '../../app/services/server.service';
 import { PlayerService } from '../../app/services/player.service';
-import { SearchPage } from '../search/search';
-import { ListPage } from '../list/list';
 import { IVolume } from '../../app/interfaces/IVolume.interface';
-import { ConfigPage } from '../config/config';
 import { ConfigService } from '../../app/services/config.services';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'player',
-    templateUrl: 'player.html',
-    styles: [
-        './player.scss'
-    ]
+  selector: 'app-player',
+  templateUrl: 'player.html',
+  styleUrls: ['./player.scss'],
 })
 export class PlayerPage {
+  @ViewChild('fab') fab: IonFab;
 
-    @ViewChild('fab') fab: FabContainer;
+  @Input() playerStats: any;
+  connected = false;
+  playerStats$: any;
+  currentVolume: any;
+  addModal: IonModal;
+  loader: any;
 
-    @Input() playerStats: any;
-    connected = false;
+  // List of all videos from the API
+  public videos = [];
 
-    constructor(public navCtrl: NavController,
-        public navParams: NavParams,
-        public viewCtrl: ViewController,
-        public loadingCtrl: LoadingController,
-        public configService: ConfigService,
-        public videosService: VideosService,
-        public serverService: ServerService,
-        public playerService: PlayerService,
-        public alertCtrl: AlertController,
-        public modalCtrl: ModalController) {
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public configService: ConfigService,
+    public videosService: VideosService,
+    public serverService: ServerService,
+    public playerService: PlayerService,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
+    public router: Router
+  ) {}
+
+  ionViewDidLoad() {
+    // this.fab.toggleList();
+  }
+
+  ionViewWillEnter() {
+    if (typeof this.playerStats === 'undefined') {
+      this.getPlayerStats();
     }
+  }
 
-    currentVolume: any;
-    addModal: Modal;
-    loader: any;
+  async ionViewDidEnter() {
+    setTimeout(() => {
+      this.configService.autoConnect();
+    }, 500);
 
-    // List of all videos from the API
-    public videos = [];
+    this.playerStats$ = this.playerService.onNewMessage().pipe(
+      tap(() => {
+        this.connected = true;
+      })
+    );
+  }
 
-    ionViewDidLoad() {
-        // this.fab.toggleList();
-    }
+  async showLoader(text: string) {
+    this.loader = this.loadingCtrl.create({
+      message: text,
+    });
+  }
 
-    ionViewWillEnter() {
+  async hideLoader() {
+    await this.loader.dismiss();
+  }
 
-        if (typeof this.playerStats === 'undefined') {
-            this.getPlayerStats();
-        }
-    }
+  openConfigPage() {
+    this.router.navigate(['/config']);
+  }
+  openSearchPage() {
+    this.router.navigate(['/search']);
+  }
+  openListPage() {
+    this.router.navigate(['/list']);
+  }
 
-    async ionViewDidEnter() {
+  /**
+   * Get player stats (current volume, last video, etc)
+   */
+  getPlayerStats() {
+    this.serverService.get().subscribe((stats) => {
+      this.playerStats = stats;
+    });
+  }
 
-        setTimeout(() => {
-            this.configService.autoConnect();
-        }, 500);
+  // Toggle continuous mode
+  setPlaylistMode() {
+    this.playerService.playList().subscribe((playlistStats) => {
+      this.playerStats = playlistStats;
+    });
+  }
 
-        if (this.navCtrl.canGoBack()) { //Can we go back?
-            // this.navCtrl.popTo(this.navCtrl.getActive().component);
-            // this.navCtrl.setRoot(this.navCtrl.getActive().component);
-        }
-        this.playerService.onNewMessage().subscribe(stats => {
-            this.playerStats = JSON.parse(JSON.stringify(stats));
-            this.connected = true;
-        });
+  playPrev() {
+    this.playerService.playPrev().subscribe();
+  }
 
-    }
+  playNext() {
+    this.playerService.playNext().subscribe();
+  }
 
+  /**
+   * Plays all videos (from current) in ascending order
+   */
+  playAll() {
+    this.playerService.playAll().subscribe();
+  }
 
-    // Toggle continuous mode
-    playList() {
-        this.playerService.playList().subscribe(playlistStats => {
-            this.playerStats = playlistStats;
-        });
-    }
+  playPause() {
+    this.playerService.pause().subscribe();
+  }
 
-    async showLoader(text: string) {
-        this.loader = this.loadingCtrl.create({
-            content: text,
-        });
-    }
+  /**
+   * Stops all playback
+   */
+  stopAll() {
+    this.playerService.stopAll().subscribe();
+  }
 
-    async hideLoader() {
-        await this.loader.dismiss();
-    }
+  /**
+   * Pauses playback
+   */
+  pause() {
+    this.playerService.pause().subscribe();
+  }
 
-    presentListModal() {
-        this.navCtrl.push(ListPage);
-    }
-    presentAddModal() {
-        this.navCtrl.push(SearchPage);
-    }
-    presentConfigModal() {
-        this.navCtrl.push(ConfigPage);
-    }
-
-    /**
-     * Get player stats (current volume, last video, etc)
-     */
-    getPlayerStats() {
-        this.serverService.get().subscribe(stats => {
-            this.playerStats = stats;
-        });
-    }
-
-    playPrev() {
-        this.playerService.playPrev().subscribe();
-    }
-
-    playNext() {
-        this.playerService.playNext().subscribe();
-    }
-
-    /**
-     * Plays all videos (from current) in ascending order
-     */
-    playAll() {
-        this.playerService.playAll().subscribe();
-    }
-
-    playPause() {
-        this.playerService.pause().subscribe();
-    }
-
-    /**
-     * Stops all playback
-     */
-    stopAll() {
-        this.playerService.stopAll().subscribe();
-    }
-
-    /**
-     * Pauses playback
-     */
-    pause() {
-        this.playerService.pause().subscribe();
-    }
-
-    /**
-     * Changes volume
-     */
-    volume(change: IVolume) {
-        this.playerService.setVolume(change).debounceTime(200).subscribe(playback => {
-            this.currentVolume = change;
-        });
-    }
-
+  /**
+   * Changes volume
+   */
+  volume(change: 'up' | 'down') {
+    const vol: IVolume = { volume: change };
+    this.playerService.setVolume(vol).subscribe((playback) => {
+      this.currentVolume = vol;
+    });
+  }
 }

@@ -1,104 +1,127 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { IVolume } from '../interfaces/IVolume.interface';
 import { ConfigService } from './config.services';
-import * as io from 'socket.io-client';
-import { Headers } from '@angular/http'
+import { io, Socket } from 'socket.io-client';
+import { catchError, debounceTime, take } from 'rxjs/operators';
+
 import { SocketEvent } from '../enums/socketio-events';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
+import { IPlayerStats } from '../interfaces/IPlayerStats';
+
 @Injectable()
 export class PlayerService {
+  private playerURL: string;
+  private io: Socket;
 
-    private playerURL: string;
-    private socket: SocketIOClient.Socket;
+  constructor(private http: HttpClient, public configService: ConfigService) {
+    this.playerURL = this.configService.getApiEndpoint() + '/api/player';
+    this.io = io(this.playerURL.replace('/api/player', ''));
+  }
 
-    constructor(
-        private http: Http,
-        public configService: ConfigService) {
-        this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
-        this.socket = io(this.playerURL.replace('/api/player', ''));
-    }
+  get(player: string): Observable<any> {
+    return this.http
+      .get(this.playerURL + '/' + player)
+      .pipe(take(1), catchError(this.handleError));
+  }
 
+  // EMITTER
+  sendMessage(msg: string) {
+    this.io.emit('PLAYER_MESSAGE', { message: msg });
+  }
 
-    // EMITTER
-    sendMessage(msg: string) {
-        this.socket.emit('PLAYER_MESSAGE', { message: msg });
-    }
+  // HANDLER
+  onNewMessage() {
+    return new Observable((observer) => {
+      console.log('onNewMessage', { observer });
 
-    // HANDLER
-    onNewMessage() {
-        return Observable.create((observer, error) => {
-            this.socket.on('PLAYER_MESSAGE', msg => {
-                observer.next(msg);
-            });
-        });
-    }
+      this.io.on('PLAYER_MESSAGE', (msg: IPlayerStats) => {
+        console.log({ msg });
 
-    public onEvent(event: SocketEvent): Observable<any> {
-        return new Observable<Event>(observer => {
-            this.socket.on(String(event), () => {
-                observer.next();
-            });
-        });
-    }
+        observer.next(msg);
+      });
+    });
+  }
 
-    extractData(res: Response) {
-        return res.json();
-    }
+  public onEvent(event: SocketEvent): Observable<any> {
+    return new Observable<Event>((observer) => {
+      console.log('onEvent', { observer });
+      this.io.on(String(event), () => {
+        observer.next();
+      });
+    });
+  }
 
-    private handleError(error: any) {
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        return Observable.throw(errMsg);
-    }
+  setVolume(upOrDown: IVolume): Observable<any> {
+    return this.http
+      .get(this.playerURL + '/volume/' + upOrDown)
+      .pipe(take(1), debounceTime(200), catchError(this.handleError));
+  }
 
-    get(player: String): Observable<any> {
-        return this.http.get(this.playerURL + '/' + player).map(this.extractData);
-    }
+  update(player: any, videoId): Observable<any> {
+    // const cpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .put(this.playerURL + '/stats/update/' + videoId, player, {
+        // headers: cpHeaders,
+      })
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    setVolume(upOrDown: IVolume): Observable<any> {
-        return this.http.get(this.playerURL + '/volume/' + upOrDown).map(this.extractData);
-    }
+  play(id: string) {
+    return this.http
+      .get(this.playerURL + '/' + id + '/play')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    update(player: any, videoId): Observable<any> {
-        let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: cpHeaders });
-        return this.http.put(this.playerURL + '/stats/update/' + videoId, player, options).map(this.extractData);
-    }
+  playAll() {
+    return this.http
+      .get(this.playerURL + '/playall')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    play(id: String): Observable<any[]> {
-        return this.http.get(this.playerURL + '/' + id + '/play').map(this.extractData);
-    }
+  // Toggles playlist mode
+  playList() {
+    return this.http
+      .patch(this.playerURL + '/playlist', {})
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    playAll(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/playall').map(this.extractData).catch(this.handleError);
-    }
+  playPrev() {
+    return this.http
+      .get(this.playerURL + '/prev')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    // Toggles playlist mode
-    playList(): Observable<any[]> {
-        return this.http.patch(this.playerURL + '/playlist', {}).map(this.extractData);
-    }
+  playNext() {
+    return this.http
+      .get(this.playerURL + '/next')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    playPrev(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/prev').map(this.extractData);
-    }
+  stopAll() {
+    return this.http
+      .get(this.playerURL + '/stop')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    playNext(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/next').map(this.extractData);
-    }
+  pause() {
+    return this.http
+      .get(this.playerURL + '/pause')
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    stopAll(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/stop').map(this.extractData);
-    }
+  volume(volume: any) {
+    return this.http
+      .get(this.playerURL + '/volume/' + volume)
+      .pipe(take(1), catchError(this.handleError));
+  }
 
-    pause(): Observable<any[]> {
-        return this.http.get(this.playerURL + '/pause').map(this.extractData);
-    }
-
-    volume(volume: any): Observable<any[]> {
-        return this.http.get(this.playerURL + '/volume/' + volume).map(this.extractData);
-    }
-
+  private handleError(error: any) {
+    const errMsg = error.message
+      ? error.message
+      : error.status
+      ? `${error.status} - ${error.statusText}`
+      : 'Server error';
+    return errMsg;
+  }
 }

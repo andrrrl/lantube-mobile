@@ -3,51 +3,51 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ConfigService {
+  apiUrl = new BehaviorSubject<any>(null);
+  apiPort = new BehaviorSubject<any>(null);
 
-    APIUrl = new BehaviorSubject<any>(null);
-    APIPort = new BehaviorSubject<any>(null);
+  constructor() {}
 
-    constructor() { }
+  setApiEndpoint(ip = 'http://localhost', port = 3000) {
+    const url = ip;
+    this.apiUrl.next({ url, port });
+    localStorage.setItem('url', url);
+    localStorage.setItem('port', String(port));
+    return `${url}:${port}`;
+  }
 
-    setAPIEndpoint(ip = 'http://localhost', port = 3000) {
-        const url = ip;
-        this.APIUrl.next({ url, port });
-        localStorage.setItem('url', url);
-        localStorage.setItem('port', String(port));
-        return `${url}:${port}`;
-    }
+  getApiUrl() {
+    const url = localStorage.getItem('url') || this.apiUrl.getValue();
+    return url;
+  }
+  getApiEndpoint() {
+    const url = localStorage.getItem('url') || this.apiUrl.getValue();
+    const port = localStorage.getItem('port') || this.apiPort.getValue();
+    return `${url}:${port}`;
+  }
 
-    getAPIUrl() {
-        const url = localStorage.getItem('url') || this.APIUrl.getValue();
-        return url;
+  delAPIEndpoint() {
+    this.apiUrl.next(null);
+    this.apiPort.next(null);
+    localStorage.removeItem('url');
+    localStorage.removeItem('port');
+  }
 
-    }
-    getAPIEndpoint() {
-        const url = localStorage.getItem('url') || this.APIUrl.getValue();
-        const port = localStorage.getItem('port') || this.APIPort.getValue();
-        return `${url}:${port}`;
-    }
-
-    delAPIEndpoint() {
-        this.APIUrl.next(null);
-        this.APIPort.next(null);
-        localStorage.removeItem('url');
-        localStorage.removeItem('port');
-    }
-
-    async autoConnect() {
-        if (!this.getAPIEndpoint()) {
-            if (window.location.hostname.indexOf('http') > -1) {
-                const result = await this.setAPIEndpoint(window.location.hostname, 3000);
-                if (result) {
-                    return true;
-                } else {
-                    return null;
-                }
-            }
+  async autoConnect() {
+    if (!this.getApiEndpoint()) {
+      if (window.location.hostname.indexOf('http') > -1) {
+        const result = await this.setApiEndpoint(
+          window.location.hostname,
+          3000
+        );
+        if (result) {
+          return true;
         } else {
-            return true;
+          return null;
         }
+      }
+    } else {
+      return true;
     }
-
+  }
 }

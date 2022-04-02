@@ -1,0 +1,106 @@
+
+svg#player {
+    width: 100px;
+    height: 100px;
+}
+
+.record-player-container {
+    position: relative;
+    top: 60px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+svg#vinyl {
+    transform-style: preserve-3d;
+    transform: rotateX(-60deg) rotateY(0deg);
+
+    position: absolute;
+    left: auto;
+    top: -6px;
+    height: 90px;
+    width: 90px;
+
+    path {
+        &:not(:last-child) {
+            stroke-dasharray: 13px;
+            stroke-dashoffset: 23px;
+        }
+
+        stroke: grey;
+        fill: black;
+        transform-origin: 50% 50%;
+        stroke-width: 8px;
+    }
+}
+
+.playing-animation {
+    path {
+        animation: vinyl 4s infinite linear;
+    }
+}
+
+@keyframes vinyl {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(300deg);
+    }
+}
+
+svg#record-player {
+    width: 170px;
+    height: 130px;
+}
+
+@keyframes pua {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(300deg);
+    }
+}
+
+.pua-container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    height: 0;
+    position: absolute;
+
+    svg#pua {
+        transform: scale(0.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+        position: relative;
+        top: 5px;
+        left: -20px;
+        z-index: 1;
+
+        &.play {
+            animation: pua 1s infinite linear;
+            animation-delay: 0.5s;
+        }
+    }
+}
+
+.spinner-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.connected {
+    color: #00804b;
+}
+
+.disconnected {
+    color: #f53a3a;
+}
+
+@import "pua";

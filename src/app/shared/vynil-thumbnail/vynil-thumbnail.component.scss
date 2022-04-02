@@ -1,0 +1,42 @@
+.vinyl-container {
+  width: 80px;
+  position: relative;
+  top: 3px;
+  left: 10px;
+
+  ion-img.video-img {
+    border: 5px solid green;
+    width: 3rem;
+
+    position: absolute;
+    top: 15px;
+    left: 0px;
+
+    transform: perspective(200px) rotateY(55deg) rotateZ(-21deg) rotateX(3deg);
+    transform-origin: 50% 50%;
+    mix-blend-mode: hard-light;
+
+    z-index: 2;
+  }
+
+  .vinyl-cover {
+    position: absolute;
+    left: 10px;
+    z-index: 1;
+  }
+
+  .vinyl {
+    position: absolute;
+    left: 0px;
+    top: 14px;
+    transform: perspective(200px) rotateX(10deg) rotateY(50deg);
+
+    path {
+      transform-origin: 50% 50%;
+      animation: vinyl 4s infinite linear;
+      stroke-width: 1.5;
+      stroke-dasharray: 3px;
+      stroke-dashoffset: 23px;
+    }
+  }
+}

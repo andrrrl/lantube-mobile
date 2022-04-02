@@ -18,117 +18,6 @@ ion-fab.player {
     // justify-content: space-around;
 }
 
-.logo-container {
-    display: flex;
-    justify-content: center;
-
-    svg {
-        width: 60vw;
-    }
-}
-
-svg#player {
-    width: 100px;
-    height: 100px;
-}
-
-.record-player-container {
-    position: relative;
-    top: 60px;
-    width: 100%;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-}
-
-svg#vinyl {
-    transform-style: preserve-3d;
-    transform: rotateX(-60deg) rotateY(0deg);
-
-    position: absolute;
-    left: auto;
-    top: -6px;
-    height: 90px;
-    width: 90px;
-
-    path {
-        &:not(:last-child) {
-            stroke-dasharray: 13px;
-            stroke-dashoffset: 23px;
-        }
-
-        stroke: grey;
-        fill: black;
-        transform-origin: 50% 50%;
-        stroke-width: 8px;
-    }
-}
-
-.playing-animation {
-    path {
-        animation: vinyl 4s infinite linear;
-    }
-}
-
-@keyframes vinyl {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(300deg);
-    }
-}
-
-svg#record-player {
-    width: 170px;
-    height: 130px;
-}
-
-@keyframes pua {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(300deg);
-    }
-}
-
-.pua-container {
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    height: 0;
-    position: absolute;
-
-    svg#pua {
-        transform: scale(0.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-        position: relative;
-        top: 5px;
-        left: -20px;
-        z-index: 1;
-
-        &.play {
-            animation: pua 1s infinite linear;
-            animation-delay: 0.5s;
-        }
-    }
-}
-
-.video-info {
-    display: flex;
-    justify-content: center;
-
-    .artist {
-        color: white;
-        font-weight: 800;
-        font-size: 1.9rem;
-        text-align: center;
-    }
-}
-
 .video-img-container {
     #record-cover {
         width: 100px;
@@ -147,14 +36,14 @@ svg#record-player {
     left: 20px;
 
     img {
-        width: 9rem;
+        width: 5.3rem;
         height: auto;
 
         position: absolute;
-        top: 10px;
-        margin-left: 47px;
+        top: 0;
+        margin-left: 54px;
 
-        transform: perspective(320px) rotateY(48deg) rotateZ(-23deg) rotateX(2deg);
+        transform: perspective(360px) rotateY(47.6deg) rotateZ(-23deg) rotateX(0deg);
         transform-origin: 50% 50%;
         mix-blend-mode: hard-light;
 
@@ -162,20 +51,15 @@ svg#record-player {
     }
 }
 
-.spinner-container {
-    width: 100%;
+.video-info {
     display: flex;
     justify-content: center;
-}
+    margin: 0 4rem;
 
-.connected {
-    color: green;
-    background: black;
+    .artist {
+        color: white;
+        font-weight: 800;
+        font-size: .5rem;
+        text-align: center;
+    }
 }
-
-.disconnected {
-    color: #f53d3d;
-    background: black;
-}
-
-@import "pua";

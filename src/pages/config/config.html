@@ -1,16 +1,16 @@
 <ion-header>
-    <ion-navbar>
+    <ion-toolbar>
         <ion-title>Configuraciones</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-item>
         <ion-label>API address</ion-label>
-        <ion-input type="text" placeholder="API address" [(ngModel)]="APIUrl" autofocus="true"></ion-input>
+        <ion-input type="text" placeholder="API address" [(ngModel)]="apiUrl" autofocus="true"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>API port</ion-label>
-        <ion-input type="text" placeholder="API port number" [(ngModel)]="APIPort"></ion-input>
+        <ion-input type="text" placeholder="API port number" [(ngModel)]="apiPort"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Sólo audio</ion-label>
@@ -18,10 +18,10 @@
     </ion-item>
 </ion-content>
 <ion-footer>
-    <button full ion-button (click)="goBack()">
+    <ion-button color="secondary" (click)="onCancel()">
         CANCELAR
-    </button>
-    <button full ion-button color="secondary" (click)="setAPIEndpoint()" [(disabled)]="!APIUrl">
+    </ion-button>
+    <ion-button color="primary" (click)="onSave()" [disabled]="!apiUrl">
         GUARDAR
-    </button>
+    </ion-button>
 </ion-footer>

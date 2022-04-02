@@ -1,87 +1,69 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
-// import { HomePage } from '../pages/home/home';
+import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { PlayerPage } from '../pages/player/player';
-import { ListPage } from '../pages/list/list';
-import { AddPage } from '../pages/add/add';
-import { SearchPage } from '../pages/search/search';
-import { ConfigPage } from '../pages/config/config';
 import { ConfigService } from './services/config.services';
-import { GamePage } from '../pages/game/game';
+import { Router } from '@angular/router';
 
 @Component({
-    templateUrl: 'app.html',
+  selector: 'app-root',
+  templateUrl: 'app.html',
 })
-export class MyApp {
-    @ViewChild(Nav) nav: Nav;
+export class AppComponent {
+  rootPage: any = PlayerPage;
+  pages: Array<{ title: string; url: string }>;
 
-    rootPage: any = PlayerPage;
+  constructor(
+    private platform: Platform,
+    private configService: ConfigService,
+    private router: Router
+  ) {
+    this.initializeApp();
 
-    pages: Array<{ title: string, component: any }>;
+    // used for an example of ngFor and navigation
+    this.pages = [
+      { title: 'Videos', url: 'videos' },
+      { title: 'Agregar URL', url: '' },
+      { title: 'Buscar', url: '' },
+      { title: 'Configuraciones', url: 'config' },
+      { title: 'Extras', url: '' },
+    ];
+  }
 
-    constructor(public platform: Platform,
-        public configService: ConfigService,
-        public statusBar: StatusBar,
-        public splashScreen: SplashScreen,
-        public alertCtrl: AlertController) {
-        this.initializeApp();
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.configService.autoConnect();
+      // this.statusBar.styleDefault();
+      // this.nav.setRoot(PlayerPage);
+      // this.splashScreen.hide();
 
-        // used for an example of ngFor and navigation
-        this.pages = [
-            { title: 'Videos', component: ListPage },
-            { title: 'Agregar URL', component: AddPage },
-            { title: 'Buscar', component: SearchPage },
-            { title: 'Configuraciones', component: ConfigPage },
-            { title: 'Extras', component: GamePage },
-        ];
+      // this.platform.backButton
 
-    }
+      // if (this.nav.canGoBack()) { //Can we go back?
+      //     this.nav.pop();
+      // } else {
+      // const alert = this.alertCtrl.create({
+      //         text: 'Cancelar',
+      //         role: 'cancel',
+      //         handler: () => {
+      //             console.log('Application exit prevented!');
+      //         }
+      //     }, {
+      //         text: 'Cerrar App',
+      //         handler: () => {
+      //             // this.platform.exitApp(); // Close this application
+      //         }
+      //     }]
+    });
+    // alert.present();
+  }
+  // this.nav.pop();
+  // });
+  //     });
+  // }
 
-
-    initializeApp() {
-        this.platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            this.configService.autoConnect();
-            this.statusBar.styleDefault();
-            this.nav.setRoot(PlayerPage);
-            this.splashScreen.hide();
-
-            this.platform.registerBackButtonAction(() => {
-
-                if (this.nav.canGoBack()) { //Can we go back?
-                    this.nav.pop();
-                } else {
-                    const alert = this.alertCtrl.create({
-                        title: 'Salir de Lantube',
-                        message: 'La App se va a cerrar',
-                        buttons: [{
-                            text: 'Cancelar',
-                            role: 'cancel',
-                            handler: () => {
-                                console.log('Application exit prevented!');
-                            }
-                        }, {
-                            text: 'Cerrar App',
-                            handler: () => {
-                                this.platform.exitApp(); // Close this application
-                            }
-                        }]
-                    });
-                    alert.present();
-                }
-                // this.nav.pop();
-            });
-        });
-    }
-
-    openPage(page) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        this.nav.push(page.component);
-    }
-
+  openPage(page) {
+    this.router.navigate([page.url]);
+  }
 }

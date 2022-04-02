@@ -1,35 +1,32 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { NavController, LoadingController } from '@ionic/angular';
 import { VideosService } from './../../app/services/videos.service';
 
-
 @Component({
-    selector: 'page-add',
-    templateUrl: 'add.html'
+  selector: 'app-page-add',
+  templateUrl: 'add.html',
 })
-export class AddPage {
-    youtubeVideo: any;
+export class AddPage implements OnDestroy {
+  @Input() youtubeVideo: any;
+  private addSub: any;
 
-    constructor(public navCtrl: NavController,
-        public loadingCtrl: LoadingController,
-        public navParams: NavParams,
-        public videosService: VideosService,
-        public viewCtrl: ViewController) {
-    }
+  constructor(
+    public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public videosService: VideosService
+  ) {}
 
-    goBack() {
-        this.navCtrl.pop();
-    }
+  addVideo() {
+    this.addSub = this.videosService.add(this.extractVideoId()).subscribe();
+  }
 
-    addVideo() {
-        this.videosService.add(this.extractVideoId()).subscribe(video => {
-            if (this.navCtrl.canGoBack()) { //Can we go back?
-                this.navCtrl.pop();
-            }
-        });
-    }
+  extractVideoId() {
+    return this.youtubeVideo
+      .trim()
+      .replace(/http(s?):\/\/(w{3}?)(\.?)youtube\.com\/watch\?v=/, '');
+  }
 
-    extractVideoId() {
-        return this.youtubeVideo.trim().replace(/http(s?):\/\/(w{3}?)(\.?)youtube\.com\/watch\?v=/, '');
-    }
+  ngOnDestroy() {
+    this.addSub.unsubscribe();
+  }
 }
