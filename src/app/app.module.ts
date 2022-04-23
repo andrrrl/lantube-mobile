@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ListPage } from '../pages/list/list';
 import { AddPage } from '../pages/add/add';
@@ -28,41 +28,41 @@ import { AppRoutingModule } from './app-routing.module';
 import { LogoComponent } from './shared/logo/logo.component';
 import { VynilThumbnailComponent } from './shared/vynil-thumbnail/vynil-thumbnail.component';
 import { RecordPlayerComponent } from 'src/pages/player/record-player/record-player.component';
+import { TransferComponent } from 'src/pages/transfer/transfer.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        ListPage,
-        AddPage,
-        PlayerPage,
-        SearchPage,
-        ModalPage,
-        ConfigPage,
-        // GamePage,
-        TemperatureComponent,
-        LogoComponent,
-        VynilThumbnailComponent,
-        RecordPlayerComponent,
-    ],
-    imports: [
-        HttpClientModule,
-        BrowserModule,
-        FormsModule,
-        IonicModule.forRoot(),
-        AppRoutingModule,
-        // IonicModule.forRoot(MyApp),
-    ],
-    bootstrap: [AppComponent],
-    providers: [
-        // StatusBar,
-        // SplashScreen,
-        VideosService,
-        ServerService,
-        PlayerService,
-        YoutubeService,
-        ConfigService,
-        SensorService,
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ]
+  declarations: [
+    AppComponent,
+    ListPage,
+    AddPage,
+    PlayerPage,
+    SearchPage,
+    ModalPage,
+    ConfigPage,
+    // GamePage,
+    TemperatureComponent,
+    LogoComponent,
+    VynilThumbnailComponent,
+    RecordPlayerComponent,
+    TransferComponent,
+  ],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+  ],
+  bootstrap: [AppComponent],
+  providers: [
+    VideosService,
+    ServerService,
+    PlayerService,
+    YoutubeService,
+    ConfigService,
+    SensorService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  ],
 })
 export class AppModule {}

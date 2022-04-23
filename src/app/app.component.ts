@@ -26,6 +26,7 @@ export class AppComponent {
       { title: 'Buscar', url: '' },
       { title: 'Configuraciones', url: 'config' },
       { title: 'Extras', url: '' },
+      { title: 'Dapp', url: 'dapp' },
     ];
   }
 

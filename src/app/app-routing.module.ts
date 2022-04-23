@@ -5,6 +5,7 @@ import { ConfigPage } from 'src/pages/config/config';
 import { ListPage } from 'src/pages/list/list';
 import { SearchPage } from 'src/pages/search/search';
 import { AddPage } from 'src/pages/add/add';
+import { TransferComponent } from 'src/pages/transfer/transfer.component';
 
 const routes: Routes = [
   // {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddPage,
+  },
+  {
+    path: 'dapp',
+    component: TransferComponent,
   },
   {
     path: '',
