@@ -1,0 +1,7 @@
+{
+  "name": "lantube-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
