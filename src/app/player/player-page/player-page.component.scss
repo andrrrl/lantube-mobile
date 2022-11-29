@@ -1,0 +1,133 @@
+svg#player {
+  width: 100px;
+  height: 100px;
+}
+
+.record-player-container {
+  position: relative;
+  top: 60px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+svg#vinyl {
+  transform-style: preserve-3d;
+  transform: rotateX(-60deg) rotateY(0deg);
+
+  position: absolute;
+  left: auto;
+  top: -6px;
+  height: 90px;
+  width: 90px;
+
+  path {
+      &:not(:last-child) {
+          stroke-dasharray: 13px;
+          stroke-dashoffset: 23px;
+      }
+
+      stroke: grey;
+      fill: black;
+      transform-origin: 50% 50%;
+      stroke-width: 8px;
+  }
+}
+
+.playing-animation {
+  path {
+      animation: vinyl 4s infinite linear;
+  }
+}
+
+@keyframes vinyl {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(300deg);
+  }
+}
+
+svg#record-player {
+  width: 170px;
+  height: 130px;
+}
+
+@keyframes pua {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(300deg);
+  }
+}
+
+.pua-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: 0;
+  position: absolute;
+
+  svg#pua {
+      transform: scale(0.6) perspective(300px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+      position: relative;
+      top: 5px;
+      left: -20px;
+      z-index: 1;
+
+      &.play {
+          animation: pua 1s infinite linear;
+          animation-delay: 0.5s;
+      }
+  }
+}
+
+.video-info {
+  display: flex;
+  justify-content: center;
+}
+
+.video-img-container {
+  .record-cover {
+      width: 100px;
+      position: absolute;
+      top: -30px;
+      margin-left: 40px;
+      z-index: 9;
+  }
+
+  background: #c56649;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 50px;
+  left: 20px;
+
+  img {
+      width: 6rem;
+      height: auto;
+
+      position: absolute;
+      top: 10px;
+      margin-left: 54px;
+
+      transform: perspective(380px) rotateY(50deg) rotateZ(-22deg) rotateX(1deg);
+      transform-origin: 50% 50%;
+      mix-blend-mode: hard-light;
+
+      z-index: 10;
+  }
+}
+
+.spinner-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
