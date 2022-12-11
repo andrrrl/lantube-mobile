@@ -8,7 +8,7 @@ import { Socket, io } from 'socket.io-client';
 export class VideosService {
 
     private API: string;
-    private socket: Socket;
+    private socket!: Socket;
 
     constructor(
         private http: HttpClient,

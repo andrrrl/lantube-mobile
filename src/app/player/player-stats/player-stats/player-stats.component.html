@@ -1,4 +1,4 @@
-<div class="video-img-container" *ngIf="stats.videoInfo !== null">
+<div class="video-img-container" *ngIf="stats?.videoInfo">
   <img *ngIf="stats.videoInfo?.img" class="video-img" src="{{ stats?.videoInfo?.img }}"
        alt="{{ stats?.videoInfo?.title }}">
   <svg version="1.1" class="record-cover" xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,7 @@
 <div class="record-player-container">
   <div id="tridiv">
       <div class="scene">
-          <div class="shape cuboid-1 cub-1" [ngClass]="{'play': stats?.status === 'playing'}">
+          <div class="shape cuboid-1 cub-1" [ngClass]="{'play': stats.status === 'playing'}">
               <div class="face ft">
                   <div class="photon-shader"></div>
               </div>

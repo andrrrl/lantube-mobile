@@ -105,7 +105,7 @@
                   </ion-icon>
                   <ion-icon *ngIf="playerStats?.status === 'playing'" name="pause"></ion-icon>
               </ion-fab-button>
-              <ion-fab-button color="dark" [disabled]="playerStats?.status !== 'playing'" (click)="stopAll($event)">
+              <ion-fab-button color="dark" [disabled]="playerStats?.status === 'loading'" (click)="stopAll($event)">
                   <ion-icon name="stop"></ion-icon>
               </ion-fab-button>
           </ion-fab-list>

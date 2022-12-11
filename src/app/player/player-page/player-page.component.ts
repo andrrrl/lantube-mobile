@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { forkJoin, merge, Observable, throwError } from 'rxjs';
-import { catchError, debounceTime, tap } from 'rxjs/operators';
-import { PlayerService } from '../..//services/player.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { PlayerService } from '../..//services/player.service';
+import { SensorService } from './../../services/sensor.service';
 import { ConfigService } from 'src/app/services/config.service';
 import { PlayerStats } from 'src/app/interfaces/player-stats.interface';
 import { AddComponent } from 'src/app/search/add/add.component';
@@ -18,7 +19,6 @@ export class PlayerPageComponent implements OnInit {
   serverStats$!: Observable<any>;
   stats$!: Observable<PlayerStats>;
   connected = false;
-  serverStats: any;
   loading!: HTMLIonLoadingElement;
 
   constructor(
@@ -26,12 +26,10 @@ export class PlayerPageComponent implements OnInit {
     private configService: ConfigService,
     public loadingController: LoadingController,
     public modalController: ModalController,
-    // private activatedRoute: ActivatedRoute,
     public toastController: ToastController,
+    public sensorService: SensorService,
     public router: Router
   ) { }
-
-
 
   async ngOnInit() {
     if (!this.connected) {
@@ -46,15 +44,15 @@ export class PlayerPageComponent implements OnInit {
 
   async init() {
     // Trae los server stats
-    this.playerService.onNewMessage();
-    this.serverStats$ = this.playerService.getStats().pipe(
+    this.playerService.getStats().pipe(
       tap(async () => {
         if (!this.connected) {
           await this.loading.dismiss();
         }
         this.connected = true;
       })
-    );
+    ).subscribe();
+    this.serverStats$ = this.playerService.onNewMessage();
   }
 
   togglePlayList() {

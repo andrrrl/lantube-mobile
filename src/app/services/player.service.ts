@@ -10,7 +10,7 @@ import { PlayerStats } from '../interfaces/player-stats.interface';
 export class PlayerService {
 
   private playerURL: string;
-  private socket: Socket;
+  private socket!: Socket;
   private serveStatsURL: string;
 
   constructor(

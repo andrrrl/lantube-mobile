@@ -12,7 +12,7 @@
               <ion-icon name="cloud" size="small" color="success"></ion-icon>
           </ion-fab-button>
       </ion-fab>
-      <app-temperature></app-temperature>
+      <app-temperature *ngIf="sensorService.isIotEnabled"></app-temperature>
   </ion-header>
 
   <ion-content class="dark">

@@ -72,12 +72,10 @@ export class PlaylistPageComponent implements AfterViewInit {
   }
 
   stopAll(event: Event) {
-    event.stopPropagation();
     this.playerService.stopAll().subscribe();
   }
 
   playPause(event: Event) {
-    event.stopPropagation();
     this.playerService.pause().subscribe();
   }
 
@@ -90,7 +88,6 @@ export class PlaylistPageComponent implements AfterViewInit {
   // }
 
   volume(event: Event, change: Volume) {
-    event.stopPropagation();
     this.playerService.setVolume(change).pipe(
       debounceTime(200)
     ).subscribe();

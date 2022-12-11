@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Socket, io } from 'socket.io-client';
@@ -15,6 +16,10 @@ export class SensorService {
         public configService: ConfigService) {
         this.sensorURL = this.configService.getAPIEndpoint() + '/api/sensor';
         this.socket = io(this.sensorURL.replace('/api/sensor', ''));
+    }
+
+    get isIotEnabled() {
+      return environment.iot.enabled;
     }
 
     // EMITTER
