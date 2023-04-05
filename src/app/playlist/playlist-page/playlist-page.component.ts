@@ -245,4 +245,8 @@ export class PlaylistPageComponent implements AfterViewInit {
     this.videos$ = of(this.videosAux);
   }
 
+  editVideoTitle(videoId: string) {
+
+  }
+
 }

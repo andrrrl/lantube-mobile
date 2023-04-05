@@ -103,9 +103,10 @@ export class SearchPageComponent {
         {
           text: 'Aceptar',
           handler: () => {
-            this.addVideo(index);
-            console.log('Agree clicked');
-            this.adding = false;
+            this.addVideo(index).subscribe(() => {
+              console.log('Agree clicked');
+              this.adding = false;
+            });
           },
         },
       ],
@@ -115,7 +116,7 @@ export class SearchPageComponent {
 
   addVideo(index: number) {
     this.adding = true;
-    this.videoList$.pipe(
+    return this.videoList$.pipe(
         tap((videos) => {
           this.youtubeVideo = videos[index];
           const videoId = this.videosService.extractVideoId(this.youtubeVideo.url);
@@ -132,6 +133,6 @@ export class SearchPageComponent {
             });
           });
         })
-      ).subscribe();
+      );
   }
 }
