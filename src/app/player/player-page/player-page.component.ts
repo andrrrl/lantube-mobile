@@ -53,6 +53,7 @@ export class PlayerPageComponent implements OnInit {
       })
     ).subscribe();
     this.serverStats$ = this.playerService.onNewMessage();
+    
   }
 
   togglePlayList() {

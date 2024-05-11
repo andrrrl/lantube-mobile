@@ -53,7 +53,7 @@ export class SearchPageComponent {
         catchError(async (err) => {
           console.log('Handling error locally and rethrowing it...', err);
           await this.hideLoader();
-          return throwError(err);
+          return throwError(() => new Error('Search failed.'));
         }),
         tap(async () => {
           await this.hideLoader();
@@ -117,22 +117,24 @@ export class SearchPageComponent {
   addVideo(index: number) {
     this.adding = true;
     return this.videoList$.pipe(
-        tap((videos) => {
-          this.youtubeVideo = videos[index];
-          const videoId = this.videosService.extractVideoId(this.youtubeVideo.url);
-          this.showLoader('Agregando video...').then(async () => {
-            this.videosService.add(videoId).subscribe(async () => {
-              const toast = await this.toastController.create({
-                message: `Se agregó "${this.youtubeVideo.title}"`,
-                duration: 3000,
-              });
-
-              this.hideLoader();
-              toast.present();
-              this.router.navigate(['list']);
+      tap((videos) => {
+        this.youtubeVideo = videos[index];
+        const videoId = this.videosService.extractVideoId(
+          this.youtubeVideo.url
+        );
+        this.showLoader('Agregando video...').then(async () => {
+          this.videosService.add(videoId).subscribe(async () => {
+            const toast = await this.toastController.create({
+              message: `Se agregó "${this.youtubeVideo.title}"`,
+              duration: 3000,
             });
+
+            this.hideLoader();
+            toast.present();
+            this.router.navigate(['list']);
           });
-        })
-      );
+        });
+      })
+    );
   }
 }

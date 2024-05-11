@@ -8,25 +8,30 @@ import { PlayerStats } from '../interfaces/player-stats.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
-
   private playerURL: string;
   private socket!: Socket;
   private serveStatsURL: string;
 
-  constructor(
-    private http: HttpClient,
-    public configService: ConfigService) {
+  constructor(private http: HttpClient, public configService: ConfigService) {
     this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
-    this.serveStatsURL = this.configService.getAPIEndpoint() + '/api/player/stats';
-    this.socket = io(this.playerURL.replace('/api/player', ''), { upgrade: false, transports: ['websocket'] });
+    this.serveStatsURL =
+      this.configService.getAPIEndpoint() + '/api/player/stats';
+    this.socket = io(this.playerURL.replace('/api/player', ''), {
+      upgrade: false,
+      transports: ['websocket'],
+    });
   }
 
   restart(): Observable<any> {
-    return new Observable<any>(observer => {
+    return new Observable<any>((observer) => {
       this.socket.disconnect();
       this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
-      this.serveStatsURL = this.configService.getAPIEndpoint() + '/api/player/stats';
-      this.socket = io(this.playerURL.replace('/api/player', ''), { upgrade: false, transports: ['websocket'] });
+      this.serveStatsURL =
+        this.configService.getAPIEndpoint() + '/api/player/stats';
+      this.socket = io(this.playerURL.replace('/api/player', ''), {
+        upgrade: false,
+        transports: ['websocket'],
+      });
       observer.next();
     });
   }
@@ -38,8 +43,8 @@ export class PlayerService {
 
   // HANDLER
   onNewMessage() {
-    return new Observable<any>(observer => {
-      this.socket.on('PLAYER_MESSAGE', msg => {
+    return new Observable<any>((observer) => {
+      this.socket.on('PLAYER_MESSAGE', (msg) => {
         observer.next(msg);
       });
       this.socket.on('disconnect', () => {
@@ -50,25 +55,25 @@ export class PlayerService {
   }
 
   get(player: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
-    const options = { headers };
-    return this.http.get(this.playerURL + '/' + player, options);
+    return this.http.get(this.playerURL + '/' + player);
   }
 
   getStats(): Observable<PlayerStats> {
-    const headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
-    const options = { headers };
-    return this.http.get<PlayerStats>(this.serveStatsURL, options);
+    return this.http.get<PlayerStats>(this.serveStatsURL);
   }
 
   setVolume(upOrDown: Volume): Observable<any> {
     return this.http.get(this.playerURL + '/volume/' + upOrDown.volume);
   }
 
-  update(player: any, videoId: number): Observable<any> {
+  update(player: any, videoId: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers };
-    return this.http.put(this.playerURL + '/stats/update/' + videoId, player, options);
+    return this.http.put(
+      this.playerURL + '/stats/update/' + videoId,
+      player,
+      options
+    );
   }
 
   play(id: string): Observable<any> {
@@ -105,5 +110,5 @@ export class PlayerService {
   volume(volume: any): Observable<any> {
     return this.http.get(this.playerURL + '/volume/' + volume);
   }
-
+  
 }

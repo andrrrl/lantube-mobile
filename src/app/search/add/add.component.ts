@@ -33,7 +33,7 @@ export class AddComponent implements OnInit, OnDestroy {
             if (added.error) {
                 this.presentToast(`ID inválido. No se agregó el video "${this.youtubeVideo}"`);
             } else {
-                this.presentToast(`Se agregó el video "${added.videoInfo.title}"`);
+                this.presentToast(`Se agregó el video "${added.title}"`);
             }
         });
     }

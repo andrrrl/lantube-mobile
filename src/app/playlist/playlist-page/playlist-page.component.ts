@@ -1,12 +1,13 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { AlertController, ModalController, IonInput } from '@ionic/angular';
-import { Observable, of } from 'rxjs';
+import { Observable, iif, of } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 import { PlayerStats } from 'src/app/interfaces/player-stats.interface';
 import { Volume } from 'src/app/interfaces/volume.interface';
 import { PlayerService } from '../../services/player.service';
 import { ServerService } from '../../services/server.service';
 import { VideosService } from '../../services/videos.service';
+import { Video } from 'src/app/interfaces/video.interface';
 // import { ImageModalPage } from '../modal/imageModal';
 
 @Component({
@@ -15,12 +16,13 @@ import { VideosService } from '../../services/videos.service';
   styleUrls: ['./playlist-page.component.scss'],
 })
 export class PlaylistPageComponent implements AfterViewInit {
-
-  videos$!: Observable<any[]>;
+  videos$!: Observable<Video[]>;
   playerStats$!: Observable<PlayerStats>;
-  videosAux: any;
-  videos: any;
-  // videosAux: any[] = [];
+  videosAux!: Video[];
+  videos: Video[] = [];
+  currentVideo: Video | undefined;
+  stats!: PlayerStats;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
     public modalController: ModalController,
@@ -28,16 +30,18 @@ export class PlaylistPageComponent implements AfterViewInit {
     public alertCtrl: AlertController,
     public serverService: ServerService,
     public playerService: PlayerService
-  ) {
-
-  }
+  ) {}
 
   ngAfterViewInit() {
     this.getPlayerStats();
     this.getAllVideos();
 
-    this.videosService.onNewMessage().subscribe(videosMessage => {
-      if (videosMessage.message === 'getAll' || videosMessage.message === 'added' || videosMessage.message === 'deleted') {
+    this.videosService.onNewMessage().subscribe((videosMessage) => {
+      if (
+        videosMessage.message === 'getAll' ||
+        videosMessage.message === 'added' ||
+        videosMessage.message === 'deleted'
+      ) {
         this.getAllVideos();
       }
     });
@@ -48,11 +52,27 @@ export class PlaylistPageComponent implements AfterViewInit {
   //  */
   getPlayerStats() {
     this.playerStats$ = this.serverService.get().pipe(
-      tap(videos => {
-        this.videos = videos;
+      tap((stats) => {
+        this.stats = stats;
       })
     );
-    // this.playerStats$ = this.playerService.onNewMessage();
+  }
+
+  sortVideos(videos: Video[], direction: 'asc' | 'desc' = 'asc') {
+    return videos.sort((a: Video, b: Video) => {
+      if (direction === 'asc') {
+        return (
+          parseInt(b.videoId.replace(/video/, ''), 10) -
+          parseInt(a.videoId.replace(/video/, ''), 10)
+        );
+      } else if (direction === 'desc') {
+        return (
+          parseInt(a.videoId.replace(/video/, ''), 10) -
+          parseInt(b.videoId.replace(/video/, ''), 10)
+        );
+      }
+      return 0;
+    });
   }
 
   // /**
@@ -60,22 +80,26 @@ export class PlaylistPageComponent implements AfterViewInit {
   //  */
   getAllVideos() {
     this.videos$ = this.videosService.get({}).pipe(
-      tap(videos => {
-        console.log(videos);
-        videos = JSON.parse(JSON.stringify((videos)));
-        const videoSort = (a: any, b: any) => parseInt(b.videoId.replace(/video/, ''), 10)
-          - parseInt(a.videoId.replace(/video/, ''), 10);
-        const fixVideos = videos.sort(videoSort);
+      tap((videos) => {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+        const fixVideos = this.sortVideos(videos);
         this.videosAux = fixVideos;
+        this.currentVideo = this.videosAux.find(
+          (x: Video) => x.videoId === this.stats.videoId
+        );
+        if (this.currentVideo) {
+          this.currentVideo.hasError = false;
+          console.log(this.currentVideo);
+        }
       })
     );
   }
 
-  stopAll(event: Event) {
+  stopAll() {
     this.playerService.stopAll().subscribe();
   }
 
-  playPause(event: Event) {
+  playPause() {
     this.playerService.pause().subscribe();
   }
 
@@ -88,9 +112,7 @@ export class PlaylistPageComponent implements AfterViewInit {
   // }
 
   volume(event: Event, change: Volume) {
-    this.playerService.setVolume(change).pipe(
-      debounceTime(200)
-    ).subscribe();
+    this.playerService.setVolume(change).pipe(debounceTime(200)).subscribe();
   }
 
   // /**
@@ -122,81 +144,93 @@ export class PlaylistPageComponent implements AfterViewInit {
           role: 'cancel',
           handler: () => {
             console.log('Disagree clicked');
-          }
+          },
         },
         {
           text: 'Aceptar',
           handler: () => {
             this.removeVideo(id);
             console.log('Agree clicked');
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     await confirm.present();
   }
 
   swapToTop(id: string) {
-
     const newTop = this.videos.find((x: any) => x.videoId === id);
-    const newTopIndex = this.videos.indexOf(newTop);
+    if (newTop) {
+      const newTopIndex = this.videos.indexOf(newTop);
 
-    const currentTop = this.videos[0];
-    currentTop.videoId = newTop.videoId;
-    currentTop.order = newTop.order;
-    currentTop.videoInfo.videoId = newTop.videoId;
-    this.videos[newTopIndex] = currentTop;
+      const currentTop = this.videos[0];
+      currentTop.videoId = newTop.videoId;
+      currentTop.order = newTop.order;
+      currentTop.videoId = newTop.videoId;
+      this.videos[newTopIndex] = currentTop;
 
-    newTop.videoId = `video${this.videos.length}`;
-    newTop.order = this.videos.length;
-    newTop.videoInfo.videoId = `video${this.videos.length}`;
-    this.videos[0] = newTop;
+      newTop.videoId = `video${this.videos.length}`;
+      newTop.order = this.videos.length;
+      newTop.videoId = `video${this.videos.length}`;
+      this.videos[0] = newTop;
 
-    this.playerStats$.pipe(
-      tap(stats => {
-        const playerStats = stats;
-        if (playerStats.status === 'playing' && playerStats.videoId === id) {
-          playerStats.videoId = `video${this.videos.length}`;
-          playerStats.videoInfo = newTop.videoInfo;
-        } else if (playerStats.status === 'playing' && playerStats.videoId === `video${this.videos.length}`) {
-          playerStats.videoId = currentTop.videoId;
-          playerStats.videoInfo = currentTop.videoInfo;
-        }
-        this.playerService.update(playerStats, newTop.videoId).subscribe();
-      })
-    );
+      this.playerStats$.pipe(
+        tap((playerStats) => {
+          if (playerStats.status === 'playing' && playerStats.videoId === id) {
+            playerStats.videoId = `video${this.videos.length}`;
+            playerStats = { ...playerStats, ...newTop };
+          } else if (
+            playerStats.status === 'playing' &&
+            playerStats.videoId === `video${this.videos.length}`
+          ) {
+            playerStats.videoId = currentTop.videoId;
+            playerStats = { ...playerStats, ...currentTop };
+          }
+          this.playerService.update(playerStats, newTop.videoId).subscribe();
+        })
+      );
+    }
   }
 
-  moveToTop(id: number) {
+  moveToTop(id: string) {
     this.videos$ = this.videos$.pipe(
-      tap(videos => {
+      tap((videos) => {
+        const newTop = videos.find((x) => x.videoId === id);
+        if (newTop) {
+          const newTopIndex = videos.indexOf(newTop);
+          const currentTop = videos[0];
 
-        const newTop = videos.find(x => x.videoId === id);
-        const newTopIndex = videos.indexOf(newTop);
-        const currentTop = videos[0];
+          videos.splice(newTopIndex, 1);
+          videos = [newTop, ...videos];
+          videos = this.reorderList(videos);
 
-        videos.splice(newTopIndex, 1);
-        videos = [newTop, ...videos];
-        videos = this.reorderList(videos);
+          // Update Player Stats
+          this.playerStats$.pipe(
+            tap((playerStats) => {
+              if (playerStats) {
+                if (
+                  playerStats.status === 'playing' &&
+                  playerStats.videoId === id
+                ) {
+                  playerStats.videoId = `video${videos.length}`;
+                  playerStats = { ...playerStats, ...newTop };
+                } else if (
+                  playerStats.status === 'playing' &&
+                  playerStats.videoId === `video${videos.length}`
+                ) {
+                  playerStats.videoId = currentTop.videoId;
+                  playerStats = { ...playerStats, ...currentTop };
+                }
 
-        // Update Player Stats
-        this.playerStats$.pipe(
-          tap(playerStats => {
-            if (playerStats) {
-              if (playerStats.status === 'playing' && playerStats.videoId === id) {
-                playerStats.videoId = `video${videos.length}`;
-                playerStats.videoInfo = newTop.videoInfo;
-              } else if (playerStats.status === 'playing' && playerStats.videoId === `video${videos.length}`) {
-                playerStats.videoId = currentTop.videoId;
-                playerStats.videoInfo = currentTop.videoInfo;
+                this.playerService
+                  .update(playerStats, id)
+                  .subscribe((stats) => {
+                    this.playerStats$ = stats;
+                  });
               }
-
-              this.playerService.update(playerStats, id).subscribe(stats => {
-                this.playerStats$ = stats;
-              });
-            }
-          })
-        );
+            })
+          );
+        }
       })
     );
   }
@@ -205,14 +239,13 @@ export class PlaylistPageComponent implements AfterViewInit {
     let i = videos.length;
     const vids = [];
     for (const video of videos) {
-      video.videoId = video.videoInfo.videoId = 'video' + i;
+      video.videoId = video.videoId = 'video' + i;
       video.order = i;
       vids.push(video);
       i--;
     }
     return vids;
   }
-
 
   // async presentModal(image: any) {
   //     const modal = await this.modalController.create({
@@ -232,21 +265,26 @@ export class PlaylistPageComponent implements AfterViewInit {
     // Reset items back to all of the items
     const videos = of(this.videosAux);
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() !== '') {
-      this.videos$ = videos.pipe(
-        tap(v => console.log(v, val)),
-        map(vids => vids.filter((vid: any) => vid.videoInfo.title.toLowerCase().indexOf(val.toLowerCase()) > -1))
-      );
-    }
+    this.videos$ = videos.pipe(
+      tap((v) => console.log(v, val)),
+      map((vids: Video[]) =>
+        vids.filter(
+          (vid: Video) =>
+            vid.title.toLowerCase().indexOf(val.toLowerCase()) > -1
+        )
+      )
+    );
   }
 
   cancelSearch() {
     this.videos$ = of(this.videosAux);
   }
 
-  editVideoTitle(videoId: string) {
+  editVideoTitle(videoId: string) {}
 
+  handleImgError(e: Event) {
+    if (this.currentVideo && e.type === 'error') {
+      this.currentVideo.hasError = true;
+    }
   }
-
 }

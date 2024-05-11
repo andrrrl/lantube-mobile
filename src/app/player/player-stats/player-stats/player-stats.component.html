@@ -1,266 +1,270 @@
-<div class="video-img-container" *ngIf="stats?.videoInfo">
-  <img *ngIf="stats.videoInfo?.img" class="video-img" src="{{ stats?.videoInfo?.img }}"
-       alt="{{ stats?.videoInfo?.title }}">
-  <svg version="1.1" class="record-cover" xmlns="http://www.w3.org/2000/svg"
-       xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="107px" height="160px" viewBox="0 0 107 160"
-       enable-background="new 0 0 107 160" xml:space="preserve">
-      <polygon fill="#C66749" points="0,38.843 83.131,0 107.534,100.56 40.395,160.295 " />
-  </svg>
+<div class="video-img-container" *ngIf="stats">
+    <ng-container *ngIf="stats?.img">
+        <img class="video-img" src="{{ stats.img }}" alt="{{ stats.title }}">
+        <!-- <img [ngClass]="{'img-fallback' : currentVideo.hasError, 'img-video': !currentVideo.hasError}"
+            [src]="currentVideo.img" onError="this.src='./assets/nota.svg'"
+            alt="{{ currentVideo.title }}" /> -->
+    </ng-container>
+    <svg version="1.1" class="record-cover" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="107px" height="160px" viewBox="0 0 107 160"
+        enable-background="new 0 0 107 160" xml:space="preserve">
+        <polygon fill="#C66749" points="0,38.843 83.131,0 107.534,100.56 40.395,160.295 " />
+    </svg>
 </div>
 <div class="record-player-container">
-  <div id="tridiv">
-      <div class="scene">
-          <div class="shape cuboid-1 cub-1" [ngClass]="{'play': stats.status === 'playing'}">
-              <div class="face ft">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="face bk">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="face rt">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="face lt">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="face bm">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="face tp">
-                  <div class="photon-shader"></div>
-              </div>
-              <div class="cr cr-0">
-                  <div class="face side s0">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s1">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s2">
-                      <div class="photon-shader"></div>
-                  </div>
-              </div>
-              <div class="cr cr-1">
-                  <div class="face side s0">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s1">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s2">
-                      <div class="photon-shader"></div>
-                  </div>
-              </div>
-              <div class="cr cr-2">
-                  <div class="face side s0">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s1">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s2">
-                      <div class="photon-shader"></div>
-                  </div>
-              </div>
-              <div class="cr cr-3">
-                  <div class="face side s0">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s1">
-                      <div class="photon-shader"></div>
-                  </div>
-                  <div class="face side s2">
-                      <div class="photon-shader"></div>
-                  </div>
-              </div>
-              <div class="shape pyramid-1 pyr-1">
-                  <div class="face-wrapper ft">
-                      <div class="face">
-                          <div class="photon-shader"></div>
-                      </div>
-                  </div>
-                  <div class="face-wrapper bk">
-                      <div class="face">
-                          <div class="photon-shader"></div>
-                      </div>
-                  </div>
-                  <div class="face-wrapper lt">
-                      <div class="face">
-                          <div class="photon-shader"></div>
-                      </div>
-                  </div>
-                  <div class="face-wrapper rt">
-                      <div class="face">
-                          <div class="photon-shader"></div>
-                      </div>
-                  </div>
-                  <div class="face bm">
-                      <div class="photon-shader"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <svg version="1.1" id="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-       y="0px" width="325px" height="325px" viewBox="0 0 325 325" enable-background="new 0 0 325 325"
-       xml:space="preserve">
-      <g [ngClass]="{'playing-animation': stats?.status === 'loading' || stats?.status === 'playing'}">
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,323.5c-88.99,0-161-72.01-161-161
+    <div id="tridiv">
+        <div class="scene">
+            <div class="shape cuboid-1 cub-1" [ngClass]="{'play': stats.status === 'playing'}">
+                <div class="face ft">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="face bk">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="face rt">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="face lt">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="face bm">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="face tp">
+                    <div class="photon-shader"></div>
+                </div>
+                <div class="cr cr-0">
+                    <div class="face side s0">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s1">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s2">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+                <div class="cr cr-1">
+                    <div class="face side s0">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s1">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s2">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+                <div class="cr cr-2">
+                    <div class="face side s0">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s1">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s2">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+                <div class="cr cr-3">
+                    <div class="face side s0">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s1">
+                        <div class="photon-shader"></div>
+                    </div>
+                    <div class="face side s2">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+                <div class="shape pyramid-1 pyr-1">
+                    <div class="face-wrapper ft">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper bk">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper lt">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face-wrapper rt">
+                        <div class="face">
+                            <div class="photon-shader"></div>
+                        </div>
+                    </div>
+                    <div class="face bm">
+                        <div class="photon-shader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <svg version="1.1" id="vinyl" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+        y="0px" width="325px" height="325px" viewBox="0 0 325 325" enable-background="new 0 0 325 325"
+        xml:space="preserve">
+        <g [ngClass]="{'playing-animation': stats.status === 'loading' || stats.status === 'playing'}">
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,323.5c-88.99,0-161-72.01-161-161
 s72.01-161,161-161s161,72.01,161,161S251.486,323.5,162.496,323.5z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,311.079
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,311.079
 c-82.15,0-148.579-66.429-148.579-148.579S80.346,13.921,162.496,13.921S311.075,80.35,311.075,162.5
 S244.646,311.079,162.496,311.079z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,298.736
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,298.736
 c-75.312,0-136.236-60.925-136.236-136.236S87.185,26.264,162.496,26.264S298.732,87.188,298.732,162.5
 S237.808,298.736,162.496,298.736z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,286.316
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,286.316
 c-68.473,0-123.816-55.344-123.816-123.816S94.023,38.684,162.496,38.684S286.313,94.027,286.313,162.5
 S230.969,286.316,162.496,286.316z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,273.974
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,273.974
 c-61.633,0-111.474-49.841-111.474-111.474S100.863,51.026,162.496,51.026S273.97,100.867,273.97,162.5
 S224.129,273.974,162.496,273.974z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
                 d="M162.496,261.553
 c-54.793,0-99.053-44.26-99.053-99.053s44.26-99.053,99.053-99.053s99.053,44.26,99.053,99.053S217.289,261.553,162.496,261.553z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,249.211
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,249.211
 c-47.954,0-86.711-38.757-86.711-86.711s38.757-86.711,86.711-86.711s86.711,38.757,86.711,86.711S210.45,249.211,162.496,249.211z
 " />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,236.789
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,236.789
 c-41.036,0-74.289-33.253-74.289-74.289s33.253-74.289,74.289-74.289s74.289,33.253,74.289,74.289S203.532,236.789,162.496,236.789
 z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10"
                 d="M162.496,224.447
 c-34.197,0-61.947-27.75-61.947-61.947s27.75-61.947,61.947-61.947s61.947,27.75,61.947,61.947S196.693,224.447,162.496,224.447z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,212.026
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M162.496,212.026
 c-27.357,0-49.526-22.169-49.526-49.526s22.169-49.526,49.526-49.526s49.526,22.169,49.526,49.526S189.854,212.026,162.496,212.026
 z" />
-          <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M168.707,162.5c0-3.459-2.752-6.211-6.211-6.211
+            <path stroke="#A8A39F" stroke-width="3" stroke-miterlimit="10" d="M168.707,162.5c0-3.459-2.752-6.211-6.211-6.211
 s-6.211,2.752-6.211,6.211s2.752,6.211,6.211,6.211S168.707,165.959,168.707,162.5z" />
-      </g>
-  </svg>
+        </g>
+    </svg>
 
-  <svg version="1.1" id="record-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-       x="0px" y="0px" width="500.051px" height="304.709px" viewBox="0 0 500.051 304.709"
-       enable-background="new 0 0 500.051 304.709" xml:space="preserve">
-      <g>
-          <polygon fill="#403B3C" points="499.291,68.914 250.025,0 0.761,68.914 250.027,198.738 	" />
-          <polygon fill="#403B3C" stroke="#939393" stroke-miterlimit="10" points="23.044,156.249 250.027,303.788 250.027,198.738
+    <svg version="1.1" id="record-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px" y="0px" width="500.051px" height="304.709px" viewBox="0 0 500.051 304.709"
+        enable-background="new 0 0 500.051 304.709" xml:space="preserve">
+        <g>
+            <polygon fill="#403B3C" points="499.291,68.914 250.025,0 0.761,68.914 250.027,198.738 	" />
+            <polygon fill="#403B3C" stroke="#939393" stroke-miterlimit="10" points="23.044,156.249 250.027,303.788 250.027,198.738
 0.761,68.912 	" />
-          <polygon fill="#403B3C" stroke="#939393" stroke-miterlimit="10" points="477.389,154.759 250.027,302.061 250.027,198.738
+            <polygon fill="#403B3C" stroke="#939393" stroke-miterlimit="10" points="477.389,154.759 250.027,302.061 250.027,198.738
 499.291,68.912 	" />
-          <g>
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M220.351,130.938c-78.38,0.695-119.763-35.606-99.533-68.706
+            <g>
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M220.351,130.938c-78.38,0.695-119.763-35.606-99.533-68.706
   c14.921-24.406,60.785-40.024,105.556-40.158c44.557-0.134,88.078,15.07,100.036,39.105
   C342.576,93.666,298.079,130.251,220.351,130.938z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M322.487,61.203c-11.063-23.226-52.997-38.048-96.181-37.916
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M322.487,61.203c-11.063-23.226-52.997-38.048-96.181-37.916
   c-43.384,0.133-87.575,15.354-101.48,38.927c-18.618,31.582,21.48,65.749,95.729,65.106
   C294.213,126.686,337.264,92.225,322.487,61.203z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M220.746,123.808c-70.302,0.594-109.024-31.496-91.913-61.614
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M220.746,123.808c-70.302,0.594-109.024-31.496-91.913-61.614
   c12.926-22.748,55.385-37.543,97.408-37.673c41.826-0.132,82.117,14.275,92.322,36.7
   C332.045,90.831,290.524,123.217,220.746,123.808z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M314.688,61.243c-9.373-21.6-48.113-35.613-88.52-35.487
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M314.688,61.243c-9.373-21.6-48.113-35.613-88.52-35.487
   c-40.578,0.127-81.405,14.521-93.383,36.417c-15.667,28.644,21.746,58.809,88.147,58.258
   C286.869,119.885,326.921,89.423,314.688,61.243z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.117,117.105c-62.672,0.51-98.631-27.728-84.328-54.954
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.117,117.105c-62.672,0.51-98.631-27.728-84.328-54.954
   c11.063-21.055,50.145-34.994,89.311-35.121c39.006-0.127,76.087,13.45,84.661,34.232
   C321.827,88.068,283.375,116.604,221.117,117.105z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M306.832,61.281c-7.803-19.935-43.269-33.082-80.804-32.954
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M306.832,61.281c-7.803-19.935-43.269-33.082-80.804-32.954
   c-37.688,0.126-75.061,13.618-85.237,33.804c-12.996,25.792,21.525,52.208,80.508,51.737
   C279.908,113.405,316.78,86.698,306.832,61.281z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.473,110.72c-55.457,0.432-88.46-24.199-76.679-48.608
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.473,110.72c-55.457,0.432-88.46-24.199-76.679-48.608
   c9.327-19.333,44.938-32.345,81.163-32.467c36.084-0.123,69.874,12.559,76.94,31.658
   C311.812,85.376,276.595,110.29,221.473,110.72z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M299.019,61.324c-6.369-18.241-38.58-30.474-73.137-30.356
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M299.019,61.324c-6.369-18.241-38.58-30.474-73.137-30.356
   c-34.686,0.121-68.633,12.676-77.139,31.124c-10.623,23.018,20.938,45.992,72.896,45.599
   C273.312,107.295,306.951,84.036,299.019,61.324z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.807,104.699c-48.617,0.361-78.602-20.956-69.071-42.628
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M221.807,104.699c-48.617,0.361-78.602-20.956-69.071-42.628
   c7.729-17.572,39.898-29.618,73.072-29.735c33.053-0.119,63.575,11.624,69.275,29.007
   C302.101,82.747,270.164,104.341,221.807,104.699z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M291.148,61.362c-5.055-16.499-33.938-27.753-65.416-27.639
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M291.148,61.362c-5.055-16.499-33.938-27.753-65.416-27.639
   c-31.589,0.116-62.029,11.657-68.999,28.327c-8.505,20.314,19.942,40.065,65.232,39.736
   C267.04,101.46,297.301,81.441,291.148,61.362z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.123,98.951c-42.114,0.298-68.944-17.913-61.402-36.922
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.123,98.951c-42.114,0.298-68.944-17.913-61.402-36.922
   c6.266-15.777,34.914-26.782,64.93-26.893c29.921-0.107,57.107,10.621,61.563,26.244
   C292.576,80.185,264.044,98.649,222.123,98.951z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M283.32,61.402c-3.887-14.721-29.463-24.949-57.745-24.841
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M283.32,61.402c-3.887-14.721-29.463-24.949-57.745-24.841
   c-28.372,0.105-55.325,10.591-60.912,25.45c-6.639,17.688,18.649,34.471,57.614,34.201
   C261.073,95.944,287.948,78.91,283.32,61.402z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.424,93.512c-35.944,0.243-59.585-15.108-53.768-31.524
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.424,93.512c-35.944,0.243-59.585-15.108-53.768-31.524
   c4.944-13.947,30.095-23.862,56.837-23.961c26.666-0.104,50.529,9.565,53.885,23.396C283.33,77.682,258.232,93.265,222.424,93.512
   z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M275.439,61.443c-2.861-12.906-25.053-22.023-50.03-21.924
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M275.439,61.443c-2.861-12.906-25.053-22.023-50.03-21.924
   c-25.037,0.097-48.433,9.441-52.765,22.45c-5.04,15.128,16.983,29.124,49.923,28.903
   C255.393,90.652,278.759,76.441,275.439,61.443z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
                     d="M222.71,88.3c-30.007,0.197-50.397-12.493-46.082-26.352
   c3.757-12.059,25.39-20.815,48.697-20.91c23.246-0.091,43.767,8.454,46.169,20.425C274.243,75.21,252.623,88.104,222.71,88.3z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M267.547,61.486c-1.976-11.05-20.772-18.985-42.307-18.899
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M267.547,61.486c-1.976-11.05-20.772-18.985-42.307-18.899
   c-21.59,0.089-41.404,8.22-44.624,19.341c-3.667,12.636,15.026,24.037,42.236,23.861C249.98,85.614,269.792,74.027,267.547,61.486
   z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.982,83.367c-24.419,0.152-41.503-10.06-38.439-21.46
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M222.982,83.367c-24.419,0.152-41.503-10.06-38.439-21.46
   c2.735-10.153,20.822-17.677,40.613-17.761c19.74-0.083,36.901,7.266,38.497,17.355C265.438,72.826,247.333,83.215,222.982,83.367
   z" />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M259.702,61.522c-1.248-9.144-16.671-15.845-34.635-15.765
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M259.702,61.522c-1.248-9.144-16.671-15.845-34.635-15.765
   c-18.002,0.076-34.261,6.933-36.538,16.131c-2.525,10.206,12.84,19.214,34.59,19.08C244.813,80.832,261.088,71.67,259.702,61.522z
   " />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M223.248,78.625c-19.084,0.116-32.778-7.755-30.743-16.758
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10" d="M223.248,78.625c-19.084,0.116-32.778-7.755-30.743-16.758
   c1.858-8.207,16.336-14.402,32.469-14.471c16.103-0.07,29.836,5.979,30.781,14.147C256.778,70.498,242.288,78.513,223.248,78.625z
   " />
-              <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
+                <path fill="none" stroke="#A8A39F" stroke-miterlimit="10"
                     d="M228.143,61.685c0.038-1.074-1.668-1.914-3.851-1.904
   c-2.187,0.012-3.994,0.867-4.074,1.946c-0.086,1.087,1.625,1.956,3.859,1.944C226.306,63.659,228.108,62.772,228.143,61.685z" />
-          </g>
-          <g>
-              <g>
-                  <g enable-background="new">
-                      <g>
-                          <path fill="#A8A39E"
+            </g>
+            <g>
+                <g>
+                    <g enable-background="new">
+                        <g>
+                            <path fill="#A8A39E"
                                 d="M117.097,78.655v-1.408c0,4.947,1.35,9.864,4.052,14.63c12.609,22.205,50.112,36.001,97.875,36.001
         c0.729,0,1.476-0.009,2.214-0.009c48.789-0.427,89.55-15.574,103.842-38.58v1.408c-14.292,23.005-55.054,38.153-103.842,38.58
         c-0.738,0-1.485,0.009-2.214,0.009c-47.763,0-85.266-13.796-97.875-36.001C118.447,88.52,117.097,83.603,117.097,78.655z" />
-                      </g>
-                      <g>
-                          <path fill="#A8A39E" d="M330.1,72.828v1.408c0,5.525-1.679,11.076-5.02,16.463v-1.408
+                        </g>
+                        <g>
+                            <path fill="#A8A39E" d="M330.1,72.828v1.408c0,5.525-1.679,11.076-5.02,16.463v-1.408
         C328.421,83.904,330.1,78.354,330.1,72.828z" />
-                      </g>
-                      <g>
-                          <path fill="#A8A39E" d="M331.105,72.84v1.408c0-4.58-1.118-9.145-3.36-13.595v-1.408
+                        </g>
+                        <g>
+                            <path fill="#A8A39E" d="M331.105,72.84v1.408c0-4.58-1.118-9.145-3.36-13.595v-1.408
         C329.987,63.695,331.105,68.26,331.105,72.84z" />
-                      </g>
-                      <g>
-                          <path fill="#A8A39E" d="M227.844,21.753v-1.408c22.05,0,44.091,3.716,62.073,10.48c18.972,7.129,32.058,16.96,37.827,28.419
+                        </g>
+                        <g>
+                            <path fill="#A8A39E" d="M227.844,21.753v-1.408c22.05,0,44.091,3.716,62.073,10.48c18.972,7.129,32.058,16.96,37.827,28.419
         v1.408c-5.77-11.458-18.855-21.29-37.827-28.419C271.935,25.469,249.894,21.753,227.844,21.753z" />
-                      </g>
-                      <g>
-                          <rect x="227.259" y="20.346" fill="#A8A39E" width="0.585" height="1.408" />
-                      </g>
-                      <g>
-                          <path fill="#A8A39E" d="M116.088,78.655v-1.408c0-5.691,1.73-11.419,5.188-17.007c14.229-22.979,58.797-39.762,105.984-39.895
+                        </g>
+                        <g>
+                            <rect x="227.259" y="20.346" fill="#A8A39E" width="0.585" height="1.408" />
+                        </g>
+                        <g>
+                            <path fill="#A8A39E" d="M116.088,78.655v-1.408c0-5.691,1.73-11.419,5.188-17.007c14.229-22.979,58.797-39.762,105.984-39.895
         v1.408c-47.187,0.133-91.755,16.917-105.984,39.895C117.818,67.236,116.088,72.964,116.088,78.655z" />
-                      </g>
-                      <g>
-                          <path fill="#A8A39E" d="M327.745,60.653c5.03,9.982,4.4,20.543-1.81,30.561c-14.463,23.291-55.557,38.625-104.688,39.051
+                        </g>
+                        <g>
+                            <path fill="#A8A39E" d="M327.745,60.653c5.03,9.982,4.4,20.543-1.81,30.561c-14.463,23.291-55.557,38.625-104.688,39.051
         c-0.738,0-1.485,0.008-2.223,0.008c-24.462,0-46.728-3.653-64.377-10.551c-16.506-6.462-28.395-15.441-34.371-25.957
         c-5.904-10.4-5.562-21.512,0.999-32.117c14.229-22.979,58.797-39.762,105.984-39.895h0.585c22.05,0,44.091,3.715,62.073,10.48
         C308.889,39.363,321.975,49.194,327.745,60.653z M325.081,90.699c6.021-9.708,6.642-19.948,1.772-29.61
         c-11.195-22.223-52.83-38.348-99.009-38.348h-0.585c-46.854,0.133-91.071,16.721-105.129,39.424
         c-6.363,10.285-6.696,21.041-0.981,31.122c12.609,22.205,50.112,36.001,97.875,36.001c0.729,0,1.476-0.009,2.214-0.009
         C270.027,128.852,310.789,113.704,325.081,90.699" />
-                      </g>
-                  </g>
-              </g>
-          </g>
-      </g>
-  </svg>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </svg>
 </div>
 <ion-card>
-  <ion-item class="ion-margin-horizontal">
-      <ion-icon name="musical-notes-outline" slot="start"></ion-icon>
-      <ion-label *ngIf="stats" class="video-info ion-text-wrap">
-          <span *ngIf="stats?.videoInfo?.title" class="artist">
-              {{ stats.videoInfo?.order }} {{ stats.videoInfo?.title }}
-          </span>
-      </ion-label>
-      <ion-spinner *ngIf="stats?.status === 'loading'" slot="end" color="primary"></ion-spinner>
-  </ion-item>
+    <ion-item class="ion-margin-horizontal">
+        <ion-icon name="musical-notes-outline" slot="start"></ion-icon>
+        <ion-label *ngIf="stats" class="video-info ion-text-wrap">
+            <span *ngIf="currentVideo?.title" class="artist">
+                {{ currentVideo.order }} {{ currentVideo.title }}
+            </span>
+        </ion-label>
+        <ion-spinner *ngIf="stats?.status === 'loading'" slot="end" color="primary"></ion-spinner>
+    </ion-item>
 </ion-card>
