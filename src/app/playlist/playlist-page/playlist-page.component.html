@@ -60,12 +60,12 @@
               video?.videoId === playerStats?.videoId &&
               playerStats?.status === 'playing'
           }">
-          <p>{{ video.order }} {{ video.title }}</p>
+          <p>{{ video.order }} {{ video.userTitle ?? video.title }}</p>
         </ion-label>
         <ion-item-group slot="end">
           <ion-note color="danger">{{
             video.duration
-            ? "(" + video.duration + ")"
+            ? "(" + video.duration.timestamp + ")"
             : ""
             }}
           </ion-note>
@@ -77,7 +77,7 @@
                     item-end color="secondary"></ion-button> -->
           <!-- <ion-icon name="arrow-up-outline" (click)="swapToTop(video?.videoId)" slot="end" color="danger"
                             *ngIf="video?.order < videos.length"></ion-icon> -->
-          <ion-icon name="pencil" (click)="editVideoTitle(video.videoId)" slot="end" color="info">
+          <ion-icon name="pencil" (click)="editVideoTitle(video.videoId)" slot="end" color="danger">
           </ion-icon>
           <ion-icon name="trash" (click)="showConfirmDelete(video.videoId)" slot="end" color="danger">
           </ion-icon>
@@ -93,6 +93,19 @@
         </ion-icon>
     </button>
 </ion-fab> -->
+    <app-modal *ngIf="modalOpen && userTitle">
+      <ion-list>
+        <ion-title class="mb-2 h-5" color="medium">Editar título</ion-title>
+        <ion-item>
+          <ion-input type="text" placeholder="{{userTitle}}" [(ngModel)]="userTitle" autofocus="true">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="full" color="medium" (click)="updateVideoTitle()" [disabled]="!userTitle">
+        Aplicar
+      </ion-button>
+    </app-modal>
+
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button color="dark">
         <ion-icon name="ellipsis-vertical"> </ion-icon>

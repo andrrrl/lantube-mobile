@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Socket, io } from 'socket.io-client';
 import { Observable } from 'rxjs';
-import { ConfigService } from './config.service';
 
 @Injectable({ providedIn: 'root' })
 export class SensorService {
@@ -12,10 +11,9 @@ export class SensorService {
     private socket: Socket;
 
     constructor(
-        private http: HttpClient,
-        public configService: ConfigService) {
-        this.sensorURL = this.configService.getAPIEndpoint() + '/api/sensor';
-        this.socket = io(this.sensorURL.replace('/api/sensor', ''));
+        private http: HttpClient) {
+        this.sensorURL = '/api/sensor';
+        this.socket = io('/', { upgrade: false, transports: ['websocket'] });
     }
 
     get isIotEnabled() {

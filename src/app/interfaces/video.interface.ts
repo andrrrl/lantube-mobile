@@ -1,9 +1,12 @@
 export interface Video {
   videoId: string;
   title: string;
+  userTitle?: string;
   url: string;
   img: string;
-  duration: string;
+  duration: {
+    timestamp: string
+  };
   order: number;
   hasError?: boolean
 }
@@ -11,6 +14,8 @@ export interface Video {
 export interface VideoResult {
   title: string;
   url: string;
-  duration: string;
+  duration: {
+    timestamp: string
+  };
   img: string;
 }

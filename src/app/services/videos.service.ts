@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, scan } from 'rxjs';
-import { ConfigService } from './config.service';
 import { Socket, io } from 'socket.io-client';
 import { Video } from '../interfaces/video.interface';
 
 @Injectable({ providedIn: 'root' })
 export class VideosService {
-  private API: string;
   private socket!: Socket;
   private videosSubject: BehaviorSubject<Video[]> = new BehaviorSubject<Video[]>([]);
   videos$: Observable<Video[]> = this.videosSubject.asObservable();
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
-    this.API = this.configService.getAPIEndpoint();
-    this.socket = io(this.API, { upgrade: false, transports: ['websocket'] });
+  constructor(private http: HttpClient) {
+    this.socket = io('/', { upgrade: false, transports: ['websocket'] });
   }
 
   extractData(res: Response) {
@@ -42,7 +39,7 @@ export class VideosService {
   }
 
   get(params: any): Observable<any> {
-    return this.http.get(this.API + '/api/videos', params).pipe(
+    return this.http.get('/api/videos', params).pipe(
         scan((videos) => {
             this.videosSubject.next(videos)
         }
@@ -50,25 +47,29 @@ export class VideosService {
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.API + '/api/videos/' + id);
+    return this.http.get('/api/videos/' + id);
   }
 
   add(videoId: string): Observable<any> {
-    return this.http.get(this.API + '/api/videos/add/' + videoId);
+    return this.http.get('/api/videos/add/' + videoId);
   }
 
   put(video: any): Observable<any> {
     return video;
   }
 
-  delete(videoId: string): Observable<any> {
-    return this.http.delete(this.API + '/api/videos/delete/' + videoId);
+  patch(videoId: string, key: string, value: any): Observable<any> {
+    return this.http.patch('/api/videos/' + videoId + '/edit', {key, value});
+  }
+
+  delete(videoId: string): Observable<Object> {
+    return this.http.delete('/api/videos/delete/' + videoId);
   }
 
   reorder(videoId: string, swap: boolean): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers };
-    return this.http.post(this.API + '/api/', swap, options);
+    return this.http.post('/api/', swap, options);
   }
 
   extractVideoId(videoURL: string) {

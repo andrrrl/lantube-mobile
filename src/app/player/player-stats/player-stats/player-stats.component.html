@@ -262,7 +262,7 @@ s-6.211,2.752-6.211,6.211s2.752,6.211,6.211,6.211S168.707,165.959,168.707,162.5z
         <ion-icon name="musical-notes-outline" slot="start"></ion-icon>
         <ion-label *ngIf="stats" class="video-info ion-text-wrap">
             <span *ngIf="currentVideo?.title" class="artist">
-                {{ currentVideo.order }} {{ currentVideo.title }}
+                {{ currentVideo.order }} {{ currentVideo.userTitle ?? currentVideo.title }}
             </span>
         </ion-label>
         <ion-spinner *ngIf="stats?.status === 'loading'" slot="end" color="primary"></ion-spinner>

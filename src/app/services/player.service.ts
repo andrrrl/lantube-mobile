@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Volume } from '../interfaces/volume.interface';
-import { ConfigService } from './config.service';
 import { Socket, io } from 'socket.io-client';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PlayerStats } from '../interfaces/player-stats.interface';
@@ -12,11 +11,10 @@ export class PlayerService {
   private socket!: Socket;
   private serveStatsURL: string;
 
-  constructor(private http: HttpClient, public configService: ConfigService) {
-    this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
-    this.serveStatsURL =
-      this.configService.getAPIEndpoint() + '/api/player/stats';
-    this.socket = io(this.playerURL.replace('/api/player', ''), {
+  constructor(private http: HttpClient) {
+    this.playerURL = '/api/player';
+    this.serveStatsURL = '/api/player/stats';
+    this.socket = io('/', {
       upgrade: false,
       transports: ['websocket'],
     });
@@ -25,10 +23,9 @@ export class PlayerService {
   restart(): Observable<any> {
     return new Observable<any>((observer) => {
       this.socket.disconnect();
-      this.playerURL = this.configService.getAPIEndpoint() + '/api/player';
-      this.serveStatsURL =
-        this.configService.getAPIEndpoint() + '/api/player/stats';
-      this.socket = io(this.playerURL.replace('/api/player', ''), {
+      this.playerURL = '/api/player';
+      this.serveStatsURL = '/api/player/stats';
+      this.socket = io('/', {
         upgrade: false,
         transports: ['websocket'],
       });
@@ -110,5 +107,4 @@ export class PlayerService {
   volume(volume: any): Observable<any> {
     return this.http.get(this.playerURL + '/volume/' + volume);
   }
-  
 }

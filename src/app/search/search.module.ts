@@ -11,7 +11,6 @@ import { SearchPageComponent } from './search-page/search-page.component';
 @NgModule({
   declarations: [
     SearchPageComponent,
-    AddComponent
   ],
   imports: [
     CommonModule,

@@ -5,7 +5,6 @@ import { debounceTime, tap } from 'rxjs/operators';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { PlayerService } from '../..//services/player.service';
 import { SensorService } from './../../services/sensor.service';
-import { ConfigService } from 'src/app/services/config.service';
 import { PlayerStats } from 'src/app/interfaces/player-stats.interface';
 import { AddComponent } from 'src/app/search/add/add.component';
 import { Volume } from 'src/app/interfaces/volume.interface';
@@ -23,7 +22,6 @@ export class PlayerPageComponent implements OnInit {
 
   constructor(
     private playerService: PlayerService,
-    private configService: ConfigService,
     public loadingController: LoadingController,
     public modalController: ModalController,
     public toastController: ToastController,
@@ -93,14 +91,13 @@ export class PlayerPageComponent implements OnInit {
     const modal = await this.modalController.create({
       component: AddComponent,
       cssClass: 'my-custom-class',
-      swipeToClose: true,
     });
 
     return await modal.present();
   }
 
   async showServerStats() {
-    const message = `${!this.connected ? 'No conectado a:' : 'Conectado a:'} ${this.configService.getAPIEndpoint()}`;
+    const message = `${!this.connected ? 'No conectado a:' : 'Conectado a:'} ' Lantube API}`;
     const toast = await this.toastController.create({
       message,
       duration: 2000

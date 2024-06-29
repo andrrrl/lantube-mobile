@@ -12,18 +12,18 @@ button {
 
 .filtro {
   .searchbar-input {
-      background: black !important;
-      color: white !important;
+    background: black !important;
+    color: white !important;
   }
 }
 
 @keyframes vinyl {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(300deg);
+    transform: rotate(300deg);
   }
 }
 
@@ -32,53 +32,53 @@ button {
   display: flex;
 
   .vinyl-container {
-      width: 80px;
-      position: relative;
-      top: 3px;
-      left: 10px;
+    width: 80px;
+    position: relative;
+    top: 3px;
+    left: 10px;
   }
 
   .vinyl-cover {
-      position: absolute;
-      left: 10px;
-      z-index: 1;
+    position: absolute;
+    left: 10px;
+    z-index: 1;
   }
 
   .vinyl {
-      position: absolute;
-      left: 0px;
-      top: 14px;
-      transform: perspective(200px) rotateX(10deg) rotateY(50deg);
+    position: absolute;
+    left: 0px;
+    top: 14px;
+    transform: perspective(200px) rotateX(10deg) rotateY(50deg);
 
-      path {
-          transform-origin: 50% 50%;
-          animation: vinyl 4s infinite linear;
-          stroke-width: 1.5;
-          stroke-dasharray: 3px;
-          stroke-dashoffset: 23px;
-      }
+    path {
+      transform-origin: 50% 50%;
+      animation: vinyl 4s infinite linear;
+      stroke-width: 1.5;
+      stroke-dasharray: 3px;
+      stroke-dashoffset: 23px;
+    }
   }
 
   .video-title {
-      display: flex;
-      // justify-content: center;
-      align-items: center;
-      width: 75vw;
-      font-weight: 800;
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    width: 75vw;
+    font-weight: 800;
   }
 
   .img-video {
-      width: 2.9rem;
+    width: 2.9rem;
 
-      position: absolute;
-      top: 15px;
-      left: 14px;
+    position: absolute;
+    top: 15px;
+    left: 14px;
 
-      transform: perspective(200px) rotateY(55deg) rotateZ(-21deg) rotateX(3deg);
-      transform-origin: 50% 50%;
-      mix-blend-mode: hard-light;
+    transform: perspective(200px) rotateY(55deg) rotateZ(-21deg) rotateX(3deg);
+    transform-origin: 50% 50%;
+    mix-blend-mode: hard-light;
 
-      z-index: 2;
+    z-index: 2;
   }
   .img-fallback {
     width: 2.9rem;
@@ -87,7 +87,8 @@ button {
     top: 15px;
     left: 14px;
 
-    transform: perspective(200px) rotateY(51deg) rotateZ(-21deg) rotateX(3deg) scale(0.8);
+    transform: perspective(200px) rotateY(51deg) rotateZ(-21deg) rotateX(3deg)
+      scale(0.8);
     transform-origin: 18% 0%;
     mix-blend-mode: hard-light;
 
@@ -97,42 +98,47 @@ button {
 
 page-list {
   @keyframes playing {
-      0% {
-          opacity: 0;
-      }
+    0% {
+      opacity: 0;
+    }
 
-      50% {
-          opacity: 1;
-      }
+    50% {
+      opacity: 1;
+    }
 
-      100% {
-          opacity: 0;
-      }
+    100% {
+      opacity: 0;
+    }
   }
 
   .playing {
-      animation: playing 1s ease infinite;
+    animation: playing 1s ease infinite;
   }
 
   .video-thumb {
-      width: 50px;
-      margin-bottom: 0 !important;
-      margin-right: 15px !important;
+    width: 50px;
+    margin-bottom: 0 !important;
+    margin-right: 15px !important;
   }
 
   .item-md {
-      height: 50px !important;
-      background: black;
-      color: white;
-      border-bottom: 1px solid white;
+    height: 50px !important;
+    background: black;
+    color: white;
+    border-bottom: 1px solid white;
   }
 
   .item-md.item-block .item-inner {
-      border-bottom: 0 !important;
+    border-bottom: 0 !important;
   }
 
   ion-label {
-      font-size: 1.25rem;
+    font-size: 1.25rem;
+  }
+}
+ion-list {
+  ion-icon {
+    margin-left: 1rem;
   }
 }
 

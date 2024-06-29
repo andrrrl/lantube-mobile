@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { AlertController, ModalController, IonInput } from '@ionic/angular';
-import { Observable, iif, of } from 'rxjs';
+import { AlertController, ModalController } from '@ionic/angular';
+import { Observable, of } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 import { PlayerStats } from 'src/app/interfaces/player-stats.interface';
 import { Volume } from 'src/app/interfaces/volume.interface';
@@ -23,6 +23,9 @@ export class PlaylistPageComponent implements AfterViewInit {
   currentVideo: Video | undefined;
   stats!: PlayerStats;
   sortDirection: 'asc' | 'desc' = 'asc';
+  modalOpen = false;
+  userTitle = '';
+  videoId = '';
 
   constructor(
     public modalController: ModalController,
@@ -61,15 +64,9 @@ export class PlaylistPageComponent implements AfterViewInit {
   sortVideos(videos: Video[], direction: 'asc' | 'desc' = 'asc') {
     return videos.sort((a: Video, b: Video) => {
       if (direction === 'asc') {
-        return (
-          parseInt(b.videoId.replace(/video/, ''), 10) -
-          parseInt(a.videoId.replace(/video/, ''), 10)
-        );
+        return b.order - a.order;
       } else if (direction === 'desc') {
-        return (
-          parseInt(a.videoId.replace(/video/, ''), 10) -
-          parseInt(b.videoId.replace(/video/, ''), 10)
-        );
+        return a.order - b.order;
       }
       return 0;
     });
@@ -89,6 +86,8 @@ export class PlaylistPageComponent implements AfterViewInit {
         );
         if (this.currentVideo) {
           this.currentVideo.hasError = false;
+          this.userTitle =
+            this.currentVideo.userTitle ?? this.currentVideo.title;
           console.log(this.currentVideo);
         }
       })
@@ -280,7 +279,27 @@ export class PlaylistPageComponent implements AfterViewInit {
     this.videos$ = of(this.videosAux);
   }
 
-  editVideoTitle(videoId: string) {}
+  editVideoTitle(videoId: string) {
+    this.videoId = videoId;
+    const editVideo = this.videosAux.find((x) => x.videoId === this.videoId);
+    this.userTitle = editVideo?.userTitle ?? editVideo?.title ?? ''
+
+    this.modalOpen = true;
+  }
+
+  updateVideoTitle() {
+    const patchedVideo = this.videosAux.find((x) => x.videoId === this.videoId);
+    console.log({ patchedVideo });
+
+    if (!patchedVideo?.userTitle) {
+      return;
+    }
+    patchedVideo.userTitle = this.userTitle;
+    this.videosService.patch(this.videoId, 'userTitle', this.userTitle).subscribe(() => {
+      this.modalOpen = false;
+    });
+    
+  }
 
   handleImgError(e: Event) {
     if (this.currentVideo && e.type === 'error') {

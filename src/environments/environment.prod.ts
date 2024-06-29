@@ -4,6 +4,6 @@ export const environment = {
     enabled: false,
     sensors: [],
   },
-  api: 'http://localhost/',
+  api: '/api',
   port: 3000
 };

@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/sock/*": {
+    "target": "http://localhost:3000/socket.io/",
+    "ws": true,
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

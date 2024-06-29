@@ -4,16 +4,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { AddComponent } from '../search/add/add.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     TemperatureComponent,
-    PlayerStatsComponent
+    PlayerStatsComponent,
+    AddComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     IonicModule,
+    FormsModule,
   ],
   providers: [
     HttpClientModule
@@ -21,6 +25,7 @@ import { IonicModule } from '@ionic/angular';
   exports: [
     TemperatureComponent,
     PlayerStatsComponent,
+    AddComponent
   ]
 })
 export class SharedModule { }

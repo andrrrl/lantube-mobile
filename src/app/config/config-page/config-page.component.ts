@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { AfterViewInit, Component, } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { ConfigService } from '../../services/config.service';
 import { PlayerService } from '../../services/player.service';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -19,7 +18,6 @@ export class ConfigPageComponent implements AfterViewInit {
     constructor(
         public loadingCtrl: LoadingController,
         public playerService: PlayerService,
-        public configService: ConfigService,
         public toastController: ToastController,
         public router: Router
     ) {
